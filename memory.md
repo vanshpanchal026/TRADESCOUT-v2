@@ -65,33 +65,37 @@
 
 ```
 TRADESCOUT/
-├── .cursorrules           # AI coding rules
-├── .env.example           # Environment variables template
-├── .gitignore             # Comprehensive ignore rules
-├── agent.md               # Agent operating protocol
-├── agentrules.md          # Hard constraints and guardrails
-├── API-Spec.md            # Complete REST API specification
-├── AppFlow.md             # Complete user journey & screen flows
-├── Backend scheme.md      # Full Supabase PostgreSQL schema with RLS
-├── CHANGELOG.md           # Project release ledger
-├── CONTRIBUTING.md        # Contributor workflow and standards
-├── data-pipeline.md       # Zero-scraper Parquet ingestion engine
-├── DesignDocument.md      # System architecture & component design
-├── environment-setup.md   # Step-by-step developer onboarding
-├── implementation-plan.md # 7-phase detailed engineering roadmap
-├── InterviewLog.md        # Architectural decision records (ADRs)
-├── memory.md              # Living state & status board (this file)
-├── PRD.md                 # Product Requirements Document
-├── README.md              # Project overview & quick start
-├── Security-and-Scale.md  # Security controls, rate limits & scaling
-├── TechStack.md           # Technology rationale and cost matrix
-├── Testing-Strategy.md    # Unit, integration, E2E & golden sets
-├── infra/
+├── .cursorrules           # AI coding rules & conventions (Root)
+├── .env.example           # Environment variables template (Root)
+├── .gitignore             # Git ignore definitions (Root)
+├── agent.md               # Autonomous agent operating protocol (Root)
+├── agentrules.md          # Hard agent constraints & guardrails (Root)
+├── CHANGELOG.md           # Project release ledger (Root)
+├── CONTRIBUTING.md        # Contributor workflow and standards (Root)
+├── memory.md              # Living state & status board (Root - this file)
+├── README.md              # Project overview & quick start (Root)
+├── infra/                 # Containerized infrastructure
 │   └── docker-compose.yml # PostgreSQL 16 + Redis 7 + pgAdmin
+├── docs/                  # Architecture & Specification Documents
+│   ├── README.md          # Master documentation directory & matrix
+│   ├── PRD.md             # Product Requirements Document
+│   ├── TechStack.md       # Technology rationale & cost matrix
+│   ├── DesignDocument.md  # System architecture & component design
+│   ├── AppFlow.md         # Complete user journey & screen flows
+│   ├── API-Spec.md        # Complete REST API specification
+│   ├── Backend scheme.md  # Full Supabase PostgreSQL schema with RLS
+│   ├── data-pipeline.md   # Zero-scraper Parquet ingestion engine
+│   ├── implementation-plan.md # 7-phase detailed engineering roadmap
+│   ├── Testing-Strategy.md# Unit, integration, E2E & golden sets
+│   ├── Security-and-Scale.md # Security controls, rate limits & scaling
+│   ├── environment-setup.md # Developer workstation setup guide
+│   └── InterviewLog.md    # Architectural decision records (ADRs)
 └── research/              # Reverse-engineering vault & benchmark data
-    ├── README.md                              # Research index and mocking guide
-    ├── scanthecharts-architecture-teardown.md# Full architecture teardown of target
-    ├── data-sources-benchmark-report.md      # Parquet & zero-cost data source tests
-    ├── cost-and-resource-breakdown.md        # Funds and cloud infrastructure breakdown
+    ├── README.md          # Research index and mocking guide
+    ├── scanthecharts-architecture-teardown.md # Full architecture teardown
+    ├── data-sources-benchmark-report.md       # Parquet & zero-cost data source tests
+    ├── cost-and-resource-breakdown.md         # Funds & cloud infrastructure analysis
+    └── api-fixtures/                          # 24 real JSON payloads from ScanTheCharts
+```
     └── api-fixtures/                         # 24 real JSON payloads from ScanTheCharts
 ```

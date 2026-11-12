@@ -107,7 +107,7 @@ Open your browser at `http://localhost:3000`. You will see the TRADESCOUT landin
 
 1. Create a free project at [supabase.com](https://supabase.com).
 2. Navigate to **SQL Editor** in the Supabase Dashboard.
-3. Open `Backend scheme.md` from the project root and copy the entire SQL script from Section 2.
+3. Open `docs/Backend scheme.md` and copy the entire SQL script from Section 2.
 4. Paste the SQL into the Supabase editor and click **Run**.
 5. Copy your **Project URL** and **anon public key** into your `.env` file under `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 

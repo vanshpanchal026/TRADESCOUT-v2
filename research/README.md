@@ -87,22 +87,22 @@ export async function getTrendTemplateStocks() {
 ```
 
 ### 2. Verify Pydantic v2 Schema Compatibility:
-When writing FastAPI models in `Backend scheme.md` / `api/schemas/`, compare your Pydantic model definitions against the raw JSON structure in `api-fixtures/` to ensure 100% field parity:
+When writing FastAPI models in `docs/Backend scheme.md` / `api/schemas/`, compare your Pydantic model definitions against the raw JSON structure in `api-fixtures/` to ensure 100% field parity:
 - Number formatting: Indian numbering system (Crores, Lakhs) vs raw floats.
 - Candle timestamps: Unix epoch seconds (`time: 1731369600`) vs ISO date strings.
 - Nullability: Handling IPOs with less than 200 trading days.
 
 ### 3. Unit & Integration Testing:
-Load fixtures in Pytest test suites (`Testing-Strategy.md`) to assert that the vectorized Polars calculations produce outputs matching the benchmark figures.
+Load fixtures in Pytest test suites (`docs/Testing-Strategy.md`) to assert that the vectorized Polars calculations produce outputs matching the benchmark figures.
 
 ---
 
-## 4. Cross-Reference to Root Specifications
+## 4. Cross-Reference to Documentation Vault (`docs/`)
 
 Every file in `research/` is directly connected to the project's engineering blueprint:
-- **`PRD.md`**: Product requirements, scanner logic, and user personas informed by teardown findings.
-- **`TechStack.md`**: Justification for Next.js 14, FastAPI, Polars, Supabase, and Lightweight Charts.
-- **`data-pipeline.md`**: Implementation plan for the zero-scraper Parquet ingestion engine.
-- **`API-Spec.md`**: Complete OpenAPI contracts derived from the 17 discovered endpoints.
-- **`DesignDocument.md`**: UI/UX, typography (Hanken Grotesk), dark mode theme, and canvas chart layout.
+- **`docs/PRD.md`**: Product requirements, scanner logic, and user personas informed by teardown findings.
+- **`docs/TechStack.md`**: Justification for Next.js 14, FastAPI, Polars, Supabase, and Lightweight Charts.
+- **`docs/data-pipeline.md`**: Implementation plan for the zero-scraper Parquet ingestion engine.
+- **`docs/API-Spec.md`**: Complete OpenAPI contracts derived from the 17 discovered endpoints.
+- **`docs/DesignDocument.md`**: UI/UX, typography (Hanken Grotesk), dark mode theme, and canvas chart layout.
 - **`memory.md`**: Living state board and architectural decision log.

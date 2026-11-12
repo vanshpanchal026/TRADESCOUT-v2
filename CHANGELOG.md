@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Reorganized repository structure: consolidated all 12 architecture, specification, and implementation documents into `docs/` with a centralized index (`docs/README.md`), keeping only essential configuration and protocol files in the repository root.
+
 ### Added
 - Imported complete context, research vault, and live API fixtures from conversation `27c18536-f6cb-409a-bfed-4ac05e6bc0e8` (`research/`).
 - Benchmark & feasibility report for open-source Parquet market data sources (`research/data-sources-benchmark-report.md`).

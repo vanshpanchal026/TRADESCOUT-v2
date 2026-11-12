@@ -39,6 +39,6 @@ Before opening a pull request, verify that:
 - [ ] Golden dataset tests pass: `pytest tests/unit/test_golden_indicators.py`
 - [ ] Python linting passes: `ruff check api/`
 - [ ] Frontend type checking passes: `cd web && pnpm tsc --noEmit`
-- [ ] Any new or altered API endpoint is documented in `API-Spec.md`
-- [ ] Any schema alteration is reflected in `Backend scheme.md`
+- [ ] Any new or altered API endpoint is documented in `docs/API-Spec.md`
+- [ ] Any schema alteration is reflected in `docs/Backend scheme.md`
 - [ ] `memory.md` status board is updated to reflect finished tasks

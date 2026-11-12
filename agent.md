@@ -9,13 +9,13 @@
 
 ### Step 1: Session Initialization (Reconnaissance)
 1. Read `memory.md` to understand current project state, active phase, and completed milestones.
-2. Check `InterviewLog.md` before questioning architectural choices (e.g., why Polars was chosen over Pandas, why Hugging Face Parquet is used instead of scrapers).
-3. Verify your working directory is the repository root: `C:\Users\pc\OneDrive\Desktop\TRADESCOUT`.
+2. Check `docs/InterviewLog.md` before questioning architectural choices (e.g., why Polars was chosen over Pandas, why Hugging Face Parquet is used instead of scrapers).
+3. Verify your working directory is the repository root.
 
 ### Step 2: Implementation Guidelines
 - **Python Tasks:** Work inside `api/`. Always activate virtual environment (`api/.venv`). Run `ruff check .` before saving.
 - **Frontend Tasks:** Work inside `web/`. Use `pnpm`. Verify strict TypeScript types with `pnpm tsc --noEmit`.
-- **Database Tasks:** Write idempotent SQL migrations in `supabase/migrations/` and update `Backend scheme.md`.
+- **Database Tasks:** Write idempotent SQL migrations in `supabase/migrations/` and update `docs/Backend scheme.md`.
 - **Infrastructure Tasks:** Configure `infra/docker-compose.yml`.
 
 ### Step 3: Verification & Quality Gates

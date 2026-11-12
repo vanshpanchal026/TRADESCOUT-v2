@@ -381,19 +381,36 @@ TRADESCOUT/
 │       ├── deploy-api.yml        # Backend deploy
 │       └── data-refresh.yml      # Daily data refresh
 │
-├── docker-compose.yml            # Local dev infrastructure
-├── .gitignore
-├── .editorconfig
-├── README.md                     # ← You are here
-├── PRD.md                        # Product Requirements Document
-├── TechStack.md                  # Technology Stack Decisions
+├── infra/                        # Containerized infrastructure
+│   └── docker-compose.yml        # PostgreSQL 16 + Redis 7 + pgAdmin
+├── docs/                         # Specifications & Architecture Documents
+│   ├── README.md                 # Documentation index & matrix
+│   ├── PRD.md                    # Product Requirements Document
+│   ├── TechStack.md              # Technology Stack Decisions
+│   ├── DesignDocument.md         # Architecture & UI/UX Design
+│   ├── API-Spec.md               # Complete REST API specification
+│   ├── Backend scheme.md         # Supabase PostgreSQL schema & RLS
+│   ├── data-pipeline.md          # Parquet ingestion & calculation engine
+│   ├── implementation-plan.md    # 7-phase implementation roadmap
+│   ├── Testing-Strategy.md       # Unit, integration & golden test plan
+│   ├── Security-and-Scale.md     # Security controls & scale targets
+│   ├── environment-setup.md      # Developer onboarding guide
+│   └── InterviewLog.md           # Architectural Decision Records (ADRs)
 ├── research/                     # Reverse-engineering vault & benchmark data
 │   ├── README.md                 # Research index & mock usage guide
 │   ├── scanthecharts-architecture-teardown.md # Target architecture teardown
 │   ├── data-sources-benchmark-report.md       # Parquet & zero-cost data source tests
 │   ├── cost-and-resource-breakdown.md         # Funds & infrastructure analysis
 │   └── api-fixtures/                          # 24 real JSON payloads from ScanTheCharts
-└── LICENSE                       # MIT License
+├── .cursorrules                  # AI coding rules
+├── .env.example                  # Environment configuration template
+├── .gitignore
+├── agent.md                      # Agent operating protocol
+├── agentrules.md                 # Agent hard constraints
+├── CHANGELOG.md                  # Project release ledger
+├── CONTRIBUTING.md               # Contributor workflow and standards
+├── memory.md                     # Living status board & state
+└── README.md                     # ← You are here
 ```
 
 ---

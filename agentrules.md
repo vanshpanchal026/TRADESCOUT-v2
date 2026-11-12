@@ -32,8 +32,8 @@
 1. **Pre-flight Reconnaissance:**
    - Before writing any code, search the repository to reuse existing patterns, utilities, and components.
 2. **Living Document Sync:**
-   - Any change to API endpoints MUST be documented in `API-Spec.md`.
-   - Any database table modification MUST be reflected in `Backend scheme.md`.
+   - Any change to API endpoints MUST be documented in `docs/API-Spec.md`.
+   - Any database table modification MUST be reflected in `docs/Backend scheme.md`.
    - Every session MUST conclude by updating the status board in `memory.md`.
 3. **SEBI Legal Safety:**
    - Ensure all public-facing financial views render the regulatory disclaimer. Never use actionable advisory terms (`"BUY"`, `"SELL"`, `"TARGET"`) in system prompts or user interfaces.
