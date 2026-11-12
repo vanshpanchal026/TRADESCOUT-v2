@@ -1,0 +1,76 @@
+version: "3.9"
+
+services:
+  # ============================================================================
+  # 1. PostgreSQL 16 (Local Database / Supabase Fallback)
+  # ============================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: tradescout_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tradescout
+      POSTGRES_PASSWORD: tradescout_dev
+      POSTGRES_DB: tradescout
+    ports:
+      - "5432:5432"
+    volumes:
+      - tradescout_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tradescout"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tradescout_net
+
+  # ============================================================================
+  # 2. Redis 7 (In-Memory Pre-Computed Scanner Cache)
+  # ============================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: tradescout_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - tradescout_redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tradescout_net
+
+  # ============================================================================
+  # 3. pgAdmin 4 (Database Inspection GUI - Optional Debug Profile)
+  # ============================================================================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: tradescout_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@tradescout.dev
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - tradescout_net
+    profiles:
+      - debug
+
+volumes:
+  tradescout_pgdata:
+    name: tradescout_pgdata
+  tradescout_redisdata:
+    name: tradescout_redisdata
+
+networks:
+  tradescout_net:
+    name: tradescout_net
+    driver: bridge

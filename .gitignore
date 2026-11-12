@@ -1,0 +1,136 @@
+# ============================================================================
+# TRADESCOUT — REPOSITORY GITIGNORE SPECIFICATION (.gitignore)
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# 1. Operating System Files
+# ----------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# ----------------------------------------------------------------------------
+# 2. Environment & Secret Variables
+# ----------------------------------------------------------------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# ----------------------------------------------------------------------------
+# 3. Python & FastAPI Artifacts
+# ----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.ruff_cache/
+.mypy_cache/
+
+# ----------------------------------------------------------------------------
+# 4. Node.js & Next.js Artifacts
+# ----------------------------------------------------------------------------
+node_modules/
+.pnpm-store/
+.npm
+.yarn/
+.yarn-cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js Build Output
+web/.next/
+web/out/
+.next/
+out/
+build/
+dist/
+
+# TypeScript declarations cache
+*.tsbuildinfo
+next-env.d.ts
+
+# ----------------------------------------------------------------------------
+# 5. Financial Data & Parquet Cache
+# ----------------------------------------------------------------------------
+.cache/
+data/cache/
+data/parquet/
+*.parquet
+*.feather
+*.h5
+*.tsfile
+
+# ----------------------------------------------------------------------------
+# 6. IDEs & Editors
+# ----------------------------------------------------------------------------
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# ----------------------------------------------------------------------------
+# 7. Docker & Local Volumes
+# ----------------------------------------------------------------------------
+docker-compose.override.yml
+.docker/
+
+# ----------------------------------------------------------------------------
+# 8. Sentry & Observability
+# ----------------------------------------------------------------------------
+.sentryclirc

@@ -1,0 +1,87 @@
+# ============================================================================
+# TRADESCOUT — AI AGENT CODING RULES & CONVENTIONS (.cursorrules)
+# ============================================================================
+# Applicable to: Cursor, Antigravity, GitHub Copilot, Codex, Claude Code
+# Primary Repository: TRADESCOUT (NSE Market Screener)
+# ============================================================================
+
+## 1. PROJECT TOPOLOGY & REPOSITORY ARCHITECTURE
+- This repository is a strict Monorepo organized as follows:
+  - `api/`    -> Python 3.12+ FastAPI backend, Polars indicator engine, Redis services.
+  - `web/`    -> Next.js 14 App Router, TypeScript, Tailwind CSS, Radix UI, TradingView LC v4.
+  - `infra/`  -> Docker Compose, Traefik/Nginx, local database services.
+  - `tests/`  -> Global E2E (Playwright) and golden indicator verification suites.
+  - `docs/`   -> Project specifications, PRD, architecture, and API docs.
+- NEVER mix frontend and backend dependencies in the root directory.
+- All Python dependencies belong in `api/requirements.txt` or `api/pyproject.toml`.
+- All Node.js dependencies belong in `web/package.json` managed via `pnpm`.
+
+---
+
+## 2. PYTHON & FASTAPI CONVENTIONS (`api/`)
+- **Version:** Python 3.12 or newer. Always use type hints everywhere (`typing` or built-in generics).
+- **Framework:** FastAPI with Pydantic v2.
+  - Use `pydantic.model_validator` instead of deprecated v1 `@root_validator` or `@validator`.
+  - Prefer Pydantic `BaseModel` with strict type definitions (`Field(..., description=...)`).
+  - All API routes MUST specify explicit `response_model` and `status_code`.
+- **Data Transformations:**
+  - MANDATORY: Use `polars` for ALL dataframe operations, calculations, and parquet reads.
+  - STRICTLY FORBIDDEN: Do NOT import `pandas` or `numpy` for data manipulation. Polars is the sole standard.
+  - Use lazy evaluation (`pl.LazyFrame`) when reading large multi-year Parquet datasets.
+- **Path Handling:**
+  - Always use `pathlib.Path` instead of `os.path`.
+- **Linting & Formatting:**
+  - Code must pass `ruff check .` and `ruff format .` with a maximum line length of 120 characters.
+- **Error Handling:**
+  - Use structured HTTPExceptions with standard error schemas: `{"error": "string", "detail": "string", "code": "ERR_CODE"}`.
+  - Never allow raw stack traces to leak to clients in production mode.
+
+---
+
+## 3. TYPESCRIPT & NEXT.JS CONVENTIONS (`web/`)
+- **Framework:** Next.js 14+ with App Router (inside `web/src/app/`). NEVER use the legacy `pages/` directory.
+- **Rendering Paradigms:**
+  - Default to React Server Components (RSC) for data fetching, metadata, and static structure.
+  - Use `'use client'` ONLY on interactive components: charts, filter selectors, modals, and client hooks.
+- **Styling & Components:**
+  - Tailwind CSS for all utility styling. Do NOT use CSS Modules or styled-components.
+  - Headless UI: Radix UI primitives (`@radix-ui/react-*`) or shadcn/ui patterns.
+  - Animation: `framer-motion` for micro-interactions and route transitions.
+  - Dark Mode: Default to dark mode (`class="dark"` on `<html>`). Persist selection in localStorage key `stc-theme`.
+- **Charting Engine:**
+  - TradingView Lightweight Charts v4 (`lightweight-charts`). Always mount canvas instances inside `useEffect` or dedicated custom hooks with proper cleanup (`chart.remove()`).
+- **Data Fetching:**
+  - TanStack React Query v5 for client-side API caching and invalidation.
+  - Centralized API fetcher utility using standard fetch with typed generic responses.
+
+---
+
+## 4. FINANCIAL DATA INTEGRITY & REGULATORY RULES
+- **No Hallucination Rule:** NEVER fabricate or extrapolate financial figures. All prices, volumes, and indicators must be computed directly from actual Parquet or Bhavcopy records.
+- **Data Source Standards:**
+  - Primary EOD: Hugging Face dataset `tejhq/indian-markets` via direct HTTP stream.
+  - Deep History: Hugging Face dataset `vishnun0027/indian-market-historical-ohlcv`.
+  - Fundamentals: `bfinance` Python SDK.
+  - Scraper Ban: NEVER write or execute web scrapers targeting `nseindia.com` or `bseindia.com`.
+- **SEBI Compliance Notice:**
+  - Any code or UI presenting stock evaluations must include the standard educational disclaimer:
+    `"TRADESCOUT is an educational research platform, not a SEBI-registered advisory. Market investments are subject to risk."`
+
+---
+
+## 5. DATABASE & AUTHENTICATION CONVENTIONS
+- **Engine:** Supabase PostgreSQL with Row Level Security (RLS) enabled on every table.
+- **Security:**
+  - All user queries MUST be bounded by user ownership: `auth.uid() = user_id`.
+  - Never bypass RLS in application endpoints unless executing an explicit system administrative job.
+  - SQL queries in Python must use SQLAlchemy 2.0 parameterized statements or Supabase PostgREST client. No raw string formatting in SQL.
+
+---
+
+## 6. TESTING & QUALITY GATES
+- **Pre-Commit Mandate:**
+  - Run backend unit tests: `pytest tests/unit/`
+  - Ensure all golden indicator tests pass with variance $< 0.01\%$.
+  - Run frontend typecheck: `pnpm tsc --noEmit`
+- **Living Memory:**
+  - When completing a major feature, database schema change, or architectural pivot, ALWAYS update `memory.md` status board.
