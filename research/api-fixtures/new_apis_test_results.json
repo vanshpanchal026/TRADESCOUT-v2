@@ -1,0 +1,23 @@
+{
+  "/api/indices": {
+    "status": 401
+  },
+  "/api/scanners/near-pivot": {
+    "status": 401
+  },
+  "/api/scanners/vcp": {
+    "status": 401
+  },
+  "/api/market-breadth": {
+    "status": 401
+  },
+  "/api/scan/earnings-calendar": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 59413,
+    "preview": "{\"as_of\":\"2026-11-12\",\"days\":[{\"date\":\"2026-11-12\",\"days_ago\":0,\"symbols\":[{\"symbol\":\"HAL\",\"market_cap_cr\":323914.49},{\"symbol\":\"IDEA\",\"market_cap_cr\":140520.92},{\"symbol\":\"POWERINDIA\",\"market_cap_cr\":127231.81},{\"symbol\":\"OIL\",\"market_cap_cr\":71570.74},{\"symbol\":\"ALKEM\",\"market_cap_cr\":63393.36},{\""
+  },
+  "/api/indices?names=NIFTY+50,NIFTY+MIDCAP+150,NIFTY+SMALLCAP+250": {
+    "status": 401
+  }
+}

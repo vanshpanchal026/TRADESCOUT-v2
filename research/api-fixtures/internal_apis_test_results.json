@@ -1,0 +1,41 @@
+{
+  "/api/cues": {
+    "status": 401
+  },
+  "/api/news": {
+    "status": 404
+  },
+  "/api/live/status": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 289,
+    "preview": "{\"kind\":\"eod\",\"as_of\":\"2026-11-12T15:30:00+05:30\",\"market_open\":false,\"delay_minutes\":5,\"stocks_missing\":0,\"stocks_requested\":0,\"built_at\":\"2026-11-12T20:03:13.004425+05:30\",\"build_seconds\":null,\"error\":null,\"partial\":false,\"stale\":false,\"session_as_of\":\"2026-11-12T15:31:11.814810+05:30\"}"
+  },
+  "/api/live/dashboard": {
+    "status": 401
+  },
+  "/api/scan/options": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 6532,
+    "preview": "{\"sectors\":[\"Automobile and Auto Components\",\"Capital Goods\",\"Chemicals\",\"Construction\",\"Construction Materials\",\"Consumer Durables\",\"Consumer Services\",\"Diversified\",\"Fast Moving Consumer Goods\",\"Financial Services\",\"Forest Materials\",\"Healthcare\",\"Information Technology\",\"Media, Entertainment & Publication\",\"Metals & Mining\",\"Oil, Gas & Consumable Fuels\",\"Power\",\"Realty\",\"Services\",\"Telecommunic"
+  },
+  "/api/catalysts": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 84848,
+    "preview": "{\"generated_at\":\"2026-11-07T16:11:54+00:00\",\"cards\":{\"SHILPAMED\":{\"name\":\"Shilpa Medicare\",\"lines\":[\"New oncology GMP facility started in June 2026, lifting CDMO capacity about 35%; oncology injection ANDA approved May 2026.\",\"July 2026: subsidiary bought 30.4% of Gate2Brain for \u20ac7 mn; Latin America biosimilar licensing pact signed March 2026.\"],\"catalyst\":true,\"updated\":\"2026-10-17\"},\"SETL\":{\"nam"
+  },
+  "/api/broadcast": {
+    "status": 404
+  },
+  "/api/live/intraday": {
+    "status": 401
+  },
+  "/api/live/intraday/nifty": {
+    "status": 401
+  },
+  "/api/live/intraday/NIFTY": {
+    "status": 401
+  }
+}

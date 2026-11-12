@@ -1,0 +1,4189 @@
+{
+  "data": [
+    {
+      "slug": "all-stocks",
+      "category": "custom",
+      "name": "All Stocks",
+      "description": "Every stock in the universe, with no pattern test at all \u2014 the starting point rather than a setup. What comes back is exactly what the Filters panel lets through, so clearing the filters lists the whole EQ universe and tightening them turns this into a screen of your own. Sorted by market cap, largest first.",
+      "sort_default": "market_cap_cr",
+      "sort_dir": "desc",
+      "columns": [],
+      "params": []
+    },
+    {
+      "slug": "trend-template",
+      "name": "Trend Template",
+      "description": "Stocks in a confirmed uptrend, judged by a stack of independent structural conditions rather than a label: a rising moving-average stack, distance off the lows, proximity to the highs and relative strength against the market. Nothing carries over from previous bars, so the verdict depends only on today's structure. Lower Min conditions to catch leaders still setting up \u2014 the Failed column names what is missing.",
+      "sort_default": "trending_bars",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "conditions_met",
+          "label": "Met (of 8)",
+          "num": true
+        },
+        {
+          "key": "failed",
+          "label": "Failed"
+        },
+        {
+          "key": "trending_bars",
+          "label": "Trending(bars)",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "stack",
+          "label": "50>150>200"
+        },
+        {
+          "key": "slope_200",
+          "label": "200 Slope(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "from_52w_high",
+          "label": "From 52W High(%)",
+          "num": true
+        },
+        {
+          "key": "above_52w_low",
+          "label": "Above 52W Low(%)",
+          "num": true
+        },
+        {
+          "key": "ext_from_50",
+          "label": "Ext from 50(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sma_50",
+          "label": "50-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sma_150",
+          "label": "150-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sma_200",
+          "label": "200-SMA (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "min_conditions",
+          "label": "Min conditions (of 8)",
+          "kind": "number",
+          "default": 8,
+          "min": 1,
+          "max": 8,
+          "step": 1
+        },
+        {
+          "key": "min_rs",
+          "label": "Min RS Rating",
+          "kind": "number",
+          "default": 70,
+          "min": 1,
+          "max": 99,
+          "step": 1
+        },
+        {
+          "key": "min_above_low_pct",
+          "label": "Min above 52W low(%)",
+          "kind": "number",
+          "default": 30.0,
+          "min": 0,
+          "max": 300,
+          "step": 5
+        },
+        {
+          "key": "max_from_high_pct",
+          "label": "Max from 52W high(%)",
+          "kind": "number",
+          "default": 25.0,
+          "min": 1,
+          "max": 90,
+          "step": 5
+        },
+        {
+          "key": "slope_bars",
+          "label": "200-SMA slope over(bars)",
+          "kind": "number",
+          "default": 21,
+          "min": 1,
+          "max": 120,
+          "step": 1
+        },
+        {
+          "key": "fast_ma",
+          "label": "Fast MA(bars)",
+          "kind": "number",
+          "default": 50,
+          "min": 5,
+          "max": 100,
+          "step": 5
+        },
+        {
+          "key": "mid_ma",
+          "label": "Mid MA(bars)",
+          "kind": "number",
+          "default": 150,
+          "min": 20,
+          "max": 250,
+          "step": 10
+        },
+        {
+          "key": "slow_ma",
+          "label": "Slow MA(bars)",
+          "kind": "number",
+          "default": 200,
+          "min": 50,
+          "max": 400,
+          "step": 10
+        }
+      ]
+    },
+    {
+      "category": "special",
+      "description": "Young bases on the daily chart: a resistance level set 4 weeks to 4 months ago that has capped a real rally, never been closed above, and price is now back within three ADRs of. The base under it fell no more than 8.5 of its 100-day ADRs (and never over 35%) and has turned back at most three breakout tries.",
+      "sort_default": "distance_pct",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "level",
+          "label": "Level (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "distance_pct",
+          "label": "Distance(%)",
+          "num": true
+        },
+        {
+          "key": "adr",
+          "label": "ADR(%)",
+          "num": true
+        },
+        {
+          "key": "dist_adr",
+          "label": "Distance(x ADR)",
+          "num": true
+        },
+        {
+          "key": "cup_depth",
+          "label": "Cup Depth(%)",
+          "num": true
+        },
+        {
+          "key": "max_depth",
+          "label": "Max Depth(%)",
+          "num": true
+        },
+        {
+          "key": "adr_100",
+          "label": "ADR100(%)",
+          "num": true
+        },
+        {
+          "key": "prior_move",
+          "label": "Prior Move(%)",
+          "num": true
+        },
+        {
+          "key": "touches",
+          "label": "Touches",
+          "num": true
+        },
+        {
+          "key": "rejections",
+          "label": "Rejections",
+          "num": true
+        },
+        {
+          "key": "age_bars",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "vol_osc",
+          "label": "Vol Osc(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "level_date",
+          "label": "Level Set"
+        }
+      ],
+      "params": [
+        {
+          "key": "near_adr",
+          "label": "Within(x ADR) of level",
+          "kind": "number",
+          "default": 3.0,
+          "min": 0.25,
+          "max": 10,
+          "step": 0.25
+        },
+        {
+          "key": "min_move_pct",
+          "label": "Min prior move(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 0,
+          "max": 200,
+          "step": 5
+        },
+        {
+          "key": "max_cup_depth_adr",
+          "label": "Max cup depth(x ADR100)",
+          "kind": "number",
+          "default": 8.5,
+          "min": 1,
+          "max": 30,
+          "step": 0.5
+        },
+        {
+          "key": "max_cup_depth_pct",
+          "label": "Max cup depth, ceiling(%)",
+          "kind": "number",
+          "default": 35.0,
+          "min": 5,
+          "max": 100,
+          "step": 5
+        },
+        {
+          "key": "max_rejections",
+          "label": "Max rejections",
+          "kind": "number",
+          "default": 3,
+          "min": 0,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "min_age_bars",
+          "label": "Min level age(bars)",
+          "kind": "number",
+          "default": 22,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "max_age_bars",
+          "label": "Max level age(bars)",
+          "kind": "number",
+          "default": 84,
+          "min": 5,
+          "max": 1000,
+          "step": 1
+        },
+        {
+          "key": "move_lookback",
+          "label": "Prior move lookback(bars)",
+          "kind": "number",
+          "default": 60,
+          "min": 5,
+          "max": 400,
+          "step": 5
+        },
+        {
+          "key": "left_bars",
+          "label": "Left bars",
+          "kind": "number",
+          "default": 15,
+          "min": 2,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "right_bars",
+          "label": "Right bars",
+          "kind": "number",
+          "default": 15,
+          "min": 2,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "lookback",
+          "label": "Lookback(bars)",
+          "kind": "number",
+          "default": 252,
+          "min": 60,
+          "max": 1000,
+          "step": 21
+        },
+        {
+          "key": "touch_band_pct",
+          "label": "Touch band(%)",
+          "kind": "number",
+          "default": 2.0,
+          "min": 0.5,
+          "max": 10,
+          "step": 0.5
+        }
+      ],
+      "slug": "daily-base",
+      "name": "Daily Base"
+    },
+    {
+      "category": "special",
+      "description": "Longer bases on the weekly chart: a resistance level set 4 to 18 months ago that has capped a real rally, never been closed above, and price is now back within three ADRs of. The base under it fell no more than 8.5 of its 100-day ADRs (and never over 45%) and has turned back at most three breakout tries.",
+      "sort_default": "distance_pct",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "level",
+          "label": "Level (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "distance_pct",
+          "label": "Distance(%)",
+          "num": true
+        },
+        {
+          "key": "adr",
+          "label": "ADR(%)",
+          "num": true
+        },
+        {
+          "key": "dist_adr",
+          "label": "Distance(x ADR)",
+          "num": true
+        },
+        {
+          "key": "cup_depth",
+          "label": "Cup Depth(%)",
+          "num": true
+        },
+        {
+          "key": "max_depth",
+          "label": "Max Depth(%)",
+          "num": true
+        },
+        {
+          "key": "adr_100",
+          "label": "ADR100(%)",
+          "num": true
+        },
+        {
+          "key": "prior_move",
+          "label": "Prior Move(%)",
+          "num": true
+        },
+        {
+          "key": "touches",
+          "label": "Touches",
+          "num": true
+        },
+        {
+          "key": "rejections",
+          "label": "Rejections",
+          "num": true
+        },
+        {
+          "key": "age_bars",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "vol_osc",
+          "label": "Vol Osc(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "level_date",
+          "label": "Level Set"
+        }
+      ],
+      "params": [
+        {
+          "key": "near_adr",
+          "label": "Within(x ADR) of level",
+          "kind": "number",
+          "default": 3.0,
+          "min": 0.25,
+          "max": 10,
+          "step": 0.25
+        },
+        {
+          "key": "min_move_pct",
+          "label": "Min prior move(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 0,
+          "max": 200,
+          "step": 5
+        },
+        {
+          "key": "max_cup_depth_adr",
+          "label": "Max cup depth(x ADR100)",
+          "kind": "number",
+          "default": 8.5,
+          "min": 1,
+          "max": 30,
+          "step": 0.5
+        },
+        {
+          "key": "max_cup_depth_pct",
+          "label": "Max cup depth, ceiling(%)",
+          "kind": "number",
+          "default": 45.0,
+          "min": 5,
+          "max": 100,
+          "step": 5
+        },
+        {
+          "key": "max_rejections",
+          "label": "Max rejections",
+          "kind": "number",
+          "default": 3,
+          "min": 0,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "min_age_bars",
+          "label": "Min level age(bars)",
+          "kind": "number",
+          "default": 17,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "max_age_bars",
+          "label": "Max level age(bars)",
+          "kind": "number",
+          "default": 78,
+          "min": 5,
+          "max": 1000,
+          "step": 1
+        },
+        {
+          "key": "move_lookback",
+          "label": "Prior move lookback(bars)",
+          "kind": "number",
+          "default": 13,
+          "min": 5,
+          "max": 400,
+          "step": 5
+        },
+        {
+          "key": "left_bars",
+          "label": "Left bars",
+          "kind": "number",
+          "default": 4,
+          "min": 2,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "right_bars",
+          "label": "Right bars",
+          "kind": "number",
+          "default": 4,
+          "min": 2,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "lookback",
+          "label": "Lookback(bars)",
+          "kind": "number",
+          "default": 104,
+          "min": 60,
+          "max": 1000,
+          "step": 21
+        },
+        {
+          "key": "touch_band_pct",
+          "label": "Touch band(%)",
+          "kind": "number",
+          "default": 2.0,
+          "min": 0.5,
+          "max": 10,
+          "step": 0.5
+        }
+      ],
+      "slug": "weekly-base",
+      "name": "Weekly Base",
+      "chart_timeframe": "weekly"
+    },
+    {
+      "category": "special",
+      "description": "Resistance levels with price right up against them \u2014 no more than one ADR below the level, so a stock that moves 3% a day must be within 3%, one that moves 6% within 6%. The level has capped a real rally, held for a while, and not been closed above.",
+      "sort_default": "distance_pct",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "level",
+          "label": "Level (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "distance_pct",
+          "label": "Distance(%)",
+          "num": true
+        },
+        {
+          "key": "adr",
+          "label": "ADR(%)",
+          "num": true
+        },
+        {
+          "key": "dist_adr",
+          "label": "Distance(x ADR)",
+          "num": true
+        },
+        {
+          "key": "cup_depth",
+          "label": "Cup Depth(%)",
+          "num": true
+        },
+        {
+          "key": "prior_move",
+          "label": "Prior Move(%)",
+          "num": true
+        },
+        {
+          "key": "touches",
+          "label": "Touches",
+          "num": true
+        },
+        {
+          "key": "rejections",
+          "label": "Rejections",
+          "num": true
+        },
+        {
+          "key": "age_bars",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "vol_osc",
+          "label": "Vol Osc(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "level_date",
+          "label": "Level Set"
+        }
+      ],
+      "params": [
+        {
+          "key": "timeframe",
+          "label": "Timeframe",
+          "kind": "radio",
+          "default": "daily",
+          "retunes": true,
+          "options": [
+            {
+              "value": "daily",
+              "label": "Daily"
+            },
+            {
+              "value": "weekly",
+              "label": "Weekly"
+            }
+          ]
+        },
+        {
+          "key": "near_adr",
+          "label": "Within(x ADR) of level",
+          "kind": "number",
+          "default": 1.0,
+          "min": 0.25,
+          "max": 10,
+          "step": 0.25
+        },
+        {
+          "key": "min_move_pct",
+          "label": "Min prior move(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 0,
+          "max": 200,
+          "step": 5
+        },
+        {
+          "key": "max_cup_depth_pct",
+          "label": "Max cup depth(%)",
+          "kind": "number",
+          "default": 40.0,
+          "min": 5,
+          "max": 100,
+          "step": 5
+        },
+        {
+          "key": "max_rejections",
+          "label": "Max rejections",
+          "kind": "number",
+          "default": 3,
+          "min": 0,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "min_age_bars",
+          "label": "Min level age(bars)",
+          "kind": "number",
+          "default": 22,
+          "defaults": {
+            "daily": 22,
+            "weekly": 4
+          },
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "max_age_bars",
+          "label": "Max level age(bars)",
+          "kind": "number",
+          "default": 168,
+          "defaults": {
+            "daily": 168,
+            "weekly": 35
+          },
+          "min": 5,
+          "max": 1000,
+          "step": 1
+        },
+        {
+          "key": "move_lookback",
+          "label": "Prior move lookback(bars)",
+          "kind": "number",
+          "default": 60,
+          "defaults": {
+            "daily": 60,
+            "weekly": 13
+          },
+          "min": 5,
+          "max": 400,
+          "step": 5
+        },
+        {
+          "key": "left_bars",
+          "label": "Left bars",
+          "kind": "number",
+          "default": 15,
+          "defaults": {
+            "daily": 15,
+            "weekly": 4
+          },
+          "min": 2,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "right_bars",
+          "label": "Right bars",
+          "kind": "number",
+          "default": 15,
+          "defaults": {
+            "daily": 15,
+            "weekly": 4
+          },
+          "min": 2,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "lookback",
+          "label": "Lookback(bars)",
+          "kind": "number",
+          "default": 252,
+          "defaults": {
+            "daily": 252,
+            "weekly": 104
+          },
+          "min": 60,
+          "max": 1000,
+          "step": 21
+        },
+        {
+          "key": "touch_band_pct",
+          "label": "Touch band(%)",
+          "kind": "number",
+          "default": 2.0,
+          "min": 0.5,
+          "max": 10,
+          "step": 0.5
+        }
+      ],
+      "slug": "near-pivot",
+      "name": "Near Pivot"
+    },
+    {
+      "slug": "recent-breakout",
+      "name": "Recent Breakout",
+      "description": "The other side of Daily and Weekly Base \u2014 same definition of a level, but these have already gone through it, on a close with conviction volume, and are now trading clear of the level rather than still inside its noise band. Age 0 broke today; Since Break is what has already been given away.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "breakout_date",
+          "label": "Breakout Date"
+        },
+        {
+          "key": "level",
+          "label": "Level (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "above_pct",
+          "label": "Above Level(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "vol_ratio",
+          "label": "Volume (x avg)",
+          "num": true
+        },
+        {
+          "key": "since_pct",
+          "label": "Since Break(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "breakout_close",
+          "label": "Breakout Close (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "breakout_vol",
+          "label": "Breakout Volume",
+          "num": true
+        },
+        {
+          "key": "level_age",
+          "label": "Level Age(bars)",
+          "num": true
+        },
+        {
+          "key": "prior_move",
+          "label": "Prior Move(%)",
+          "num": true
+        },
+        {
+          "key": "touches",
+          "label": "Touches",
+          "num": true
+        },
+        {
+          "key": "levels_broken",
+          "label": "Levels Broken",
+          "num": true
+        },
+        {
+          "key": "level_date",
+          "label": "Level From"
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Broke within(bars)",
+          "kind": "number",
+          "default": 5,
+          "min": 1,
+          "max": 60,
+          "step": 1
+        },
+        {
+          "key": "min_above_pct",
+          "label": "Min above level(%)",
+          "kind": "number",
+          "default": 5.0,
+          "min": 0,
+          "max": 50,
+          "step": 0.5
+        },
+        {
+          "key": "min_vol_ratio",
+          "label": "Min volume (x avg)",
+          "kind": "number",
+          "default": 2.0,
+          "min": 1,
+          "max": 20,
+          "step": 0.1
+        },
+        {
+          "key": "vol_length",
+          "label": "Volume average(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 5,
+          "max": 200,
+          "step": 1
+        },
+        {
+          "key": "min_move_pct",
+          "label": "Min prior move(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 0,
+          "max": 200,
+          "step": 5
+        },
+        {
+          "key": "min_age_bars",
+          "label": "Min level age(bars)",
+          "kind": "number",
+          "default": 22,
+          "min": 1,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "left_bars",
+          "label": "Pivot left(bars)",
+          "kind": "number",
+          "default": 15,
+          "min": 1,
+          "max": 60,
+          "step": 1
+        },
+        {
+          "key": "right_bars",
+          "label": "Pivot right(bars)",
+          "kind": "number",
+          "default": 15,
+          "min": 1,
+          "max": 60,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "4pct-breakout",
+      "name": "4% Breakout",
+      "description": "Today's genuine movers: a big up close on volume that was both heavier than yesterday's and well above the stock's own norm, in names large and liquid enough to trade. A single-session scan \u2014 the bar is the signal \u2014 so it opens with no other filters applied; add your own from the Filters panel.",
+      "sort_default": "change_pct",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "change_pct",
+          "label": "Change(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "rvol",
+          "label": "RVOL",
+          "num": true
+        },
+        {
+          "key": "vol_vs_prev",
+          "label": "Vol vs Prev(x)",
+          "num": true
+        },
+        {
+          "key": "volume",
+          "label": "Volume",
+          "num": true
+        },
+        {
+          "key": "prev_volume",
+          "label": "Prev Volume",
+          "num": true
+        },
+        {
+          "key": "turnover_cr",
+          "label": "Turnover (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "min_change",
+          "label": "Min change(%)",
+          "kind": "number",
+          "default": 4.0,
+          "min": 0,
+          "max": 50,
+          "step": 0.5
+        },
+        {
+          "key": "min_rvol",
+          "label": "Min RVOL (x)",
+          "kind": "number",
+          "default": 2.0,
+          "min": 0,
+          "max": 20,
+          "step": 0.25
+        },
+        {
+          "key": "min_vol_vs_prev",
+          "label": "Min volume vs previous day (x)",
+          "kind": "number",
+          "default": 1.0,
+          "min": 0,
+          "max": 20,
+          "step": 0.25
+        },
+        {
+          "key": "min_turnover_cr",
+          "label": "Min turnover (\u20b9Cr)",
+          "kind": "number",
+          "default": 5.0,
+          "min": 0,
+          "max": 1000,
+          "step": 0.5
+        },
+        {
+          "key": "min_mcap_cr",
+          "label": "Min market cap (\u20b9Cr)",
+          "kind": "number",
+          "default": 500.0,
+          "min": 0,
+          "max": 500000,
+          "step": 50
+        },
+        {
+          "key": "max_stale_days",
+          "label": "Max days since last trade",
+          "kind": "number",
+          "default": 7,
+          "min": 0,
+          "max": 3650,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "pullback-20",
+      "name": "20-SMA Pullback",
+      "description": "Recent leaders that have come back to rest on their 20-day average with the short-term trend still intact \u2014 the spot a trend trader buys, rather than the breakout day everyone else does. Opens with no other filters applied; add your own from the Filters panel.",
+      "sort_default": "ret_1m_pct",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "ret_1m_pct",
+          "label": "1M Gain(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "vs_sma",
+          "label": "vs 20-SMA(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sma_vs_ema",
+          "label": "20-SMA vs 50-EMA(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sma_fast",
+          "label": "20-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "ema_slow",
+          "label": "50-EMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "turnover_cr",
+          "label": "Turnover (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "volume",
+          "label": "Volume",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "band_pct",
+          "label": "Within (\u00b1%) of SMA",
+          "kind": "number",
+          "default": 3.0,
+          "min": 0.25,
+          "max": 20,
+          "step": 0.25
+        },
+        {
+          "key": "min_ret_1m",
+          "label": "Min 1M gain(%)",
+          "kind": "number",
+          "default": 15.0,
+          "min": -50,
+          "max": 500,
+          "step": 5
+        },
+        {
+          "key": "fast_sma",
+          "label": "SMA length(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 3,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "key": "slow_ema",
+          "label": "EMA length(bars)",
+          "kind": "number",
+          "default": 50,
+          "min": 5,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "min_turnover_cr",
+          "label": "Min turnover (\u20b9Cr)",
+          "kind": "number",
+          "default": 10.0,
+          "min": 0,
+          "max": 1000,
+          "step": 0.5
+        },
+        {
+          "key": "min_mcap_cr",
+          "label": "Min market cap (\u20b9Cr)",
+          "kind": "number",
+          "default": 500.0,
+          "min": 0,
+          "max": 500000,
+          "step": 50
+        },
+        {
+          "key": "max_stale_days",
+          "label": "Max days since last trade",
+          "kind": "number",
+          "default": 7,
+          "min": 0,
+          "max": 3650,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "pullback-50",
+      "category": "special",
+      "name": "50-EMA Pullback",
+      "description": "Stocks in a strong, established uptrend that have paused and drifted back to their 50-day EMA: well off the lows, still up handsomely over the half-year, but going nowhere on the month. The deeper cousin of the 20-SMA Pullback. Opens with no other filters applied; add your own from the Filters panel.",
+      "sort_default": "from_low_pct",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "from_low_pct",
+          "label": "From 52w Low(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "ret_6m_pct",
+          "label": "6M Gain(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "ret_3m_pct",
+          "label": "3M Gain(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "ret_1m_pct",
+          "label": "1M Gain(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "vs_ema",
+          "label": "vs 50-EMA(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "ema_vs_sma",
+          "label": "50-EMA vs 200-SMA(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "ema_fast",
+          "label": "50-EMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sma_slow",
+          "label": "200-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "low_52w",
+          "label": "52w Low (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "turnover_cr",
+          "label": "Turnover (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "volume",
+          "label": "Volume",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "band_pct",
+          "label": "Within (\u00b1%) of EMA",
+          "kind": "number",
+          "default": 3.0,
+          "min": 0.25,
+          "max": 20,
+          "step": 0.25
+        },
+        {
+          "key": "min_from_low",
+          "label": "Min from 52w low(%)",
+          "kind": "number",
+          "default": 30.0,
+          "min": 0,
+          "max": 1000,
+          "step": 5
+        },
+        {
+          "key": "min_ret_6m",
+          "label": "Min 6M gain(%)",
+          "kind": "number",
+          "default": 40.0,
+          "min": -50,
+          "max": 500,
+          "step": 5
+        },
+        {
+          "key": "max_ret_1m",
+          "label": "Max 1M gain(%)",
+          "kind": "number",
+          "default": 5.0,
+          "min": -50,
+          "max": 500,
+          "step": 1
+        },
+        {
+          "key": "min_ret_3m",
+          "label": "Min 3M gain(%)",
+          "kind": "number",
+          "default": 0.0,
+          "min": -50,
+          "max": 500,
+          "step": 5
+        },
+        {
+          "key": "fast_ema",
+          "label": "EMA length(bars)",
+          "kind": "number",
+          "default": 50,
+          "min": 5,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "slow_sma",
+          "label": "SMA length(bars)",
+          "kind": "number",
+          "default": 200,
+          "min": 20,
+          "max": 400,
+          "step": 10
+        },
+        {
+          "key": "min_turnover_cr",
+          "label": "Min turnover (\u20b9Cr)",
+          "kind": "number",
+          "default": 10.0,
+          "min": 0,
+          "max": 1000,
+          "step": 0.5
+        },
+        {
+          "key": "max_stale_days",
+          "label": "Max days since last trade",
+          "kind": "number",
+          "default": 7,
+          "min": 0,
+          "max": 3650,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "vcp",
+      "category": "special",
+      "name": "VCP",
+      "description": "Volatility Contraction Pattern \u2014 successive pullbacks off a confirmed pivot high, each shallower than the last, coiling back under the pivot. Runs only on stocks that already pass the full Trend Template, and is shown for a few sessions after the final contraction confirms, then dropped.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "depths",
+          "label": "Falls (C1\u2192C2\u2192C3)"
+        },
+        {
+          "key": "last_depth",
+          "label": "Final Fall(%)",
+          "num": true
+        },
+        {
+          "key": "mid_depth",
+          "label": "2nd Fall(%)",
+          "num": true
+        },
+        {
+          "key": "first_depth",
+          "label": "First Fall(%)",
+          "num": true
+        },
+        {
+          "key": "c3_distance_pct",
+          "label": "C3 to Pivot(%)",
+          "num": true
+        },
+        {
+          "key": "pivot",
+          "label": "Pivot (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "distance_pct",
+          "label": "CMP to Pivot(%)",
+          "num": true
+        },
+        {
+          "key": "base_bars",
+          "label": "Base(bars)",
+          "num": true
+        },
+        {
+          "key": "base_start",
+          "label": "Base Start"
+        },
+        {
+          "key": "age",
+          "label": "Days Since C3",
+          "num": true
+        },
+        {
+          "key": "status",
+          "label": "Status"
+        }
+      ],
+      "params": [
+        {
+          "key": "last_fall_distance_pct",
+          "label": "Third fall: max distance below pivot(%)",
+          "kind": "number",
+          "default": 12.0,
+          "min": 0,
+          "max": 100,
+          "step": 0.5
+        },
+        {
+          "key": "show_bars_after_c3",
+          "label": "Keep showing after 3rd fall(days)",
+          "kind": "number",
+          "default": 2,
+          "min": 0,
+          "max": 20,
+          "step": 1
+        },
+        {
+          "key": "min_base_bars",
+          "label": "Min base(bars)",
+          "kind": "number",
+          "default": 15,
+          "min": 5,
+          "max": 40,
+          "step": 1
+        },
+        {
+          "key": "max_base_bars",
+          "label": "Max base(bars)",
+          "kind": "number",
+          "default": 50,
+          "min": 20,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "key": "lookback_bars",
+          "label": "Resistance lookback(bars)",
+          "kind": "number",
+          "default": 75,
+          "min": 20,
+          "max": 250,
+          "step": 5
+        },
+        {
+          "key": "pivot_left",
+          "label": "Pivot left(bars)",
+          "kind": "number",
+          "default": 3,
+          "min": 1,
+          "max": 10,
+          "step": 1
+        },
+        {
+          "key": "pivot_right",
+          "label": "Pivot right(bars)",
+          "kind": "number",
+          "default": 3,
+          "min": 1,
+          "max": 10,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "flag-pattern",
+      "category": "special",
+      "name": "Flag Pattern",
+      "description": "Bullish flags and pennants off a zigzag, from the \"Bullish Flags \u2014 Retracement Filter\" study: a five-pivot consolidation whose highs and lows each sit on a straight line that candles respect, classified as a falling channel or wedge (flag) or a contracting triangle (pennant), hanging off a pole the zigzag can trace back. The flag may give back at most 40% of the pole, measured on actual candles. Detected on the bar the flag's last pivot printed; Status says where price is now against the flag's lines. On top of the study: \u20b91 Cr traded today and 20-SMA > 50-EMA > 200-SMA. The pattern is drawn on the chart the way the study draws it.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "pattern",
+          "label": "Pattern"
+        },
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "detect_date",
+          "label": "Detected"
+        },
+        {
+          "key": "status",
+          "label": "Status"
+        },
+        {
+          "key": "upper_line",
+          "label": "Upper Line (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "distance_pct",
+          "label": "To Upper(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "lower_line",
+          "label": "Lower Line (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "retracement",
+          "label": "Retracement(%)",
+          "num": true
+        },
+        {
+          "key": "pole_gain",
+          "label": "Pole Gain(%)",
+          "num": true
+        },
+        {
+          "key": "pole_bars",
+          "label": "Pole(bars)",
+          "num": true
+        },
+        {
+          "key": "flag_bars",
+          "label": "Flag(bars)",
+          "num": true
+        },
+        {
+          "key": "upper_slope",
+          "label": "Upper Slope(%/bar)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "lower_slope",
+          "label": "Lower Slope(%/bar)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "pole_low",
+          "label": "Pole Low (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "pole_high",
+          "label": "Pole High (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "pole_start",
+          "label": "Pole Start"
+        },
+        {
+          "key": "flag_start",
+          "label": "Flag Start"
+        },
+        {
+          "key": "flag_end",
+          "label": "Flag End"
+        },
+        {
+          "key": "zz",
+          "label": "Zigzag",
+          "num": true
+        },
+        {
+          "key": "turnover_cr",
+          "label": "Turnover (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "sma_20",
+          "label": "20-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "ema_50",
+          "label": "50-EMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sma_200",
+          "label": "200-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Detected within(bars)",
+          "kind": "number",
+          "default": 0,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "min_turnover_cr",
+          "label": "Min turnover (\u20b9Cr)",
+          "kind": "number",
+          "default": 1.0,
+          "min": 0,
+          "max": 1000,
+          "step": 1
+        },
+        {
+          "key": "require_ma_stack",
+          "label": "20-SMA > 50-EMA > 200-SMA",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "Require"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "show_flags",
+          "label": "Bullish flags",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "show_pennants",
+          "label": "Bullish pennants",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "use_retracement",
+          "label": "Retracement filter",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "Apply"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "max_retracement",
+          "label": "Max pole retracement(%)",
+          "kind": "number",
+          "default": 40.0,
+          "min": 1,
+          "max": 100,
+          "step": 5
+        },
+        {
+          "key": "use_z1",
+          "label": "Zigzag 1",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "len1",
+          "label": "Z1: length",
+          "kind": "number",
+          "default": 3,
+          "min": 1,
+          "max": 500,
+          "step": 1
+        },
+        {
+          "key": "dep1",
+          "label": "Z1: depth",
+          "kind": "number",
+          "default": 144,
+          "min": 6,
+          "max": 500,
+          "step": 1
+        },
+        {
+          "key": "use_z2",
+          "label": "Zigzag 2",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "len2",
+          "label": "Z2: length",
+          "kind": "number",
+          "default": 5,
+          "min": 1,
+          "max": 500,
+          "step": 1
+        },
+        {
+          "key": "dep2",
+          "label": "Z2: depth",
+          "kind": "number",
+          "default": 89,
+          "min": 6,
+          "max": 500,
+          "step": 1
+        },
+        {
+          "key": "use_z3",
+          "label": "Zigzag 3",
+          "kind": "radio",
+          "default": "false",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "len3",
+          "label": "Z3: length",
+          "kind": "number",
+          "default": 8,
+          "min": 1,
+          "max": 500,
+          "step": 1
+        },
+        {
+          "key": "dep3",
+          "label": "Z3: depth",
+          "kind": "number",
+          "default": 55,
+          "min": 6,
+          "max": 500,
+          "step": 1
+        },
+        {
+          "key": "scan_higher_levels",
+          "label": "Higher zigzag levels",
+          "kind": "radio",
+          "default": "false",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "error_threshold",
+          "label": "Error threshold(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 0,
+          "max": 100,
+          "step": 5
+        },
+        {
+          "key": "flat_threshold",
+          "label": "Flat threshold(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 0,
+          "max": 30,
+          "step": 5
+        },
+        {
+          "key": "pole_ratio",
+          "label": "Pole geometry ratio",
+          "kind": "number",
+          "default": 0.618,
+          "min": 0.1,
+          "max": 1,
+          "step": 0.01
+        },
+        {
+          "key": "check_spacing",
+          "label": "Verify bar ratio",
+          "kind": "radio",
+          "default": "false",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "spacing_limit",
+          "label": "Bar ratio limit",
+          "kind": "number",
+          "default": 0.382,
+          "min": 0.01,
+          "max": 1,
+          "step": 0.01
+        },
+        {
+          "key": "avoid_overlap",
+          "label": "Avoid overlap",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "use_slope",
+          "label": "Flag slope filter",
+          "kind": "radio",
+          "default": "false",
+          "options": [
+            {
+              "value": "true",
+              "label": "Apply"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "min_slope",
+          "label": "Min slope(%/bar)",
+          "kind": "number",
+          "default": -0.5,
+          "min": -10,
+          "max": 10,
+          "step": 0.05
+        },
+        {
+          "key": "max_slope",
+          "label": "Max slope(%/bar)",
+          "kind": "number",
+          "default": 0.0,
+          "min": -10,
+          "max": 10,
+          "step": 0.05
+        }
+      ]
+    },
+    {
+      "slug": "rs-before-price",
+      "category": "special",
+      "name": "New RS before Price",
+      "description": "Stocks whose RS line (vs NIFTY MidSmallcap 400) made a fresh high while price did not \u2014 strength showing up in the ratio before the price chart. Defaults to a dot on the current bar only.",
+      "sort_default": "dot_age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "dot_age",
+          "label": "Dot Age(bars)",
+          "num": true
+        },
+        {
+          "key": "dot_date",
+          "label": "Dot Date"
+        },
+        {
+          "key": "px_below_high",
+          "label": "Price Below High(%)",
+          "num": true
+        },
+        {
+          "key": "rs_above_high",
+          "label": "RS Above High(%)",
+          "num": true
+        },
+        {
+          "key": "dot_count",
+          "label": "Dots",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Dot within(bars)",
+          "kind": "number",
+          "default": 0,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "lookback",
+          "label": "RS/price high lookback(bars)",
+          "kind": "number",
+          "default": 50,
+          "min": 10,
+          "max": 250,
+          "step": 5
+        }
+      ]
+    },
+    {
+      "slug": "results-today",
+      "category": "earnings",
+      "name": "Results Today",
+      "description": "Stocks declaring quarterly results today: a results board meeting on NSE's calendar for today, or a result already filed with NSE today. Status is Out (with the filing time) once the filing is up, else Due. Filings are checked every 30 minutes. Empty on days with no results meetings, such as weekends.",
+      "sort_default": "days_to",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "result_status",
+          "label": "Status"
+        },
+        {
+          "key": "result_day",
+          "label": "Results On"
+        },
+        {
+          "key": "days_to",
+          "label": "Days Away",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "days_ahead",
+          "label": "Days ahead (0 = today only)",
+          "kind": "number",
+          "default": 0,
+          "min": 0,
+          "max": 14,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "earnings-gap",
+      "category": "earnings",
+      "name": "Earnings Gap",
+      "description": "Gapped up on results, held the gap through the session rather than being sold into, and has never filled it since. Scored on the session on or after the declaration and the one after it.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "event_date",
+          "label": "Reaction Date"
+        },
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "gap_pct",
+          "label": "Gap(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "gap_held",
+          "label": "Gap Held(%)",
+          "num": true
+        },
+        {
+          "key": "gap_cushion",
+          "label": "Unfilled By(%)",
+          "num": true
+        },
+        {
+          "key": "move_pct",
+          "label": "Day Move(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "close_pos",
+          "label": "Close in Range",
+          "num": true
+        },
+        {
+          "key": "event_rvol",
+          "label": "RVOL on Day",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Reaction within(bars)",
+          "kind": "number",
+          "default": 30,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "min_gap_pct",
+          "label": "Min gap(%)",
+          "kind": "number",
+          "default": 5.0,
+          "min": 1,
+          "max": 50,
+          "step": 0.5
+        },
+        {
+          "key": "min_close_pct",
+          "label": "Min close(%)",
+          "kind": "number",
+          "default": 5.0,
+          "min": 0,
+          "max": 50,
+          "step": 0.5
+        },
+        {
+          "key": "min_gap_hold",
+          "label": "Gap held at close (1 = close \u2265 open)",
+          "kind": "number",
+          "default": 1.0,
+          "min": 0,
+          "max": 3,
+          "step": 0.05
+        }
+      ]
+    },
+    {
+      "slug": "earnings-move",
+      "category": "earnings",
+      "name": "Episodic Pivot",
+      "description": "A big up close on results that finished near the top of the day's range \u2014 a strong close, not a spike that was sold into. Scored on the session on or after the declaration and the one after it.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "event_date",
+          "label": "Reaction Date"
+        },
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "move_pct",
+          "label": "Move(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "close_pos",
+          "label": "Close in Range",
+          "num": true
+        },
+        {
+          "key": "gap_pct",
+          "label": "Gap(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "event_rvol",
+          "label": "RVOL on Day",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Reaction within(bars)",
+          "kind": "number",
+          "default": 30,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "min_move_pct",
+          "label": "Min move(%)",
+          "kind": "number",
+          "default": 10.0,
+          "min": 1,
+          "max": 50,
+          "step": 0.5
+        },
+        {
+          "key": "min_close_pos",
+          "label": "Min close in range",
+          "kind": "number",
+          "default": 0.75,
+          "min": 0,
+          "max": 1,
+          "step": 0.05
+        }
+      ]
+    },
+    {
+      "slug": "earnings-explosion",
+      "category": "earnings",
+      "name": "EPS Doublers",
+      "description": "The blowout quarter, read off the P&L rather than the chart: EPS, sales and net profit all up sharply together against the same quarter a year earlier \u2014 never the previous one, because Indian quarters are seasonal. All three are required at once, since EPS alone can jump on a buyback or a one-off, and sales alone on an acquisition that earns nothing. Growth is only counted off a meaningful positive base; drop Min base EPS to 0 to see the turnarounds. Listed for 30 sessions after the result was declared, freshest first.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "result_date",
+          "label": "Declared"
+        },
+        {
+          "key": "quarter",
+          "label": "Quarter"
+        },
+        {
+          "key": "eps_growth_yoy",
+          "label": "EPS YoY(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sales_growth_yoy",
+          "label": "Sales YoY(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "np_growth_yoy",
+          "label": "PAT YoY(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps",
+          "label": "EPS (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "eps_prev",
+          "label": "EPS YrAgo (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sales",
+          "label": "Sales (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "sales_prev",
+          "label": "Sales YrAgo (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "pat",
+          "label": "PAT (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "pat_prev",
+          "label": "PAT YrAgo (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "opm",
+          "label": "OPM(%)",
+          "num": true
+        },
+        {
+          "key": "npm",
+          "label": "NPM(%)",
+          "num": true
+        },
+        {
+          "key": "stale_q",
+          "label": "Qtrs Behind",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Declared within(bars)",
+          "kind": "number",
+          "default": 30,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "min_eps_growth",
+          "label": "Min EPS YoY(%)",
+          "kind": "number",
+          "default": 100.0,
+          "min": 0,
+          "max": 2000,
+          "step": 10
+        },
+        {
+          "key": "min_sales_growth",
+          "label": "Min Sales YoY(%)",
+          "kind": "number",
+          "default": 50.0,
+          "min": 0,
+          "max": 2000,
+          "step": 10
+        },
+        {
+          "key": "min_pat_growth",
+          "label": "Min PAT YoY(%)",
+          "kind": "number",
+          "default": 50.0,
+          "min": 0,
+          "max": 2000,
+          "step": 10
+        },
+        {
+          "key": "min_base_eps",
+          "label": "Min base EPS (\u20b9)",
+          "kind": "number",
+          "default": 0.1,
+          "min": 0,
+          "max": 100,
+          "step": 0.05
+        },
+        {
+          "key": "max_stale_quarters",
+          "label": "Max quarters behind",
+          "kind": "number",
+          "default": 1,
+          "min": 0,
+          "max": 8,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "stage2-breakout",
+      "name": "Stage 2 Breakout",
+      "description": "The TrendStage Pro 'Power Breakout' \u2014 the indicator our stage column comes from: a close above the highest high of the previous 50 sessions, on at least 2x the 20-day average volume, closing in the top quarter of the day's range, with the stock in Stage 2 (Uptrend) and fresh to it \u2014 entered Stage 2 in the 5 sessions before, or came into this Stage 2 run straight from Stage 1 (Basing) or Stage 3. Breakouts in the last 7 sessions, freshest first. RMV before is the base's tightness the day before the break (under 25 = tight); set Max RMV to 25 for breakouts out of tight bases only.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "breakout_date",
+          "label": "Breakout"
+        },
+        {
+          "key": "rvol",
+          "label": "Volume (x avg)",
+          "num": true
+        },
+        {
+          "key": "above_pivot_pct",
+          "label": "Above 50D High(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "close_pos",
+          "label": "Close in Range",
+          "num": true
+        },
+        {
+          "key": "why",
+          "label": "Stage 2 Entry"
+        },
+        {
+          "key": "stage2_bars",
+          "label": "Days in Stage 2",
+          "num": true
+        },
+        {
+          "key": "rmv_before",
+          "label": "RMV Before",
+          "num": true
+        },
+        {
+          "key": "pivot",
+          "label": "50D High (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "breakout_close",
+          "label": "Breakout Close (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "since_pct",
+          "label": "Since(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Breakout within(bars)",
+          "kind": "number",
+          "default": 7,
+          "min": 1,
+          "max": 30,
+          "step": 1
+        },
+        {
+          "key": "min_rvol",
+          "label": "Min volume (x avg)",
+          "kind": "number",
+          "default": 2.0,
+          "min": 1,
+          "max": 10,
+          "step": 0.25
+        },
+        {
+          "key": "max_rmv",
+          "label": "Max RMV before (0 = off)",
+          "kind": "number",
+          "default": 0.0,
+          "min": 0,
+          "max": 100,
+          "step": 5
+        }
+      ]
+    },
+    {
+      "slug": "code-33",
+      "category": "earnings",
+      "name": "Code 33",
+      "description": "Code 33: over the last three reported quarters, sales growth, EPS growth and net margin each rose quarter after quarter \u2014 e.g. sales 12% \u2192 18% \u2192 27%, EPS 20% \u2192 34% \u2192 58%, margin 8.1% \u2192 8.9% \u2192 10.2%. Growth is always against the same quarter a year earlier, because Indian quarters are seasonal. Guardrails: every growth figure positive and the latest EPS growth at least 20%; year-ago EPS at least \u20b90.50 (a tiny or loss-making base makes the % meaningless \u2014 losses are under Turnarounds); EPS restated for splits and bonuses, or growth taken from net profit where the share history does not line up; one basis per stock (consolidated, else standalone); a one-off tax-credit quarter left out.",
+      "sort_default": "eps_g3",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "quarter",
+          "label": "Quarter"
+        },
+        {
+          "key": "result_date",
+          "label": "Declared"
+        },
+        {
+          "key": "sales_g1",
+          "label": "Sales YoY Q-2(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sales_g2",
+          "label": "Sales YoY Q-1(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sales_g3",
+          "label": "Sales YoY Latest(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps_g1",
+          "label": "EPS YoY Q-2(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps_g2",
+          "label": "EPS YoY Q-1(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps_g3",
+          "label": "EPS YoY Latest(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "npm1",
+          "label": "Net Margin Q-2(%)",
+          "num": true
+        },
+        {
+          "key": "npm2",
+          "label": "Net Margin Q-1(%)",
+          "num": true
+        },
+        {
+          "key": "npm3",
+          "label": "Net Margin Latest(%)",
+          "num": true
+        },
+        {
+          "key": "eps_basis",
+          "label": "Growth From"
+        },
+        {
+          "key": "eps",
+          "label": "EPS (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "eps_prev",
+          "label": "EPS YrAgo (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sales",
+          "label": "Sales (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "pat",
+          "label": "PAT (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "stale_q",
+          "label": "Qtrs Behind",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "min_latest_eps_growth",
+          "label": "Min latest EPS YoY(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 0,
+          "max": 500,
+          "step": 5
+        },
+        {
+          "key": "min_base_eps",
+          "label": "Min year-ago EPS (\u20b9)",
+          "kind": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 100,
+          "step": 0.1
+        },
+        {
+          "key": "min_sales_growth",
+          "label": "Min sales YoY, every qtr(%)",
+          "kind": "number",
+          "default": 0.0,
+          "min": 0,
+          "max": 200,
+          "step": 5
+        },
+        {
+          "key": "max_stale_quarters",
+          "label": "Max quarters behind",
+          "kind": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "eps-accelerators",
+      "category": "earnings",
+      "name": "EPS Accelerators",
+      "description": "EPS growth rising three quarters running (e.g. 20% \u2192 34% \u2192 58%) on growing sales \u2014 the wider net of Code 33, without the margin test. Same year-on-year reading and the same guardrails: positive growth, latest EPS growth at least 20%, year-ago EPS at least \u20b90.50, splits and bonuses adjusted, one basis per stock, one-off tax credits left out.",
+      "sort_default": "eps_g3",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "quarter",
+          "label": "Quarter"
+        },
+        {
+          "key": "result_date",
+          "label": "Declared"
+        },
+        {
+          "key": "sales_g1",
+          "label": "Sales YoY Q-2(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sales_g2",
+          "label": "Sales YoY Q-1(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sales_g3",
+          "label": "Sales YoY Latest(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps_g1",
+          "label": "EPS YoY Q-2(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps_g2",
+          "label": "EPS YoY Q-1(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps_g3",
+          "label": "EPS YoY Latest(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "npm1",
+          "label": "Net Margin Q-2(%)",
+          "num": true
+        },
+        {
+          "key": "npm2",
+          "label": "Net Margin Q-1(%)",
+          "num": true
+        },
+        {
+          "key": "npm3",
+          "label": "Net Margin Latest(%)",
+          "num": true
+        },
+        {
+          "key": "eps_basis",
+          "label": "Growth From"
+        },
+        {
+          "key": "eps",
+          "label": "EPS (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "eps_prev",
+          "label": "EPS YrAgo (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sales",
+          "label": "Sales (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "pat",
+          "label": "PAT (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "stale_q",
+          "label": "Qtrs Behind",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "min_latest_eps_growth",
+          "label": "Min latest EPS YoY(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 0,
+          "max": 500,
+          "step": 5
+        },
+        {
+          "key": "min_base_eps",
+          "label": "Min year-ago EPS (\u20b9)",
+          "kind": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 100,
+          "step": 0.1
+        },
+        {
+          "key": "min_sales_growth",
+          "label": "Min sales YoY, every qtr(%)",
+          "kind": "number",
+          "default": 0.0,
+          "min": 0,
+          "max": 200,
+          "step": 5
+        },
+        {
+          "key": "max_stale_quarters",
+          "label": "Max quarters behind",
+          "kind": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "turnarounds",
+      "category": "earnings",
+      "name": "Turnarounds",
+      "description": "A loss in the same quarter a year ago, a profit now \u2014 on sales up at least 10% \u2014 with net profit improving in each of the last three quarters. A % growth off a loss means nothing, so these are kept out of the accelerator scans and listed here. One-off tax-credit profits are left out.",
+      "sort_default": "sales_g3",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "quarter",
+          "label": "Quarter"
+        },
+        {
+          "key": "result_date",
+          "label": "Declared"
+        },
+        {
+          "key": "sales_g1",
+          "label": "Sales YoY Q-2(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sales_g2",
+          "label": "Sales YoY Q-1(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sales_g3",
+          "label": "Sales YoY Latest(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps_g1",
+          "label": "EPS YoY Q-2(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps_g2",
+          "label": "EPS YoY Q-1(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "eps_g3",
+          "label": "EPS YoY Latest(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "npm1",
+          "label": "Net Margin Q-2(%)",
+          "num": true
+        },
+        {
+          "key": "npm2",
+          "label": "Net Margin Q-1(%)",
+          "num": true
+        },
+        {
+          "key": "npm3",
+          "label": "Net Margin Latest(%)",
+          "num": true
+        },
+        {
+          "key": "eps_basis",
+          "label": "Growth From"
+        },
+        {
+          "key": "eps",
+          "label": "EPS (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "eps_prev",
+          "label": "EPS YrAgo (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sales",
+          "label": "Sales (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "pat",
+          "label": "PAT (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "stale_q",
+          "label": "Qtrs Behind",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "turnaround_min_sales",
+          "label": "Min latest sales YoY(%)",
+          "kind": "number",
+          "default": 10.0,
+          "min": 0,
+          "max": 200,
+          "step": 5
+        },
+        {
+          "key": "max_stale_quarters",
+          "label": "Max quarters behind",
+          "kind": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "high-volume",
+      "name": "High Volume",
+      "group": "Volume",
+      "description": "Stocks that just printed a volume event \u2014 a bar clearing their own highest volume ever (HVE), of the last year (HVY) or of the last quarter (HVQ). Ranked against the stock's own history, not a flat multiple of average, and only counted when the bar stands alone. Volume is direction-blind, so the bar must also have closed strong and moved \u2014 volume that arrived with a move, not a sell-off.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "event_code",
+          "label": "Event"
+        },
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "event_date",
+          "label": "Event Date"
+        },
+        {
+          "key": "event_rvol",
+          "label": "RVOL on Day",
+          "num": true
+        },
+        {
+          "key": "vs_prior",
+          "label": "Over Prior High(%)",
+          "num": true
+        },
+        {
+          "key": "close_pos",
+          "label": "Close in Range",
+          "num": true
+        },
+        {
+          "key": "move_pct",
+          "label": "Day Move(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "move_vs_adr",
+          "label": "Move (x ADR)",
+          "num": true
+        },
+        {
+          "key": "event_adr",
+          "label": "ADR on Day(%)",
+          "num": true
+        },
+        {
+          "key": "since_pct",
+          "label": "Since Event(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "event_vol",
+          "label": "Volume",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Event within(bars)",
+          "kind": "number",
+          "default": 5,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "quiet_bars",
+          "label": "No other event within(bars)",
+          "kind": "number",
+          "default": 10,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "min_close_pos",
+          "label": "Min close in range (0 = off)",
+          "kind": "number",
+          "default": 0.75,
+          "min": 0,
+          "max": 1,
+          "step": 0.05
+        },
+        {
+          "key": "min_move_adr",
+          "label": "Min day move (x ADR, 0 = off)",
+          "kind": "number",
+          "default": 2.0,
+          "min": 0,
+          "max": 10,
+          "step": 0.5
+        },
+        {
+          "key": "require_green",
+          "label": "Day close",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "Green only"
+            },
+            {
+              "value": "false",
+              "label": "Either"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "new-listing",
+      "name": "New Listing (IPO)",
+      "description": "Stocks listed within the last year, read against the only structure they have \u2014 the high and low since listing. A small From High is the IPO base; pair it with High Age to tell a base from a fresh spike. Listing date is NSE's, IPOs only: a company that was already public elsewhere before its NSE listing is not counted as new.",
+      "sort_default": "days_listed",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "listing_date",
+          "label": "Listed"
+        },
+        {
+          "key": "days_listed",
+          "label": "Age(days)",
+          "num": true
+        },
+        {
+          "key": "bars_listed",
+          "label": "Bars",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "from_high",
+          "label": "From High(%)",
+          "num": true
+        },
+        {
+          "key": "ipo_high",
+          "label": "Post-Listing High (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "high_age",
+          "label": "High Age(bars)",
+          "num": true
+        },
+        {
+          "key": "above_low",
+          "label": "Above Low(%)",
+          "num": true
+        },
+        {
+          "key": "ipo_low",
+          "label": "Post-Listing Low (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "from_listing",
+          "label": "Since Listing(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "list_close",
+          "label": "Day 1 Close (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "max_days",
+          "label": "Listed within(days)",
+          "kind": "number",
+          "default": 365,
+          "min": 30,
+          "max": 1200,
+          "step": 30
+        },
+        {
+          "key": "min_bars",
+          "label": "Min history(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 1,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "max_from_high_pct",
+          "label": "Max from high(%) \u2014 100 = off",
+          "kind": "number",
+          "default": 100.0,
+          "min": 1,
+          "max": 100,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "ipo-base",
+      "category": "special",
+      "name": "IPO Base",
+      "description": "Recent listings still inside their first base and coiled just under its level \u2014 the breakout has not happened yet. Day two decides the level: if it held under the listing-day high, that high is the resistance (C2); if it broke it, the first pivot high above the listing high is (C1). A base has six months and a 35% fall ends it; a close through the level ends it too, so what is listed here is only what is still waiting.",
+      "sort_default": "distance_pct",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "category",
+          "label": "Base"
+        },
+        {
+          "key": "level",
+          "label": "Level (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "distance_pct",
+          "label": "Distance(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "breakout_date",
+          "label": "Broke Out"
+        },
+        {
+          "key": "breakout_close",
+          "label": "Breakout Close (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "base_bars",
+          "label": "Base Age(bars)",
+          "num": true
+        },
+        {
+          "key": "depth_pct",
+          "label": "Base Depth(%)",
+          "num": true
+        },
+        {
+          "key": "base_low",
+          "label": "Base Low (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "listing_high",
+          "label": "Listing High (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "listing_date",
+          "label": "Listed"
+        },
+        {
+          "key": "bars_listed",
+          "label": "Bars",
+          "num": true
+        },
+        {
+          "key": "level_date",
+          "label": "Level Set"
+        }
+      ],
+      "params": [
+        {
+          "key": "mode",
+          "label": "Show",
+          "kind": "radio",
+          "default": "setup",
+          "options": [
+            {
+              "value": "setup",
+              "label": "Near level"
+            },
+            {
+              "value": "breakout",
+              "label": "Broke out"
+            }
+          ]
+        },
+        {
+          "key": "window",
+          "label": "Broke out within(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "near_pct",
+          "label": "Within(%) of level \u2014 100 = off",
+          "kind": "number",
+          "default": 8.0,
+          "min": 0.5,
+          "max": 100,
+          "step": 0.5
+        },
+        {
+          "key": "max_base_bars",
+          "label": "Max base age(bars)",
+          "kind": "number",
+          "default": 126,
+          "min": 5,
+          "max": 500,
+          "step": 1
+        },
+        {
+          "key": "max_depth_pct",
+          "label": "Max fall from level(%)",
+          "kind": "number",
+          "default": 35.0,
+          "min": 5,
+          "max": 90,
+          "step": 1
+        },
+        {
+          "key": "max_age_bars",
+          "label": "Listed within(bars)",
+          "kind": "number",
+          "default": 252,
+          "min": 20,
+          "max": 500,
+          "step": 1
+        },
+        {
+          "key": "min_base_bars",
+          "label": "Min base age(bars)",
+          "kind": "number",
+          "default": 3,
+          "min": 1,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "key": "pivot_left",
+          "label": "C1 pivot left(bars)",
+          "kind": "number",
+          "default": 1,
+          "min": 1,
+          "max": 20,
+          "step": 1
+        },
+        {
+          "key": "pivot_right",
+          "label": "C1 pivot right(bars)",
+          "kind": "number",
+          "default": 2,
+          "min": 1,
+          "max": 20,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "tight-setups",
+      "category": "special",
+      "name": "Tight Range",
+      "description": "Two tight-range scans side by side, one list. Tight Setups: a hit on any of three methods \u2014 two measure a box against the stock's own daily range, the third is a run of closes in a narrow band on a contracting range \u2014 behind a trend filter and a 3-month gain gate. RTI: three or more bars in a row each among the narrowest of its last five (RTI \u2264 18), boxed inside 5.5%, with 20-SMA > 50-EMA > 200-SMA, the close within 5% of the 20-SMA, \u20b91 Cr traded today and a 500\u201380,000 Cr cap band. Method says which scan found it.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "mode",
+          "label": "Method"
+        },
+        {
+          "key": "bars",
+          "label": "Range(bars)",
+          "num": true
+        },
+        {
+          "key": "range_pct",
+          "label": "Range(%)",
+          "num": true
+        },
+        {
+          "key": "max_range_pct",
+          "label": "Allowed(%)",
+          "num": true
+        },
+        {
+          "key": "adr_pct",
+          "label": "ADR(%)",
+          "num": true
+        },
+        {
+          "key": "drift_pct",
+          "label": "Drift(%)",
+          "num": true
+        },
+        {
+          "key": "contraction",
+          "label": "Contraction",
+          "num": true
+        },
+        {
+          "key": "days_tight",
+          "label": "Days Tight",
+          "num": true
+        },
+        {
+          "key": "rti",
+          "label": "RTI",
+          "num": true
+        },
+        {
+          "key": "ret_3m",
+          "label": "3M Gain(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "ext_pct",
+          "label": "Ext from 20-SMA(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "sma_20",
+          "label": "20-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "ema_50",
+          "label": "50-EMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sma_200",
+          "label": "200-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "turnover_cr",
+          "label": "Turnover (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "range_low",
+          "label": "Range Low (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "range_high",
+          "label": "Range High (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "use_setups",
+          "label": "Tight Setups scan",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "use_rti",
+          "label": "RTI scan",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "rti_max",
+          "label": "RTI: max RTI",
+          "kind": "number",
+          "default": 18.0,
+          "min": 1,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "key": "rti_min_streak",
+          "label": "RTI: min tight bars",
+          "kind": "number",
+          "default": 3,
+          "min": 1,
+          "max": 20,
+          "step": 1
+        },
+        {
+          "key": "rti_max_range_pct",
+          "label": "RTI: max box range(%)",
+          "kind": "number",
+          "default": 5.5,
+          "min": 0.1,
+          "max": 50,
+          "step": 0.1
+        },
+        {
+          "key": "rti_length",
+          "label": "RTI: lookback(bars)",
+          "kind": "number",
+          "default": 5,
+          "min": 2,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "key": "rti_max_dist_sma20",
+          "label": "RTI: max dist from 20-SMA(%)",
+          "kind": "number",
+          "default": 5.0,
+          "min": 0,
+          "max": 50,
+          "step": 0.5
+        },
+        {
+          "key": "rti_min_turnover_cr",
+          "label": "RTI: min turnover (\u20b9Cr)",
+          "kind": "number",
+          "default": 1.0,
+          "min": 0,
+          "max": 1000,
+          "step": 1
+        },
+        {
+          "key": "rti_mcap_min_cr",
+          "label": "RTI: min market cap (Cr)",
+          "kind": "number",
+          "default": 500.0,
+          "min": 0,
+          "max": 2000000,
+          "step": 100
+        },
+        {
+          "key": "rti_mcap_max_cr",
+          "label": "RTI: max market cap (Cr)",
+          "kind": "number",
+          "default": 80000.0,
+          "min": 0,
+          "max": 2000000,
+          "step": 1000
+        },
+        {
+          "key": "rti_window",
+          "label": "RTI: qualified within(bars)",
+          "kind": "number",
+          "default": 0,
+          "min": 0,
+          "max": 60,
+          "step": 1
+        },
+        {
+          "key": "min_ret_3m",
+          "label": "Min 3M gain(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": -50,
+          "max": 300,
+          "step": 5
+        },
+        {
+          "key": "require_trend",
+          "label": "Trend filter",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "Apply"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "max_extension",
+          "label": "Max ext from SMA(%)",
+          "kind": "number",
+          "default": 10.0,
+          "min": 0,
+          "max": 100,
+          "step": 0.5
+        },
+        {
+          "key": "sma_length",
+          "label": "SMA(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 1,
+          "max": 200,
+          "step": 1
+        },
+        {
+          "key": "ema_length",
+          "label": "EMA(bars)",
+          "kind": "number",
+          "default": 50,
+          "min": 1,
+          "max": 200,
+          "step": 1
+        },
+        {
+          "key": "range_mult",
+          "label": "Range (x ADR)",
+          "kind": "number",
+          "default": 0.8,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.05
+        },
+        {
+          "key": "use_long",
+          "label": "2nd method",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "long_min_bars",
+          "label": "2nd: min range(bars)",
+          "kind": "number",
+          "default": 5,
+          "min": 2,
+          "max": 60,
+          "step": 1
+        },
+        {
+          "key": "long_range_mult",
+          "label": "2nd: range (x ADR)",
+          "kind": "number",
+          "default": 1.0,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.05
+        },
+        {
+          "key": "use_spread",
+          "label": "3rd method",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "On"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        },
+        {
+          "key": "max_spread_pct",
+          "label": "3rd: max close spread(%)",
+          "kind": "number",
+          "default": 5.0,
+          "min": 0.5,
+          "max": 30,
+          "step": 0.5
+        },
+        {
+          "key": "spread_bars",
+          "label": "3rd: window(bars)",
+          "kind": "number",
+          "default": 10,
+          "min": 3,
+          "max": 60,
+          "step": 1
+        },
+        {
+          "key": "max_contraction",
+          "label": "3rd: max contraction",
+          "kind": "number",
+          "default": 0.6,
+          "min": 0.1,
+          "max": 2,
+          "step": 0.05
+        },
+        {
+          "key": "spread_adr_fast",
+          "label": "3rd: ADR fast(bars)",
+          "kind": "number",
+          "default": 5,
+          "min": 2,
+          "max": 30,
+          "step": 1
+        },
+        {
+          "key": "spread_adr_slow",
+          "label": "3rd: ADR slow(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 5,
+          "max": 120,
+          "step": 1
+        },
+        {
+          "key": "adr_length",
+          "label": "ADR length(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 2,
+          "max": 200,
+          "step": 1
+        },
+        {
+          "key": "min_bars",
+          "label": "Min range(bars)",
+          "kind": "number",
+          "default": 3,
+          "min": 2,
+          "max": 60,
+          "step": 1
+        },
+        {
+          "key": "max_bars",
+          "label": "Max range(bars)",
+          "kind": "number",
+          "default": 10,
+          "min": 4,
+          "max": 120,
+          "step": 1
+        },
+        {
+          "key": "max_drift",
+          "label": "Max drift(%)",
+          "kind": "number",
+          "default": 21.0,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "key": "use_sideways",
+          "label": "Drift test",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "Sideways only"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "1m-gainers",
+      "name": "1M Gainers",
+      "description": "Stocks that have made a big move over the last month, screened down to names liquid enough to trade. No pattern test \u2014 the move is the signal, and the rest of the screen keeps out the microcaps that dominate any raw sorted-by-return list.",
+      "sort_default": "gain_pct",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "gain_pct",
+          "label": "1M Gain(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "turnover_cr",
+          "label": "Turnover (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "volume",
+          "label": "Volume",
+          "num": true
+        },
+        {
+          "key": "ref_close",
+          "label": "1M Ago (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "ref_date",
+          "label": "From"
+        }
+      ],
+      "params": [
+        {
+          "key": "min_gain",
+          "label": "Min 1M gain(%)",
+          "kind": "number",
+          "default": 20.0,
+          "min": -50,
+          "max": 500,
+          "step": 5
+        },
+        {
+          "key": "min_price",
+          "label": "Min price (\u20b9)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 1,
+          "max": 5000,
+          "step": 5
+        },
+        {
+          "key": "min_volume",
+          "label": "Min volume(shares)",
+          "kind": "number",
+          "default": 40000,
+          "min": 0,
+          "max": 10000000,
+          "step": 10000
+        },
+        {
+          "key": "min_turnover_cr",
+          "label": "Min turnover (\u20b9Cr)",
+          "kind": "number",
+          "default": 5.0,
+          "min": 0,
+          "max": 1000,
+          "step": 0.5
+        },
+        {
+          "key": "max_stale_days",
+          "label": "Max days since last trade",
+          "kind": "number",
+          "default": 7,
+          "min": 0,
+          "max": 3650,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "3m-gainers",
+      "name": "3M Gainers",
+      "description": "Stocks that have made a big move over the last quarter, screened down to names liquid enough to trade. The slower cousin of 1M Gainers \u2014 a quarter of advance is a trend rather than a burst.",
+      "sort_default": "gain_pct",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "gain_pct",
+          "label": "3M Gain(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "turnover_cr",
+          "label": "Turnover (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "volume",
+          "label": "Volume",
+          "num": true
+        },
+        {
+          "key": "ref_close",
+          "label": "3M Ago (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "ref_date",
+          "label": "From"
+        }
+      ],
+      "params": [
+        {
+          "key": "min_gain",
+          "label": "Min 3M gain(%)",
+          "kind": "number",
+          "default": 30.0,
+          "min": -50,
+          "max": 500,
+          "step": 5
+        },
+        {
+          "key": "min_price",
+          "label": "Min price (\u20b9)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 1,
+          "max": 5000,
+          "step": 5
+        },
+        {
+          "key": "min_volume",
+          "label": "Min volume(shares)",
+          "kind": "number",
+          "default": 40000,
+          "min": 0,
+          "max": 10000000,
+          "step": 10000
+        },
+        {
+          "key": "min_turnover_cr",
+          "label": "Min turnover (\u20b9Cr)",
+          "kind": "number",
+          "default": 5.0,
+          "min": 0,
+          "max": 1000,
+          "step": 0.5
+        },
+        {
+          "key": "max_stale_days",
+          "label": "Max days since last trade",
+          "kind": "number",
+          "default": 7,
+          "min": 0,
+          "max": 3650,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "outperformers",
+      "name": "Outperformers",
+      "description": "Stocks beating the rest of the market this week, this month and this quarter: 1-week RS Rating above 90, 1-month above 85 and 3-month above 80, among names liquid enough to trade (30-session median turnover of \u20b91 Cr or more and a price of \u20b95 or more). Strongest 1M RS first.",
+      "sort_default": "rs_1m",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "rs_1w",
+          "label": "1W RS",
+          "num": true
+        },
+        {
+          "key": "rs_1m",
+          "label": "1M RS",
+          "num": true
+        },
+        {
+          "key": "rs_3m",
+          "label": "3M RS",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "min_rs_1w",
+          "label": "1W RS above",
+          "kind": "number",
+          "default": 90,
+          "min": 0,
+          "max": 98,
+          "step": 1
+        },
+        {
+          "key": "min_rs_1m",
+          "label": "1M RS above",
+          "kind": "number",
+          "default": 85,
+          "min": 0,
+          "max": 98,
+          "step": 1
+        },
+        {
+          "key": "min_rs_3m",
+          "label": "3M RS above",
+          "kind": "number",
+          "default": 80,
+          "min": 0,
+          "max": 98,
+          "step": 1
+        },
+        {
+          "key": "liquid_only",
+          "label": "Liquidity",
+          "kind": "radio",
+          "default": "true",
+          "options": [
+            {
+              "value": "true",
+              "label": "Liquid only"
+            },
+            {
+              "value": "false",
+              "label": "Off"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "doublers",
+      "name": "Doublers",
+      "description": "Stocks that have doubled or better over the past year, screened down to names liquid enough to trade. No pattern test \u2014 a year of doubling is the signal; the leaders of the cycle are on this list long before they are on the front page.",
+      "sort_default": "gain_pct",
+      "sort_dir": "desc",
+      "columns": [
+        {
+          "key": "gain_pct",
+          "label": "1Y Gain(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "turnover_cr",
+          "label": "Turnover (\u20b9Cr)",
+          "num": true
+        },
+        {
+          "key": "volume",
+          "label": "Volume",
+          "num": true
+        },
+        {
+          "key": "ref_close",
+          "label": "1Y Ago (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "ref_date",
+          "label": "From"
+        }
+      ],
+      "params": [
+        {
+          "key": "min_gain",
+          "label": "Min 1Y gain(%)",
+          "kind": "number",
+          "default": 100.0,
+          "min": -50,
+          "max": 2000,
+          "step": 10
+        },
+        {
+          "key": "min_price",
+          "label": "Min price (\u20b9)",
+          "kind": "number",
+          "default": 20.0,
+          "min": 1,
+          "max": 5000,
+          "step": 5
+        },
+        {
+          "key": "min_volume",
+          "label": "Min volume(shares)",
+          "kind": "number",
+          "default": 40000,
+          "min": 0,
+          "max": 10000000,
+          "step": 10000
+        },
+        {
+          "key": "min_turnover_cr",
+          "label": "Min turnover (\u20b9Cr)",
+          "kind": "number",
+          "default": 5.0,
+          "min": 0,
+          "max": 1000,
+          "step": 0.5
+        },
+        {
+          "key": "max_stale_days",
+          "label": "Max days since last trade",
+          "kind": "number",
+          "default": 7,
+          "min": 0,
+          "max": 3650,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "big-reversal",
+      "category": "special",
+      "name": "Big Reversal",
+      "description": "Stocks in a clean, fully stacked downtrend that turned in a single session: a violent up bar on a surge of volume that held most of its gains into the close. The strict downtrend test is what separates a change of character from a bounce in a stock that was already drifting sideways. Signals from the last few sessions, freshest first \u2014 Since Signal shows what has already been given away.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "signal_date",
+          "label": "Signal Date"
+        },
+        {
+          "key": "high_move",
+          "label": "High Move(%)",
+          "num": true
+        },
+        {
+          "key": "close_move",
+          "label": "Close Move(%)",
+          "num": true
+        },
+        {
+          "key": "vol_ratio",
+          "label": "Volume (x avg)",
+          "num": true
+        },
+        {
+          "key": "close_pos",
+          "label": "Close in Range",
+          "num": true
+        },
+        {
+          "key": "below_200",
+          "label": "Below 200-SMA(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "since_pct",
+          "label": "Since Signal(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "signal_close",
+          "label": "Signal Close (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "signal_vol",
+          "label": "Volume",
+          "num": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Signal within(bars)",
+          "kind": "number",
+          "default": 5,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "min_high_move_pct",
+          "label": "Min high move(%)",
+          "kind": "number",
+          "default": 13.0,
+          "min": 1,
+          "max": 50,
+          "step": 0.5
+        },
+        {
+          "key": "min_close_move_pct",
+          "label": "Min close move(%)",
+          "kind": "number",
+          "default": 12.0,
+          "min": 1,
+          "max": 50,
+          "step": 0.5
+        },
+        {
+          "key": "volume_multiplier",
+          "label": "Min volume (x avg)",
+          "kind": "number",
+          "default": 3.0,
+          "min": 1,
+          "max": 20,
+          "step": 0.5
+        },
+        {
+          "key": "volume_length",
+          "label": "Volume average(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 5,
+          "max": 200,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "slug": "shakeout",
+      "category": "special",
+      "name": "Shakeout",
+      "description": "Uptrending stocks flushed well beyond a normal day's range and taken straight back: the low is free to pierce the major averages \u2014 that is the shakeout \u2014 but the stock must still close above them with the trend intact, and recover the pre-fall close within a few sessions. Confirmations from the last few sessions, freshest first.",
+      "sort_default": "age",
+      "sort_dir": "asc",
+      "columns": [
+        {
+          "key": "age",
+          "label": "Age(bars)",
+          "num": true
+        },
+        {
+          "key": "confirm_date",
+          "label": "Confirmed"
+        },
+        {
+          "key": "recovery",
+          "label": "Recovery"
+        },
+        {
+          "key": "fall_date",
+          "label": "Fall Date"
+        },
+        {
+          "key": "fall_pct",
+          "label": "Fall(%)",
+          "num": true
+        },
+        {
+          "key": "fall_x_adr",
+          "label": "Fall (x ADR)",
+          "num": true
+        },
+        {
+          "key": "adr",
+          "label": "ADR(%)",
+          "num": true
+        },
+        {
+          "key": "above_50",
+          "label": "Above 50-SMA(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "above_200",
+          "label": "Above 200-SMA(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "fan_50_200",
+          "label": "Fan 50 vs 200(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "pierced_50",
+          "label": "Pierced 50"
+        },
+        {
+          "key": "fall_low",
+          "label": "Fall Low (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sma_20",
+          "label": "20-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sma_50",
+          "label": "50-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "sma_200",
+          "label": "200-SMA (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "ref_close",
+          "label": "Pre-fall Close (\u20b9)",
+          "num": true
+        },
+        {
+          "key": "since_pct",
+          "label": "Since Signal(%)",
+          "num": true,
+          "signed": true
+        },
+        {
+          "key": "cmp",
+          "label": "CMP (\u20b9)",
+          "num": true
+        }
+      ],
+      "params": [
+        {
+          "key": "window",
+          "label": "Confirmed within(bars)",
+          "kind": "number",
+          "default": 5,
+          "min": 0,
+          "max": 250,
+          "step": 1
+        },
+        {
+          "key": "adr_multiplier",
+          "label": "Min fall (x ADR)",
+          "kind": "number",
+          "default": 1.0,
+          "min": 0.5,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "adr_length",
+          "label": "ADR length(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 5,
+          "max": 200,
+          "step": 1
+        },
+        {
+          "key": "fast_ma",
+          "label": "Fast MA(bars)",
+          "kind": "number",
+          "default": 20,
+          "min": 3,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "key": "mid_ma",
+          "label": "Mid MA(bars)",
+          "kind": "number",
+          "default": 50,
+          "min": 10,
+          "max": 250,
+          "step": 5
+        },
+        {
+          "key": "slow_ma",
+          "label": "Slow MA(bars)",
+          "kind": "number",
+          "default": 200,
+          "min": 20,
+          "max": 400,
+          "step": 10
+        },
+        {
+          "key": "require_previous_low_break",
+          "label": "Prev day low",
+          "kind": "radio",
+          "default": "false",
+          "options": [
+            {
+              "value": "false",
+              "label": "Any fall"
+            },
+            {
+              "value": "true",
+              "label": "Must break it"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

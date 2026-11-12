@@ -1,0 +1,5271 @@
+{
+  "as_of": "2026-11-12",
+  "days": [
+    {
+      "date": "2026-11-12",
+      "days_ago": 0,
+      "symbols": [
+        {
+          "symbol": "HAL",
+          "market_cap_cr": 323914.49
+        },
+        {
+          "symbol": "IDEA",
+          "market_cap_cr": 140520.92
+        },
+        {
+          "symbol": "POWERINDIA",
+          "market_cap_cr": 127231.81
+        },
+        {
+          "symbol": "OIL",
+          "market_cap_cr": 71570.74
+        },
+        {
+          "symbol": "ALKEM",
+          "market_cap_cr": 63393.36
+        },
+        {
+          "symbol": "NMDC",
+          "market_cap_cr": 62483.45
+        },
+        {
+          "symbol": "RVNL",
+          "market_cap_cr": 42826.32
+        },
+        {
+          "symbol": "BDL",
+          "market_cap_cr": 38676.01
+        },
+        {
+          "symbol": "IRCTC",
+          "market_cap_cr": 37676.0
+        },
+        {
+          "symbol": "PAGEIND",
+          "market_cap_cr": 35525.09
+        },
+        {
+          "symbol": "MANAPPURAM",
+          "market_cap_cr": 30054.06
+        },
+        {
+          "symbol": "PGHH",
+          "market_cap_cr": 23340.89
+        },
+        {
+          "symbol": "AMBER",
+          "market_cap_cr": 21897.76
+        },
+        {
+          "symbol": "EIHOTEL",
+          "market_cap_cr": 19774.02
+        },
+        {
+          "symbol": "TDPOWERSYS",
+          "market_cap_cr": 19556.67
+        },
+        {
+          "symbol": "CAPLIPOINT",
+          "market_cap_cr": 18138.67
+        },
+        {
+          "symbol": "IFCI",
+          "market_cap_cr": 17052.32
+        },
+        {
+          "symbol": "ASTRAMICRO",
+          "market_cap_cr": 16955.28
+        },
+        {
+          "symbol": "OLAELEC",
+          "market_cap_cr": 16541.93
+        },
+        {
+          "symbol": "NAVA",
+          "market_cap_cr": 16266.39
+        },
+        {
+          "symbol": "TRAVELFOOD",
+          "market_cap_cr": 15605.02
+        },
+        {
+          "symbol": "AVALON",
+          "market_cap_cr": 14102.14
+        },
+        {
+          "symbol": "ACE",
+          "market_cap_cr": 14047.65
+        },
+        {
+          "symbol": "MANORAMA",
+          "market_cap_cr": 13256.33
+        },
+        {
+          "symbol": "NSLNISP",
+          "market_cap_cr": 11930.5
+        },
+        {
+          "symbol": "TECHNOE",
+          "market_cap_cr": 11817.2
+        },
+        {
+          "symbol": "RPOWER",
+          "market_cap_cr": 7973.76
+        },
+        {
+          "symbol": "RELIGARE",
+          "market_cap_cr": 7888.2
+        },
+        {
+          "symbol": "ETHOSLTD",
+          "market_cap_cr": 7638.25
+        },
+        {
+          "symbol": "DBL",
+          "market_cap_cr": 6606.64
+        },
+        {
+          "symbol": "MANINDS",
+          "market_cap_cr": 6543.08
+        },
+        {
+          "symbol": "RCF",
+          "market_cap_cr": 5953.82
+        },
+        {
+          "symbol": "PICCADIL",
+          "market_cap_cr": 5840.4
+        },
+        {
+          "symbol": "ITDC",
+          "market_cap_cr": 5562.14
+        },
+        {
+          "symbol": "ELEVATE",
+          "market_cap_cr": 5247.22
+        },
+        {
+          "symbol": "SHARDAMOTR",
+          "market_cap_cr": 5125.36
+        },
+        {
+          "symbol": "FIEMIND",
+          "market_cap_cr": 5115.23
+        },
+        {
+          "symbol": "MSTCLTD",
+          "market_cap_cr": 4595.71
+        },
+        {
+          "symbol": "WAKEFIT",
+          "market_cap_cr": 4594.28
+        },
+        {
+          "symbol": "UFLEX",
+          "market_cap_cr": 4522.6
+        },
+        {
+          "symbol": "TARC",
+          "market_cap_cr": 3937.77
+        },
+        {
+          "symbol": "VIPIND",
+          "market_cap_cr": 3505.17
+        },
+        {
+          "symbol": "PREMEXPLN",
+          "market_cap_cr": 3160.62
+        },
+        {
+          "symbol": "LASERPOWER",
+          "market_cap_cr": 3135.97
+        },
+        {
+          "symbol": "POCL",
+          "market_cap_cr": 3044.65
+        },
+        {
+          "symbol": "INDOTECH",
+          "market_cap_cr": 2927.4
+        },
+        {
+          "symbol": "INDNIPPON",
+          "market_cap_cr": 2851.88
+        },
+        {
+          "symbol": "OSWALPUMPS",
+          "market_cap_cr": 2724.49
+        },
+        {
+          "symbol": "FMGOETZE",
+          "market_cap_cr": 2672.84
+        },
+        {
+          "symbol": "RANEHOLDIN",
+          "market_cap_cr": 2377.97
+        },
+        {
+          "symbol": "SPAL",
+          "market_cap_cr": 2296.94
+        },
+        {
+          "symbol": "CANTABIL",
+          "market_cap_cr": 2232.3
+        },
+        {
+          "symbol": "PRAKASH",
+          "market_cap_cr": 2124.27
+        },
+        {
+          "symbol": "LANDMARK",
+          "market_cap_cr": 2067.44
+        },
+        {
+          "symbol": "MVELECTRO",
+          "market_cap_cr": 2032.43
+        },
+        {
+          "symbol": "MUKANDLTD",
+          "market_cap_cr": 2015.71
+        },
+        {
+          "symbol": "TAJGVK",
+          "market_cap_cr": 2008.33
+        },
+        {
+          "symbol": "TURTLEMINT",
+          "market_cap_cr": 1800.15
+        },
+        {
+          "symbol": "EMSLIMITED",
+          "market_cap_cr": 1756.44
+        },
+        {
+          "symbol": "TARSONS",
+          "market_cap_cr": 1657.91
+        },
+        {
+          "symbol": "CEINSYS",
+          "market_cap_cr": 1470.97
+        },
+        {
+          "symbol": "ARDEE",
+          "market_cap_cr": 1428.8
+        },
+        {
+          "symbol": "SUNSHINE",
+          "market_cap_cr": 1390.79
+        },
+        {
+          "symbol": "SPMLINFRA",
+          "market_cap_cr": 1359.03
+        },
+        {
+          "symbol": "ALICON",
+          "market_cap_cr": 1329.59
+        },
+        {
+          "symbol": "YATRA",
+          "market_cap_cr": 1271.65
+        },
+        {
+          "symbol": "BLKASHYAP",
+          "market_cap_cr": 1215.8
+        },
+        {
+          "symbol": "GULPOLY",
+          "market_cap_cr": 1083.19
+        },
+        {
+          "symbol": "APEX",
+          "market_cap_cr": 1071.88
+        },
+        {
+          "symbol": "TEMBO",
+          "market_cap_cr": 1060.83
+        },
+        {
+          "symbol": "SALZERELEC",
+          "market_cap_cr": 931.0
+        },
+        {
+          "symbol": "STANLEY",
+          "market_cap_cr": 829.41
+        },
+        {
+          "symbol": "LOKESHMACH",
+          "market_cap_cr": 809.21
+        },
+        {
+          "symbol": "GAUDIUMIVF",
+          "market_cap_cr": 783.18
+        },
+        {
+          "symbol": "MOMSBELIEF",
+          "market_cap_cr": 618.31
+        },
+        {
+          "symbol": "SINGERIND",
+          "market_cap_cr": 565.14
+        },
+        {
+          "symbol": "MARKOLINES",
+          "market_cap_cr": 360.41
+        }
+      ]
+    },
+    {
+      "date": "2026-11-11",
+      "days_ago": 1,
+      "symbols": [
+        {
+          "symbol": "TATAPOWER",
+          "market_cap_cr": 114073.62
+        },
+        {
+          "symbol": "CUPID",
+          "market_cap_cr": 47600.99
+        },
+        {
+          "symbol": "HINDCOPPER",
+          "market_cap_cr": 42196.09
+        },
+        {
+          "symbol": "GRSE",
+          "market_cap_cr": 25333.17
+        },
+        {
+          "symbol": "LALITHAA",
+          "market_cap_cr": 20709.26
+        },
+        {
+          "symbol": "TRITURBINE",
+          "market_cap_cr": 16351.11
+        },
+        {
+          "symbol": "TSFINV",
+          "market_cap_cr": 9449.41
+        },
+        {
+          "symbol": "MIDHANI",
+          "market_cap_cr": 7603.19
+        },
+        {
+          "symbol": "POWERMECH",
+          "market_cap_cr": 7572.41
+        },
+        {
+          "symbol": "BAJAJHIND",
+          "market_cap_cr": 4360.58
+        },
+        {
+          "symbol": "NPST",
+          "market_cap_cr": 3672.18
+        },
+        {
+          "symbol": "NFL",
+          "market_cap_cr": 3259.89
+        },
+        {
+          "symbol": "TALBROAUTO",
+          "market_cap_cr": 2569.74
+        },
+        {
+          "symbol": "DCXINDIA",
+          "market_cap_cr": 1804.35
+        },
+        {
+          "symbol": "AVTNPL",
+          "market_cap_cr": 1512.79
+        },
+        {
+          "symbol": "ROTO",
+          "market_cap_cr": 1267.11
+        },
+        {
+          "symbol": "GREENPOWER",
+          "market_cap_cr": 1097.96
+        },
+        {
+          "symbol": "SEPC",
+          "market_cap_cr": 1037.0
+        }
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "days_ago": 2,
+      "symbols": [
+        {
+          "symbol": "KALYANKJIL",
+          "market_cap_cr": 67583.51
+        },
+        {
+          "symbol": "MRF",
+          "market_cap_cr": 53674.45
+        },
+        {
+          "symbol": "COCHINSHIP",
+          "market_cap_cr": 33768.02
+        },
+        {
+          "symbol": "AVANTIFEED",
+          "market_cap_cr": 10666.55
+        },
+        {
+          "symbol": "TITAGARH",
+          "market_cap_cr": 9469.22
+        },
+        {
+          "symbol": "MMTC",
+          "market_cap_cr": 8013.35
+        },
+        {
+          "symbol": "RENTOMOJO",
+          "market_cap_cr": 6445.23
+        },
+        {
+          "symbol": "MIDWESTLTD",
+          "market_cap_cr": 3711.17
+        },
+        {
+          "symbol": "HIRECT",
+          "market_cap_cr": 3247.68
+        },
+        {
+          "symbol": "DREDGECORP",
+          "market_cap_cr": 2431.75
+        },
+        {
+          "symbol": "SIMPLEXINF",
+          "market_cap_cr": 2334.34
+        },
+        {
+          "symbol": "QUADFUTURE",
+          "market_cap_cr": 1751.93
+        },
+        {
+          "symbol": "SURAKSHA",
+          "market_cap_cr": 1745.81
+        }
+      ]
+    },
+    {
+      "date": "2026-11-09",
+      "days_ago": 3,
+      "symbols": [
+        {
+          "symbol": "PARKHOSPS",
+          "market_cap_cr": 11046.2
+        },
+        {
+          "symbol": "WHIRLPOOL",
+          "market_cap_cr": 10569.05
+        },
+        {
+          "symbol": "OLECTRA",
+          "market_cap_cr": 8574.57
+        }
+      ]
+    },
+    {
+      "date": "2026-11-07",
+      "days_ago": 5,
+      "symbols": [
+        {
+          "symbol": "DIVISLAB",
+          "market_cap_cr": 304890.67
+        },
+        {
+          "symbol": "TATASTEEL",
+          "market_cap_cr": 234690.31
+        },
+        {
+          "symbol": "HBLENGINE",
+          "market_cap_cr": 22412.6
+        },
+        {
+          "symbol": "FINCABLES",
+          "market_cap_cr": 19158.71
+        },
+        {
+          "symbol": "TATACHEM",
+          "market_cap_cr": 15383.46
+        },
+        {
+          "symbol": "SPECTRUM",
+          "market_cap_cr": 7555.06
+        },
+        {
+          "symbol": "SUPRAJIT",
+          "market_cap_cr": 6365.8
+        },
+        {
+          "symbol": "GOLDIAM",
+          "market_cap_cr": 4799.01
+        },
+        {
+          "symbol": "SURYAROSNI",
+          "market_cap_cr": 4567.75
+        },
+        {
+          "symbol": "ANDHRSUGAR",
+          "market_cap_cr": 1089.98
+        },
+        {
+          "symbol": "MAMATA",
+          "market_cap_cr": 849.83
+        },
+        {
+          "symbol": "PROSTARM",
+          "market_cap_cr": 798.81
+        },
+        {
+          "symbol": "MAWANASUG",
+          "market_cap_cr": 563.28
+        },
+        {
+          "symbol": "DCMSRIND",
+          "market_cap_cr": 506.73
+        },
+        {
+          "symbol": "REMSONSIND",
+          "market_cap_cr": 312.06
+        }
+      ]
+    },
+    {
+      "date": "2026-11-06",
+      "days_ago": 6,
+      "symbols": [
+        {
+          "symbol": "HINDALCO",
+          "market_cap_cr": 216632.64
+        },
+        {
+          "symbol": "BOSCHLTD",
+          "market_cap_cr": 148955.31
+        },
+        {
+          "symbol": "SIEMENS",
+          "market_cap_cr": 130728.28
+        },
+        {
+          "symbol": "ASTERDM",
+          "market_cap_cr": 64146.37
+        },
+        {
+          "symbol": "COROMANDEL",
+          "market_cap_cr": 58776.13
+        },
+        {
+          "symbol": "GLAND",
+          "market_cap_cr": 54597.14
+        },
+        {
+          "symbol": "VOLTAS",
+          "market_cap_cr": 36883.73
+        },
+        {
+          "symbol": "NUVAMA",
+          "market_cap_cr": 34803.34
+        },
+        {
+          "symbol": "3MINDIA",
+          "market_cap_cr": 32212.47
+        },
+        {
+          "symbol": "JUBLFOOD",
+          "market_cap_cr": 29033.19
+        },
+        {
+          "symbol": "CHOLAHLDNG",
+          "market_cap_cr": 27460.58
+        },
+        {
+          "symbol": "DATAPATTNS",
+          "market_cap_cr": 23686.82
+        },
+        {
+          "symbol": "GESHIP",
+          "market_cap_cr": 20694.1
+        },
+        {
+          "symbol": "KIOCL",
+          "market_cap_cr": 20672.66
+        },
+        {
+          "symbol": "ELGIEQUIP",
+          "market_cap_cr": 18331.6
+        },
+        {
+          "symbol": "COHANCE",
+          "market_cap_cr": 18045.21
+        },
+        {
+          "symbol": "RATNAMANI",
+          "market_cap_cr": 17341.46
+        },
+        {
+          "symbol": "SIGMAADV",
+          "market_cap_cr": 16604.6
+        },
+        {
+          "symbol": "HONASA",
+          "market_cap_cr": 16159.39
+        },
+        {
+          "symbol": "AZAD",
+          "market_cap_cr": 15941.36
+        },
+        {
+          "symbol": "VTL",
+          "market_cap_cr": 15058.0
+        },
+        {
+          "symbol": "ANURAS",
+          "market_cap_cr": 13682.48
+        },
+        {
+          "symbol": "INGERRAND",
+          "market_cap_cr": 12672.97
+        },
+        {
+          "symbol": "GODREJAGRO",
+          "market_cap_cr": 11350.35
+        },
+        {
+          "symbol": "BLUEDART",
+          "market_cap_cr": 10605.68
+        },
+        {
+          "symbol": "BANCOINDIA",
+          "market_cap_cr": 9677.19
+        },
+        {
+          "symbol": "SUDARSCHEM",
+          "market_cap_cr": 9399.1
+        },
+        {
+          "symbol": "KWIL",
+          "market_cap_cr": 9330.23
+        },
+        {
+          "symbol": "KMEW",
+          "market_cap_cr": 9042.38
+        },
+        {
+          "symbol": "DYNAMATECH",
+          "market_cap_cr": 8966.06
+        },
+        {
+          "symbol": "TTKPRESTIG",
+          "market_cap_cr": 7942.68
+        },
+        {
+          "symbol": "PRECWIRE",
+          "market_cap_cr": 7347.97
+        },
+        {
+          "symbol": "STARCEMENT",
+          "market_cap_cr": 7267.41
+        },
+        {
+          "symbol": "AJAXENGG",
+          "market_cap_cr": 6452.54
+        },
+        {
+          "symbol": "PRSMJOHNSN",
+          "market_cap_cr": 5775.01
+        },
+        {
+          "symbol": "ROSSTECH",
+          "market_cap_cr": 5609.99
+        },
+        {
+          "symbol": "RAIN",
+          "market_cap_cr": 5599.15
+        },
+        {
+          "symbol": "SUPRIYA",
+          "market_cap_cr": 5167.4
+        },
+        {
+          "symbol": "CMRGREEN",
+          "market_cap_cr": 4874.42
+        },
+        {
+          "symbol": "WSTCSTPAPR",
+          "market_cap_cr": 4757.83
+        },
+        {
+          "symbol": "FOSECOIND",
+          "market_cap_cr": 4733.78
+        },
+        {
+          "symbol": "DPABHUSHAN",
+          "market_cap_cr": 4571.52
+        },
+        {
+          "symbol": "CCAVENUE",
+          "market_cap_cr": 4350.22
+        },
+        {
+          "symbol": "AGIIL",
+          "market_cap_cr": 3773.92
+        },
+        {
+          "symbol": "ALEMBICLTD",
+          "market_cap_cr": 2934.51
+        },
+        {
+          "symbol": "ANUP",
+          "market_cap_cr": 2879.52
+        },
+        {
+          "symbol": "CARRARO",
+          "market_cap_cr": 2810.74
+        },
+        {
+          "symbol": "NACLIND",
+          "market_cap_cr": 2778.13
+        },
+        {
+          "symbol": "RAMKY",
+          "market_cap_cr": 2698.36
+        },
+        {
+          "symbol": "BLUSPRING",
+          "market_cap_cr": 2524.79
+        },
+        {
+          "symbol": "HINDOILEXP",
+          "market_cap_cr": 2497.59
+        },
+        {
+          "symbol": "PIXTRANS",
+          "market_cap_cr": 2379.23
+        },
+        {
+          "symbol": "SIRCA",
+          "market_cap_cr": 2327.65
+        },
+        {
+          "symbol": "BOMDYEING",
+          "market_cap_cr": 2206.21
+        },
+        {
+          "symbol": "NGLFINE",
+          "market_cap_cr": 1926.37
+        },
+        {
+          "symbol": "BAJEL",
+          "market_cap_cr": 1882.05
+        },
+        {
+          "symbol": "BFUTILITIE",
+          "market_cap_cr": 1696.18
+        },
+        {
+          "symbol": "RGL",
+          "market_cap_cr": 1682.59
+        },
+        {
+          "symbol": "VOEPL",
+          "market_cap_cr": 1632.07
+        },
+        {
+          "symbol": "GTLINFRA",
+          "market_cap_cr": 1396.19
+        },
+        {
+          "symbol": "MANALIPETC",
+          "market_cap_cr": 1383.9
+        },
+        {
+          "symbol": "RICOAUTO",
+          "market_cap_cr": 1335.4
+        },
+        {
+          "symbol": "PASHUPATI",
+          "market_cap_cr": 1320.96
+        },
+        {
+          "symbol": "SALSTEEL",
+          "market_cap_cr": 1267.87
+        },
+        {
+          "symbol": "INDOBORAX",
+          "market_cap_cr": 1236.27
+        },
+        {
+          "symbol": "INDOAMIN",
+          "market_cap_cr": 846.8
+        },
+        {
+          "symbol": "OCCLLTD",
+          "market_cap_cr": 796.96
+        },
+        {
+          "symbol": "MAGADSUGAR",
+          "market_cap_cr": 767.71
+        },
+        {
+          "symbol": "KECL",
+          "market_cap_cr": 730.69
+        },
+        {
+          "symbol": "SOLEX",
+          "market_cap_cr": 708.05
+        },
+        {
+          "symbol": "KILITCH",
+          "market_cap_cr": 701.36
+        },
+        {
+          "symbol": "COFFEEDAY",
+          "market_cap_cr": 647.06
+        },
+        {
+          "symbol": "TRANSWORLD",
+          "market_cap_cr": 543.09
+        },
+        {
+          "symbol": "SOUTHWEST",
+          "market_cap_cr": 491.9
+        }
+      ]
+    },
+    {
+      "date": "2026-11-05",
+      "days_ago": 7,
+      "symbols": [
+        {
+          "symbol": "BHARTIARTL",
+          "market_cap_cr": 1308009.02
+        },
+        {
+          "symbol": "LICI",
+          "market_cap_cr": 511059.81
+        },
+        {
+          "symbol": "TITAN",
+          "market_cap_cr": 436959.47
+        },
+        {
+          "symbol": "M&M",
+          "market_cap_cr": 422675.45
+        },
+        {
+          "symbol": "ONGC",
+          "market_cap_cr": 282427.27
+        },
+        {
+          "symbol": "MOTHERSON",
+          "market_cap_cr": 175024.33
+        },
+        {
+          "symbol": "LGEINDIA",
+          "market_cap_cr": 117643.09
+        },
+        {
+          "symbol": "BRITANNIA",
+          "market_cap_cr": 115542.11
+        },
+        {
+          "symbol": "BHARATFORG",
+          "market_cap_cr": 86006.03
+        },
+        {
+          "symbol": "UNOMINDA",
+          "market_cap_cr": 80049.66
+        },
+        {
+          "symbol": "BHARTIHEXA",
+          "market_cap_cr": 79660.0
+        },
+        {
+          "symbol": "GLENMARK",
+          "market_cap_cr": 75066.12
+        },
+        {
+          "symbol": "PRESTIGE",
+          "market_cap_cr": 72961.4
+        },
+        {
+          "symbol": "FORTIS",
+          "market_cap_cr": 57376.82
+        },
+        {
+          "symbol": "BERGEPAINT",
+          "market_cap_cr": 55904.0
+        },
+        {
+          "symbol": "CPPLUS",
+          "market_cap_cr": 49719.04
+        },
+        {
+          "symbol": "IPCALAB",
+          "market_cap_cr": 48196.19
+        },
+        {
+          "symbol": "MPHASIS",
+          "market_cap_cr": 47176.74
+        },
+        {
+          "symbol": "TIINDIA",
+          "market_cap_cr": 44566.15
+        },
+        {
+          "symbol": "SAILIFE",
+          "market_cap_cr": 41007.12
+        },
+        {
+          "symbol": "ASTRAL",
+          "market_cap_cr": 34252.89
+        },
+        {
+          "symbol": "THERMAX",
+          "market_cap_cr": 32439.11
+        },
+        {
+          "symbol": "SANSERA",
+          "market_cap_cr": 29340.91
+        },
+        {
+          "symbol": "IKS",
+          "market_cap_cr": 28620.12
+        },
+        {
+          "symbol": "RUBICON",
+          "market_cap_cr": 28426.79
+        },
+        {
+          "symbol": "GODFRYPHLP",
+          "market_cap_cr": 28302.89
+        },
+        {
+          "symbol": "SCHNEIDER",
+          "market_cap_cr": 25129.84
+        },
+        {
+          "symbol": "CEMPRO",
+          "market_cap_cr": 24447.11
+        },
+        {
+          "symbol": "GODIGIT",
+          "market_cap_cr": 23577.31
+        },
+        {
+          "symbol": "KPIL",
+          "market_cap_cr": 23066.12
+        },
+        {
+          "symbol": "IRB",
+          "market_cap_cr": 22918.87
+        },
+        {
+          "symbol": "NBCC",
+          "market_cap_cr": 22328.65
+        },
+        {
+          "symbol": "GUJENERGY",
+          "market_cap_cr": 22251.38
+        },
+        {
+          "symbol": "RAMCOCEM",
+          "market_cap_cr": 19644.17
+        },
+        {
+          "symbol": "SHILPAMED",
+          "market_cap_cr": 19355.75
+        },
+        {
+          "symbol": "AADHARHFC",
+          "market_cap_cr": 19045.99
+        },
+        {
+          "symbol": "EMAMILTD",
+          "market_cap_cr": 18012.17
+        },
+        {
+          "symbol": "HAPPYFORGE",
+          "market_cap_cr": 17757.8
+        },
+        {
+          "symbol": "BEML",
+          "market_cap_cr": 17703.08
+        },
+        {
+          "symbol": "AGARWALEYE",
+          "market_cap_cr": 17318.69
+        },
+        {
+          "symbol": "CESC",
+          "market_cap_cr": 17277.48
+        },
+        {
+          "symbol": "POLYMED",
+          "market_cap_cr": 17161.51
+        },
+        {
+          "symbol": "ASTRAZEN",
+          "market_cap_cr": 16096.25
+        },
+        {
+          "symbol": "MOLBIO",
+          "market_cap_cr": 16065.61
+        },
+        {
+          "symbol": "WABAG",
+          "market_cap_cr": 13002.0
+        },
+        {
+          "symbol": "TEGA",
+          "market_cap_cr": 12976.81
+        },
+        {
+          "symbol": "PGIL",
+          "market_cap_cr": 12704.25
+        },
+        {
+          "symbol": "BIKAJI",
+          "market_cap_cr": 12506.95
+        },
+        {
+          "symbol": "KARAMTARA",
+          "market_cap_cr": 12354.58
+        },
+        {
+          "symbol": "AMAGI",
+          "market_cap_cr": 12131.54
+        },
+        {
+          "symbol": "MANYAVAR",
+          "market_cap_cr": 12079.66
+        },
+        {
+          "symbol": "SIGNATURE",
+          "market_cap_cr": 10939.74
+        },
+        {
+          "symbol": "UTLSOLAR",
+          "market_cap_cr": 10833.07
+        },
+        {
+          "symbol": "SYMBIOTEC",
+          "market_cap_cr": 10566.67
+        },
+        {
+          "symbol": "WELENT",
+          "market_cap_cr": 10457.51
+        },
+        {
+          "symbol": "LLOYDSENT",
+          "market_cap_cr": 10274.48
+        },
+        {
+          "symbol": "BLUEJET",
+          "market_cap_cr": 10207.64
+        },
+        {
+          "symbol": "TIMETECHNO",
+          "market_cap_cr": 9749.43
+        },
+        {
+          "symbol": "LEMONTREE",
+          "market_cap_cr": 9539.44
+        },
+        {
+          "symbol": "SHIPROCKET",
+          "market_cap_cr": 9456.33
+        },
+        {
+          "symbol": "KINGFA",
+          "market_cap_cr": 8653.23
+        },
+        {
+          "symbol": "HCG",
+          "market_cap_cr": 8598.94
+        },
+        {
+          "symbol": "NCC",
+          "market_cap_cr": 8531.8
+        },
+        {
+          "symbol": "CELLO",
+          "market_cap_cr": 8332.51
+        },
+        {
+          "symbol": "RATEGAIN",
+          "market_cap_cr": 8043.64
+        },
+        {
+          "symbol": "SUVEN",
+          "market_cap_cr": 7958.38
+        },
+        {
+          "symbol": "IBULLSLTD",
+          "market_cap_cr": 7271.81
+        },
+        {
+          "symbol": "SONATSOFTW",
+          "market_cap_cr": 7153.69
+        },
+        {
+          "symbol": "SETL",
+          "market_cap_cr": 6956.27
+        },
+        {
+          "symbol": "OPTIEMUS",
+          "market_cap_cr": 6934.25
+        },
+        {
+          "symbol": "CEIGALL",
+          "market_cap_cr": 6873.25
+        },
+        {
+          "symbol": "INDIASHLTR",
+          "market_cap_cr": 6722.53
+        },
+        {
+          "symbol": "HNDFDS",
+          "market_cap_cr": 6678.49
+        },
+        {
+          "symbol": "SAFARI",
+          "market_cap_cr": 6361.32
+        },
+        {
+          "symbol": "KUSUMGAR",
+          "market_cap_cr": 6185.99
+        },
+        {
+          "symbol": "JAIBALAJI",
+          "market_cap_cr": 6113.95
+        },
+        {
+          "symbol": "CAMPUS",
+          "market_cap_cr": 6048.18
+        },
+        {
+          "symbol": "POWERICA",
+          "market_cap_cr": 6027.04
+        },
+        {
+          "symbol": "EMIL",
+          "market_cap_cr": 5565.39
+        },
+        {
+          "symbol": "RPTECH",
+          "market_cap_cr": 5436.52
+        },
+        {
+          "symbol": "GOKEX",
+          "market_cap_cr": 5304.95
+        },
+        {
+          "symbol": "ABFRL",
+          "market_cap_cr": 5165.94
+        },
+        {
+          "symbol": "DBREALTY",
+          "market_cap_cr": 4967.54
+        },
+        {
+          "symbol": "HCC",
+          "market_cap_cr": 4903.65
+        },
+        {
+          "symbol": "LXCHEM",
+          "market_cap_cr": 4673.9
+        },
+        {
+          "symbol": "TEXRAIL",
+          "market_cap_cr": 4610.59
+        },
+        {
+          "symbol": "JUNIPER",
+          "market_cap_cr": 4536.16
+        },
+        {
+          "symbol": "GUJALKALI",
+          "market_cap_cr": 4338.34
+        },
+        {
+          "symbol": "ASHAPURMIN",
+          "market_cap_cr": 4083.52
+        },
+        {
+          "symbol": "TCPLPACK",
+          "market_cap_cr": 4005.47
+        },
+        {
+          "symbol": "VENUSPIPES",
+          "market_cap_cr": 3895.04
+        },
+        {
+          "symbol": "JINDWORLD",
+          "market_cap_cr": 3626.41
+        },
+        {
+          "symbol": "VSTTILLERS",
+          "market_cap_cr": 3421.04
+        },
+        {
+          "symbol": "HEMIPROP",
+          "market_cap_cr": 3389.58
+        },
+        {
+          "symbol": "ASHOKA",
+          "market_cap_cr": 3329.74
+        },
+        {
+          "symbol": "KIRIINDUS",
+          "market_cap_cr": 3321.61
+        },
+        {
+          "symbol": "SANDHAR",
+          "market_cap_cr": 3124.2
+        },
+        {
+          "symbol": "EIEL",
+          "market_cap_cr": 3057.21
+        },
+        {
+          "symbol": "PRABHA",
+          "market_cap_cr": 2952.26
+        },
+        {
+          "symbol": "PROTEAN",
+          "market_cap_cr": 2949.56
+        },
+        {
+          "symbol": "ADFFOODS",
+          "market_cap_cr": 2945.55
+        },
+        {
+          "symbol": "MUTHOOTMF",
+          "market_cap_cr": 2884.28
+        },
+        {
+          "symbol": "ARVSMART",
+          "market_cap_cr": 2862.23
+        },
+        {
+          "symbol": "RPSGVENT",
+          "market_cap_cr": 2848.74
+        },
+        {
+          "symbol": "TASTYBITE",
+          "market_cap_cr": 2810.03
+        },
+        {
+          "symbol": "MUFIN",
+          "market_cap_cr": 2775.86
+        },
+        {
+          "symbol": "PATELENG",
+          "market_cap_cr": 2588.5
+        },
+        {
+          "symbol": "MMFL",
+          "market_cap_cr": 2570.57
+        },
+        {
+          "symbol": "GIPCL",
+          "market_cap_cr": 2545.7
+        },
+        {
+          "symbol": "MAITHANALL",
+          "market_cap_cr": 2447.55
+        },
+        {
+          "symbol": "REPCOHOME",
+          "market_cap_cr": 2401.77
+        },
+        {
+          "symbol": "BUILDPRO",
+          "market_cap_cr": 2238.45
+        },
+        {
+          "symbol": "APOLLOPIPE",
+          "market_cap_cr": 2182.37
+        },
+        {
+          "symbol": "JNKINDIA",
+          "market_cap_cr": 2097.72
+        },
+        {
+          "symbol": "WINDLAS",
+          "market_cap_cr": 2090.86
+        },
+        {
+          "symbol": "EUROPRATIK",
+          "market_cap_cr": 1926.47
+        },
+        {
+          "symbol": "GCSL",
+          "market_cap_cr": 1903.96
+        },
+        {
+          "symbol": "TCIEXP",
+          "market_cap_cr": 1902.41
+        },
+        {
+          "symbol": "IGPL",
+          "market_cap_cr": 1791.34
+        },
+        {
+          "symbol": "AVADHSUGAR",
+          "market_cap_cr": 1666.84
+        },
+        {
+          "symbol": "MBEL",
+          "market_cap_cr": 1662.52
+        },
+        {
+          "symbol": "TEAMLEASE",
+          "market_cap_cr": 1659.59
+        },
+        {
+          "symbol": "TEXINFRA",
+          "market_cap_cr": 1631.95
+        },
+        {
+          "symbol": "HPL",
+          "market_cap_cr": 1616.02
+        },
+        {
+          "symbol": "GALAPREC",
+          "market_cap_cr": 1576.91
+        },
+        {
+          "symbol": "HITECH",
+          "market_cap_cr": 1543.62
+        },
+        {
+          "symbol": "IKIO",
+          "market_cap_cr": 1513.39
+        },
+        {
+          "symbol": "TIRUMALCHM",
+          "market_cap_cr": 1509.44
+        },
+        {
+          "symbol": "VIKRAN",
+          "market_cap_cr": 1410.25
+        },
+        {
+          "symbol": "FERMENTA",
+          "market_cap_cr": 1396.06
+        },
+        {
+          "symbol": "SHANKESH",
+          "market_cap_cr": 1337.99
+        },
+        {
+          "symbol": "GHCLTEXTIL",
+          "market_cap_cr": 1248.73
+        },
+        {
+          "symbol": "SULA",
+          "market_cap_cr": 1195.85
+        },
+        {
+          "symbol": "VALIANTORG",
+          "market_cap_cr": 1119.09
+        },
+        {
+          "symbol": "IVALUE",
+          "market_cap_cr": 1107.72
+        },
+        {
+          "symbol": "ARROWGREEN",
+          "market_cap_cr": 1081.2
+        },
+        {
+          "symbol": "UGROCAP",
+          "market_cap_cr": 1062.39
+        },
+        {
+          "symbol": "ARMEE",
+          "market_cap_cr": 977.96
+        },
+        {
+          "symbol": "BIRLACABLE",
+          "market_cap_cr": 968.4
+        },
+        {
+          "symbol": "AWHCL",
+          "market_cap_cr": 897.16
+        },
+        {
+          "symbol": "JARO",
+          "market_cap_cr": 895.72
+        },
+        {
+          "symbol": "EXCELSOFT",
+          "market_cap_cr": 869.46
+        },
+        {
+          "symbol": "VEEGALAND",
+          "market_cap_cr": 668.41
+        },
+        {
+          "symbol": "DCI",
+          "market_cap_cr": 545.38
+        },
+        {
+          "symbol": "DPWIRES",
+          "market_cap_cr": 277.67
+        }
+      ]
+    },
+    {
+      "date": "2026-11-04",
+      "days_ago": 8,
+      "symbols": [
+        {
+          "symbol": "BSE",
+          "market_cap_cr": 151515.74
+        },
+        {
+          "symbol": "LENSKART",
+          "market_cap_cr": 126525.83
+        },
+        {
+          "symbol": "APOLLOHOSP",
+          "market_cap_cr": 122432.64
+        },
+        {
+          "symbol": "ZYDUSLIFE",
+          "market_cap_cr": 120298.96
+        },
+        {
+          "symbol": "CUMMINSIND",
+          "market_cap_cr": 118037.31
+        },
+        {
+          "symbol": "PFC",
+          "market_cap_cr": 111873.45
+        },
+        {
+          "symbol": "NYKAA",
+          "market_cap_cr": 103200.54
+        },
+        {
+          "symbol": "AUROPHARMA",
+          "market_cap_cr": 99322.02
+        },
+        {
+          "symbol": "NHPC",
+          "market_cap_cr": 78135.9
+        },
+        {
+          "symbol": "DABUR",
+          "market_cap_cr": 67995.77
+        },
+        {
+          "symbol": "TORNTPOWER",
+          "market_cap_cr": 61985.17
+        },
+        {
+          "symbol": "BIOCON",
+          "market_cap_cr": 60453.5
+        },
+        {
+          "symbol": "SUNDARMFIN",
+          "market_cap_cr": 49106.8
+        },
+        {
+          "symbol": "BALKRISIND",
+          "market_cap_cr": 44399.16
+        },
+        {
+          "symbol": "PREMIERENE",
+          "market_cap_cr": 41618.48
+        },
+        {
+          "symbol": "PWL",
+          "market_cap_cr": 37364.22
+        },
+        {
+          "symbol": "HUDCO",
+          "market_cap_cr": 34122.38
+        },
+        {
+          "symbol": "LALPATHLAB",
+          "market_cap_cr": 33717.47
+        },
+        {
+          "symbol": "NLCINDIA",
+          "market_cap_cr": 33591.27
+        },
+        {
+          "symbol": "PIIND",
+          "market_cap_cr": 32622.11
+        },
+        {
+          "symbol": "EXIDEIND",
+          "market_cap_cr": 32300.0
+        },
+        {
+          "symbol": "KIMS",
+          "market_cap_cr": 30944.03
+        },
+        {
+          "symbol": "REDINGTON",
+          "market_cap_cr": 28073.52
+        },
+        {
+          "symbol": "APOLLOTYRE",
+          "market_cap_cr": 26877.47
+        },
+        {
+          "symbol": "KIRLOSENG",
+          "market_cap_cr": 23840.52
+        },
+        {
+          "symbol": "APLLTD",
+          "market_cap_cr": 20585.07
+        },
+        {
+          "symbol": "TENNIND",
+          "market_cap_cr": 18550.26
+        },
+        {
+          "symbol": "CHALET",
+          "market_cap_cr": 17640.82
+        },
+        {
+          "symbol": "KANSAINER",
+          "market_cap_cr": 15555.75
+        },
+        {
+          "symbol": "CENTURYPLY",
+          "market_cap_cr": 15060.0
+        },
+        {
+          "symbol": "MARKSANS",
+          "market_cap_cr": 14505.23
+        },
+        {
+          "symbol": "NIVABUPA",
+          "market_cap_cr": 14466.07
+        },
+        {
+          "symbol": "BALRAMCHIN",
+          "market_cap_cr": 13769.71
+        },
+        {
+          "symbol": "JSWDULUX",
+          "market_cap_cr": 13539.14
+        },
+        {
+          "symbol": "THANGAMAYL",
+          "market_cap_cr": 13294.09
+        },
+        {
+          "symbol": "SKFINDUS",
+          "market_cap_cr": 12875.28
+        },
+        {
+          "symbol": "SCI",
+          "market_cap_cr": 12758.25
+        },
+        {
+          "symbol": "VARROC",
+          "market_cap_cr": 12678.21
+        },
+        {
+          "symbol": "BASF",
+          "market_cap_cr": 12650.66
+        },
+        {
+          "symbol": "SAREGAMA",
+          "market_cap_cr": 12383.19
+        },
+        {
+          "symbol": "JMFINANCIL",
+          "market_cap_cr": 11012.7
+        },
+        {
+          "symbol": "ICIL",
+          "market_cap_cr": 11010.83
+        },
+        {
+          "symbol": "IRCON",
+          "market_cap_cr": 10759.52
+        },
+        {
+          "symbol": "APTUS",
+          "market_cap_cr": 10114.09
+        },
+        {
+          "symbol": "RITES",
+          "market_cap_cr": 9505.86
+        },
+        {
+          "symbol": "MAXESTATES",
+          "market_cap_cr": 9458.73
+        },
+        {
+          "symbol": "ENTERO",
+          "market_cap_cr": 8981.37
+        },
+        {
+          "symbol": "PRICOLLTD",
+          "market_cap_cr": 8943.06
+        },
+        {
+          "symbol": "AUGMONT",
+          "market_cap_cr": 8646.22
+        },
+        {
+          "symbol": "GALAXYSURF",
+          "market_cap_cr": 8289.89
+        },
+        {
+          "symbol": "ESABINDIA",
+          "market_cap_cr": 8288.68
+        },
+        {
+          "symbol": "GPPL",
+          "market_cap_cr": 8100.52
+        },
+        {
+          "symbol": "AFCONS",
+          "market_cap_cr": 7831.17
+        },
+        {
+          "symbol": "ORKLAINDIA",
+          "market_cap_cr": 7707.01
+        },
+        {
+          "symbol": "EPL",
+          "market_cap_cr": 7647.91
+        },
+        {
+          "symbol": "SWANCORP",
+          "market_cap_cr": 7487.86
+        },
+        {
+          "symbol": "JYOTHYLAB",
+          "market_cap_cr": 7309.78
+        },
+        {
+          "symbol": "ISGEC",
+          "market_cap_cr": 7266.92
+        },
+        {
+          "symbol": "OMNI",
+          "market_cap_cr": 7052.67
+        },
+        {
+          "symbol": "SJS",
+          "market_cap_cr": 6642.76
+        },
+        {
+          "symbol": "BECTORFOOD",
+          "market_cap_cr": 6535.53
+        },
+        {
+          "symbol": "CERA",
+          "market_cap_cr": 6417.3
+        },
+        {
+          "symbol": "KSHINTL",
+          "market_cap_cr": 6348.45
+        },
+        {
+          "symbol": "CENTUM",
+          "market_cap_cr": 6258.35
+        },
+        {
+          "symbol": "MARINE",
+          "market_cap_cr": 6194.91
+        },
+        {
+          "symbol": "JKLAKSHMI",
+          "market_cap_cr": 6155.08
+        },
+        {
+          "symbol": "REDTAPE",
+          "market_cap_cr": 6001.27
+        },
+        {
+          "symbol": "PDSL",
+          "market_cap_cr": 5999.85
+        },
+        {
+          "symbol": "SBCL",
+          "market_cap_cr": 5971.83
+        },
+        {
+          "symbol": "IMFA",
+          "market_cap_cr": 5943.04
+        },
+        {
+          "symbol": "ROLEXRINGS",
+          "market_cap_cr": 5724.63
+        },
+        {
+          "symbol": "GMMPFAUDLR",
+          "market_cap_cr": 5525.69
+        },
+        {
+          "symbol": "SIS",
+          "market_cap_cr": 5462.38
+        },
+        {
+          "symbol": "LCL",
+          "market_cap_cr": 5446.95
+        },
+        {
+          "symbol": "GUJTHEM",
+          "market_cap_cr": 5044.03
+        },
+        {
+          "symbol": "SMSPHARMA",
+          "market_cap_cr": 4905.96
+        },
+        {
+          "symbol": "MAPMYINDIA",
+          "market_cap_cr": 4808.85
+        },
+        {
+          "symbol": "SANATHAN",
+          "market_cap_cr": 4723.86
+        },
+        {
+          "symbol": "NRBBEARING",
+          "market_cap_cr": 4588.36
+        },
+        {
+          "symbol": "RUSTOMJEE",
+          "market_cap_cr": 4507.79
+        },
+        {
+          "symbol": "UNIVCABLES",
+          "market_cap_cr": 4273.68
+        },
+        {
+          "symbol": "63MOONS",
+          "market_cap_cr": 4273.55
+        },
+        {
+          "symbol": "ELLEN",
+          "market_cap_cr": 4207.17
+        },
+        {
+          "symbol": "CHEMPLASTS",
+          "market_cap_cr": 3726.32
+        },
+        {
+          "symbol": "SHUKRAPHAR",
+          "market_cap_cr": 3612.27
+        },
+        {
+          "symbol": "UNIPARTS",
+          "market_cap_cr": 3562.92
+        },
+        {
+          "symbol": "UNICHEMLAB",
+          "market_cap_cr": 3499.87
+        },
+        {
+          "symbol": "JASH",
+          "market_cap_cr": 3465.23
+        },
+        {
+          "symbol": "VINDHYATEL",
+          "market_cap_cr": 3259.33
+        },
+        {
+          "symbol": "MAYURUNIQ",
+          "market_cap_cr": 3231.0
+        },
+        {
+          "symbol": "SANGAMIND",
+          "market_cap_cr": 3218.8
+        },
+        {
+          "symbol": "LUMINO",
+          "market_cap_cr": 3201.88
+        },
+        {
+          "symbol": "WEBELSOLAR",
+          "market_cap_cr": 2999.82
+        },
+        {
+          "symbol": "EMUDHRA",
+          "market_cap_cr": 2992.06
+        },
+        {
+          "symbol": "SHRINGARMS",
+          "market_cap_cr": 2904.62
+        },
+        {
+          "symbol": "RELTD",
+          "market_cap_cr": 2895.04
+        },
+        {
+          "symbol": "RAMCOIND",
+          "market_cap_cr": 2769.81
+        },
+        {
+          "symbol": "INTERARCH",
+          "market_cap_cr": 2769.6
+        },
+        {
+          "symbol": "NAVNETEDUL",
+          "market_cap_cr": 2744.81
+        },
+        {
+          "symbol": "CARYSIL",
+          "market_cap_cr": 2691.67
+        },
+        {
+          "symbol": "PANAMAPET",
+          "market_cap_cr": 2670.09
+        },
+        {
+          "symbol": "STOVEKRAFT",
+          "market_cap_cr": 2548.16
+        },
+        {
+          "symbol": "SUNCLAY",
+          "market_cap_cr": 2436.98
+        },
+        {
+          "symbol": "VINCOFE",
+          "market_cap_cr": 2401.68
+        },
+        {
+          "symbol": "SOMANYCERA",
+          "market_cap_cr": 2222.08
+        },
+        {
+          "symbol": "EXICOM",
+          "market_cap_cr": 1987.45
+        },
+        {
+          "symbol": "JISLJALEQS",
+          "market_cap_cr": 1962.32
+        },
+        {
+          "symbol": "GAJA",
+          "market_cap_cr": 1910.55
+        },
+        {
+          "symbol": "SAKSOFT",
+          "market_cap_cr": 1802.83
+        },
+        {
+          "symbol": "ARMANFIN",
+          "market_cap_cr": 1741.52
+        },
+        {
+          "symbol": "DIFFNKG",
+          "market_cap_cr": 1708.14
+        },
+        {
+          "symbol": "VIDYAWIRES",
+          "market_cap_cr": 1661.12
+        },
+        {
+          "symbol": "OAL",
+          "market_cap_cr": 1646.5
+        },
+        {
+          "symbol": "CAPACITE",
+          "market_cap_cr": 1496.14
+        },
+        {
+          "symbol": "AEROENTER",
+          "market_cap_cr": 1475.66
+        },
+        {
+          "symbol": "GARUDA",
+          "market_cap_cr": 1454.98
+        },
+        {
+          "symbol": "GPTINFRA",
+          "market_cap_cr": 1439.93
+        },
+        {
+          "symbol": "STEELXIND",
+          "market_cap_cr": 1405.62
+        },
+        {
+          "symbol": "MOL",
+          "market_cap_cr": 1404.83
+        },
+        {
+          "symbol": "GKSL",
+          "market_cap_cr": 1248.54
+        },
+        {
+          "symbol": "PLATIND",
+          "market_cap_cr": 1188.46
+        },
+        {
+          "symbol": "GODAVARIB",
+          "market_cap_cr": 1187.97
+        },
+        {
+          "symbol": "HARIOMPIPE",
+          "market_cap_cr": 1029.48
+        },
+        {
+          "symbol": "TCC",
+          "market_cap_cr": 921.79
+        },
+        {
+          "symbol": "PATELRMART",
+          "market_cap_cr": 810.1
+        },
+        {
+          "symbol": "ADVANCE",
+          "market_cap_cr": 790.13
+        },
+        {
+          "symbol": "ZIMLAB",
+          "market_cap_cr": 756.69
+        },
+        {
+          "symbol": "HTEL",
+          "market_cap_cr": 754.69
+        },
+        {
+          "symbol": "WANBURY",
+          "market_cap_cr": 722.6
+        },
+        {
+          "symbol": "MANIKA",
+          "market_cap_cr": 567.18
+        }
+      ]
+    },
+    {
+      "date": "2026-11-03",
+      "days_ago": 9,
+      "symbols": [
+        {
+          "symbol": "SBIN",
+          "market_cap_cr": 1002922.81
+        },
+        {
+          "symbol": "BAJAJFINSV",
+          "market_cap_cr": 302325.0
+        },
+        {
+          "symbol": "SOLARINDS",
+          "market_cap_cr": 174428.63
+        },
+        {
+          "symbol": "BAJAJHLDNG",
+          "market_cap_cr": 125372.14
+        },
+        {
+          "symbol": "LLOYDSME",
+          "market_cap_cr": 102049.41
+        },
+        {
+          "symbol": "LUPIN",
+          "market_cap_cr": 93469.71
+        },
+        {
+          "symbol": "LINDEINDIA",
+          "market_cap_cr": 58031.65
+        },
+        {
+          "symbol": "ANTHEM",
+          "market_cap_cr": 52884.29
+        },
+        {
+          "symbol": "FLUOROCHEM",
+          "market_cap_cr": 52881.79
+        },
+        {
+          "symbol": "AIIL",
+          "market_cap_cr": 50939.9
+        },
+        {
+          "symbol": "GLAXO",
+          "market_cap_cr": 44987.47
+        },
+        {
+          "symbol": "EMCURE",
+          "market_cap_cr": 43906.64
+        },
+        {
+          "symbol": "MEDANTA",
+          "market_cap_cr": 38709.47
+        },
+        {
+          "symbol": "ENDURANCE",
+          "market_cap_cr": 35444.22
+        },
+        {
+          "symbol": "DHOOTTRANS",
+          "market_cap_cr": 30251.53
+        },
+        {
+          "symbol": "AIAENG",
+          "market_cap_cr": 29915.71
+        },
+        {
+          "symbol": "ASAHIINDIA",
+          "market_cap_cr": 28141.42
+        },
+        {
+          "symbol": "NEULANDLAB",
+          "market_cap_cr": 26843.98
+        },
+        {
+          "symbol": "JYOTICNC",
+          "market_cap_cr": 24379.76
+        },
+        {
+          "symbol": "DIACABS",
+          "market_cap_cr": 22625.03
+        },
+        {
+          "symbol": "INOXINDIA",
+          "market_cap_cr": 17828.99
+        },
+        {
+          "symbol": "PFIZER",
+          "market_cap_cr": 17678.75
+        },
+        {
+          "symbol": "MINDACORP",
+          "market_cap_cr": 17293.81
+        },
+        {
+          "symbol": "GRAPHITE",
+          "market_cap_cr": 15604.65
+        },
+        {
+          "symbol": "CHAMBLFERT",
+          "market_cap_cr": 15487.22
+        },
+        {
+          "symbol": "CLEANMAX",
+          "market_cap_cr": 15343.71
+        },
+        {
+          "symbol": "ZYDUSWELL",
+          "market_cap_cr": 14985.37
+        },
+        {
+          "symbol": "VIJAYA",
+          "market_cap_cr": 14810.64
+        },
+        {
+          "symbol": "SEDEMAC",
+          "market_cap_cr": 13763.53
+        },
+        {
+          "symbol": "ASKAUTOLTD",
+          "market_cap_cr": 12873.41
+        },
+        {
+          "symbol": "FRACTAL",
+          "market_cap_cr": 12485.71
+        },
+        {
+          "symbol": "METROPOLIS",
+          "market_cap_cr": 11721.54
+        },
+        {
+          "symbol": "MGL",
+          "market_cap_cr": 11395.99
+        },
+        {
+          "symbol": "KSB",
+          "market_cap_cr": 11082.81
+        },
+        {
+          "symbol": "YATHARTH",
+          "market_cap_cr": 10216.93
+        },
+        {
+          "symbol": "JAINREC",
+          "market_cap_cr": 9924.67
+        },
+        {
+          "symbol": "BLS",
+          "market_cap_cr": 9354.34
+        },
+        {
+          "symbol": "HEGAM",
+          "market_cap_cr": 9255.81
+        },
+        {
+          "symbol": "SANDUMA",
+          "market_cap_cr": 8908.84
+        },
+        {
+          "symbol": "BATAINDIA",
+          "market_cap_cr": 8336.3
+        },
+        {
+          "symbol": "ALKYLAMINE",
+          "market_cap_cr": 8234.36
+        },
+        {
+          "symbol": "MPIMANIPAL",
+          "market_cap_cr": 7808.98
+        },
+        {
+          "symbol": "TFCILTD",
+          "market_cap_cr": 7709.5
+        },
+        {
+          "symbol": "EMBDL",
+          "market_cap_cr": 7441.28
+        },
+        {
+          "symbol": "SKFINDIA",
+          "market_cap_cr": 7309.89
+        },
+        {
+          "symbol": "V2RETAIL",
+          "market_cap_cr": 6786.27
+        },
+        {
+          "symbol": "EBGNG",
+          "market_cap_cr": 6519.75
+        },
+        {
+          "symbol": "NEPHROPLUS",
+          "market_cap_cr": 6261.31
+        },
+        {
+          "symbol": "VMART",
+          "market_cap_cr": 6111.39
+        },
+        {
+          "symbol": "TRANSRAILL",
+          "market_cap_cr": 6089.85
+        },
+        {
+          "symbol": "IONEXCHANG",
+          "market_cap_cr": 5099.0
+        },
+        {
+          "symbol": "NORTHARC",
+          "market_cap_cr": 4646.32
+        },
+        {
+          "symbol": "AARTIDRUGS",
+          "market_cap_cr": 4643.36
+        },
+        {
+          "symbol": "SOTL",
+          "market_cap_cr": 4590.47
+        },
+        {
+          "symbol": "DATAMATICS",
+          "market_cap_cr": 4314.47
+        },
+        {
+          "symbol": "DEEPINDS",
+          "market_cap_cr": 4235.2
+        },
+        {
+          "symbol": "HARSHA",
+          "market_cap_cr": 4223.54
+        },
+        {
+          "symbol": "SEAMECLTD",
+          "market_cap_cr": 4042.83
+        },
+        {
+          "symbol": "SUBROS",
+          "market_cap_cr": 4012.0
+        },
+        {
+          "symbol": "MPSLTD",
+          "market_cap_cr": 3987.91
+        },
+        {
+          "symbol": "DALMIASUG",
+          "market_cap_cr": 3911.79
+        },
+        {
+          "symbol": "KOLTEPATIL",
+          "market_cap_cr": 3811.13
+        },
+        {
+          "symbol": "RTNINDIA",
+          "market_cap_cr": 3614.63
+        },
+        {
+          "symbol": "SAMHI",
+          "market_cap_cr": 3584.74
+        },
+        {
+          "symbol": "LUXIND",
+          "market_cap_cr": 3534.02
+        },
+        {
+          "symbol": "PRINCEPIPE",
+          "market_cap_cr": 3525.79
+        },
+        {
+          "symbol": "PARAGMILK",
+          "market_cap_cr": 3494.88
+        },
+        {
+          "symbol": "RML",
+          "market_cap_cr": 3486.43
+        },
+        {
+          "symbol": "GSPLTRANS",
+          "market_cap_cr": 3333.69
+        },
+        {
+          "symbol": "RSYSTEMS",
+          "market_cap_cr": 2818.43
+        },
+        {
+          "symbol": "HIKAL",
+          "market_cap_cr": 2757.0
+        },
+        {
+          "symbol": "HGINFRA",
+          "market_cap_cr": 2695.8
+        },
+        {
+          "symbol": "XPROINDIA",
+          "market_cap_cr": 2680.79
+        },
+        {
+          "symbol": "AJMERA",
+          "market_cap_cr": 2637.26
+        },
+        {
+          "symbol": "MANGLMCEM",
+          "market_cap_cr": 2508.99
+        },
+        {
+          "symbol": "BHAGCHEM",
+          "market_cap_cr": 2437.91
+        },
+        {
+          "symbol": "JGCHEM",
+          "market_cap_cr": 2357.44
+        },
+        {
+          "symbol": "POKARNA",
+          "market_cap_cr": 2309.8
+        },
+        {
+          "symbol": "SHANTIGOLD",
+          "market_cap_cr": 2278.22
+        },
+        {
+          "symbol": "COSMOFIRST",
+          "market_cap_cr": 2141.85
+        },
+        {
+          "symbol": "NITCO",
+          "market_cap_cr": 2136.95
+        },
+        {
+          "symbol": "UTKARSHBNK",
+          "market_cap_cr": 2119.41
+        },
+        {
+          "symbol": "GLASSWALL",
+          "market_cap_cr": 2100.33
+        },
+        {
+          "symbol": "AWFIS",
+          "market_cap_cr": 2076.83
+        },
+        {
+          "symbol": "BODALCHEM",
+          "market_cap_cr": 2048.86
+        },
+        {
+          "symbol": "ONEPOINT",
+          "market_cap_cr": 1923.65
+        },
+        {
+          "symbol": "JYOTISTRUC",
+          "market_cap_cr": 1606.66
+        },
+        {
+          "symbol": "ARFIN",
+          "market_cap_cr": 1594.77
+        },
+        {
+          "symbol": "CAMLINFINE",
+          "market_cap_cr": 1535.24
+        },
+        {
+          "symbol": "ALLCARGO",
+          "market_cap_cr": 1520.95
+        },
+        {
+          "symbol": "SERVOTECH",
+          "market_cap_cr": 1441.31
+        },
+        {
+          "symbol": "HMAAGRO",
+          "market_cap_cr": 1363.59
+        },
+        {
+          "symbol": "FAZE3Q",
+          "market_cap_cr": 1352.39
+        },
+        {
+          "symbol": "KOPRAN",
+          "market_cap_cr": 1351.38
+        },
+        {
+          "symbol": "KALAMANDIR",
+          "market_cap_cr": 1308.97
+        },
+        {
+          "symbol": "ARIS",
+          "market_cap_cr": 1219.31
+        },
+        {
+          "symbol": "NRAIL",
+          "market_cap_cr": 1132.45
+        },
+        {
+          "symbol": "RHETAN",
+          "market_cap_cr": 1046.29
+        },
+        {
+          "symbol": "ASIANTILES",
+          "market_cap_cr": 1037.57
+        },
+        {
+          "symbol": "DAMCAPITAL",
+          "market_cap_cr": 994.77
+        },
+        {
+          "symbol": "MASTERTR",
+          "market_cap_cr": 983.27
+        },
+        {
+          "symbol": "ESTER",
+          "market_cap_cr": 950.03
+        },
+        {
+          "symbol": "SUBEXLTD",
+          "market_cap_cr": 891.55
+        },
+        {
+          "symbol": "AMANTA",
+          "market_cap_cr": 886.75
+        },
+        {
+          "symbol": "VASCONEQ",
+          "market_cap_cr": 731.7
+        },
+        {
+          "symbol": "SUYOG",
+          "market_cap_cr": 608.85
+        },
+        {
+          "symbol": "ADSL",
+          "market_cap_cr": 588.49
+        },
+        {
+          "symbol": "MANCREDIT",
+          "market_cap_cr": 570.73
+        },
+        {
+          "symbol": "BMWVENTLTD",
+          "market_cap_cr": 569.89
+        }
+      ]
+    },
+    {
+      "date": "2026-11-02",
+      "days_ago": 10,
+      "symbols": [
+        {
+          "symbol": "ITC",
+          "market_cap_cr": 355929.34
+        },
+        {
+          "symbol": "MARICO",
+          "market_cap_cr": 117277.0
+        },
+        {
+          "symbol": "NATIONALUM",
+          "market_cap_cr": 61929.57
+        },
+        {
+          "symbol": "PETRONET",
+          "market_cap_cr": 50250.0
+        },
+        {
+          "symbol": "UPL",
+          "market_cap_cr": 46931.59
+        },
+        {
+          "symbol": "CONCOR",
+          "market_cap_cr": 34211.88
+        },
+        {
+          "symbol": "WOCKPHARMA",
+          "market_cap_cr": 33375.89
+        },
+        {
+          "symbol": "TATAINVEST",
+          "market_cap_cr": 29785.45
+        },
+        {
+          "symbol": "ESCORTS",
+          "market_cap_cr": 27180.7
+        },
+        {
+          "symbol": "GRANULES",
+          "market_cap_cr": 20827.34
+        },
+        {
+          "symbol": "CARBORUNIV",
+          "market_cap_cr": 20138.33
+        },
+        {
+          "symbol": "TBOTEK",
+          "market_cap_cr": 17604.25
+        },
+        {
+          "symbol": "CHOICEIN",
+          "market_cap_cr": 16587.97
+        },
+        {
+          "symbol": "FINEORG",
+          "market_cap_cr": 16349.43
+        },
+        {
+          "symbol": "DEVYANI",
+          "market_cap_cr": 16038.08
+        },
+        {
+          "symbol": "ESDS",
+          "market_cap_cr": 14829.53
+        },
+        {
+          "symbol": "ARE&M",
+          "market_cap_cr": 13801.95
+        },
+        {
+          "symbol": "LLOYDSENGG",
+          "market_cap_cr": 13648.43
+        },
+        {
+          "symbol": "VENTIVE",
+          "market_cap_cr": 12942.19
+        },
+        {
+          "symbol": "TRIDENT",
+          "market_cap_cr": 12113.09
+        },
+        {
+          "symbol": "DOMS",
+          "market_cap_cr": 12051.83
+        },
+        {
+          "symbol": "AKUMS",
+          "market_cap_cr": 11802.97
+        },
+        {
+          "symbol": "PCBL",
+          "market_cap_cr": 11231.39
+        },
+        {
+          "symbol": "PGHL",
+          "market_cap_cr": 9642.58
+        },
+        {
+          "symbol": "KRBL",
+          "market_cap_cr": 9627.11
+        },
+        {
+          "symbol": "KEC",
+          "market_cap_cr": 9358.03
+        },
+        {
+          "symbol": "KANOHAR",
+          "market_cap_cr": 9049.12
+        },
+        {
+          "symbol": "VESUVIUS",
+          "market_cap_cr": 7489.2
+        },
+        {
+          "symbol": "EUREKAFORB",
+          "market_cap_cr": 7253.26
+        },
+        {
+          "symbol": "JKPAPER",
+          "market_cap_cr": 7020.47
+        },
+        {
+          "symbol": "GNFC",
+          "market_cap_cr": 6910.62
+        },
+        {
+          "symbol": "SPARC",
+          "market_cap_cr": 6898.2
+        },
+        {
+          "symbol": "SFL",
+          "market_cap_cr": 6648.9
+        },
+        {
+          "symbol": "BALAMINES",
+          "market_cap_cr": 5994.39
+        },
+        {
+          "symbol": "VRLLOG",
+          "market_cap_cr": 5882.79
+        },
+        {
+          "symbol": "GSFC",
+          "market_cap_cr": 5874.75
+        },
+        {
+          "symbol": "TRIVENI",
+          "market_cap_cr": 5477.61
+        },
+        {
+          "symbol": "THOMASCOOK",
+          "market_cap_cr": 5111.63
+        },
+        {
+          "symbol": "PURVA",
+          "market_cap_cr": 4915.86
+        },
+        {
+          "symbol": "PRASOLCHEM",
+          "market_cap_cr": 4803.7
+        },
+        {
+          "symbol": "BOSCH-HCIL",
+          "market_cap_cr": 4799.46
+        },
+        {
+          "symbol": "HAPPSTMNDS",
+          "market_cap_cr": 4727.7
+        },
+        {
+          "symbol": "ARVINDFASN",
+          "market_cap_cr": 4655.8
+        },
+        {
+          "symbol": "MOIL",
+          "market_cap_cr": 4496.61
+        },
+        {
+          "symbol": "PTC",
+          "market_cap_cr": 4164.24
+        },
+        {
+          "symbol": "CAPILLARY",
+          "market_cap_cr": 4098.82
+        },
+        {
+          "symbol": "EPIGRAL",
+          "market_cap_cr": 4035.44
+        },
+        {
+          "symbol": "PERNIASPOP",
+          "market_cap_cr": 3847.49
+        },
+        {
+          "symbol": "IDEAFORGE",
+          "market_cap_cr": 3571.55
+        },
+        {
+          "symbol": "GOPAL",
+          "market_cap_cr": 3215.95
+        },
+        {
+          "symbol": "SANGHVIMOV",
+          "market_cap_cr": 3195.51
+        },
+        {
+          "symbol": "PSPPROJECT",
+          "market_cap_cr": 3186.01
+        },
+        {
+          "symbol": "WONDERLA",
+          "market_cap_cr": 3169.45
+        },
+        {
+          "symbol": "HLEGLAS",
+          "market_cap_cr": 3153.59
+        },
+        {
+          "symbol": "BALMLAWRIE",
+          "market_cap_cr": 3006.05
+        },
+        {
+          "symbol": "JTLIND",
+          "market_cap_cr": 2984.28
+        },
+        {
+          "symbol": "FUSION",
+          "market_cap_cr": 2750.71
+        },
+        {
+          "symbol": "DIVGIITTS",
+          "market_cap_cr": 2676.98
+        },
+        {
+          "symbol": "BLSE",
+          "market_cap_cr": 2614.85
+        },
+        {
+          "symbol": "KITEX",
+          "market_cap_cr": 2535.82
+        },
+        {
+          "symbol": "AEROPLANE",
+          "market_cap_cr": 2514.55
+        },
+        {
+          "symbol": "EFCIL",
+          "market_cap_cr": 2417.37
+        },
+        {
+          "symbol": "MOLDTKPAC",
+          "market_cap_cr": 2326.72
+        },
+        {
+          "symbol": "UFBL",
+          "market_cap_cr": 2128.0
+        },
+        {
+          "symbol": "EPACKPEB",
+          "market_cap_cr": 2110.55
+        },
+        {
+          "symbol": "SHK",
+          "market_cap_cr": 1876.42
+        },
+        {
+          "symbol": "GREENPANEL",
+          "market_cap_cr": 1831.93
+        },
+        {
+          "symbol": "SHREEPUSHK",
+          "market_cap_cr": 1829.69
+        },
+        {
+          "symbol": "MOBIKWIK",
+          "market_cap_cr": 1812.83
+        },
+        {
+          "symbol": "KRSNAA",
+          "market_cap_cr": 1680.49
+        },
+        {
+          "symbol": "XTRANET",
+          "market_cap_cr": 1419.95
+        },
+        {
+          "symbol": "RSL",
+          "market_cap_cr": 1410.62
+        },
+        {
+          "symbol": "WALCHANNAG",
+          "market_cap_cr": 1364.55
+        },
+        {
+          "symbol": "JAYBARMARU",
+          "market_cap_cr": 1343.06
+        },
+        {
+          "symbol": "NELCAST",
+          "market_cap_cr": 1328.77
+        },
+        {
+          "symbol": "MMP",
+          "market_cap_cr": 1155.19
+        },
+        {
+          "symbol": "BHARATWIRE",
+          "market_cap_cr": 1043.86
+        },
+        {
+          "symbol": "TNPETRO",
+          "market_cap_cr": 1024.7
+        },
+        {
+          "symbol": "RUPA",
+          "market_cap_cr": 1001.44
+        },
+        {
+          "symbol": "ORIENTTECH",
+          "market_cap_cr": 983.04
+        },
+        {
+          "symbol": "DIGITIDE",
+          "market_cap_cr": 975.74
+        },
+        {
+          "symbol": "VIVIANA",
+          "market_cap_cr": 815.82
+        },
+        {
+          "symbol": "GANESHCP",
+          "market_cap_cr": 739.66
+        },
+        {
+          "symbol": "PASUPTAC",
+          "market_cap_cr": 641.49
+        }
+      ]
+    },
+    {
+      "date": "2026-11-01",
+      "days_ago": 11,
+      "symbols": [
+        {
+          "symbol": "POWERGRID",
+          "market_cap_cr": 240537.98
+        },
+        {
+          "symbol": "SAIPARENT",
+          "market_cap_cr": 2376.53
+        }
+      ]
+    },
+    {
+      "date": "2026-10-31",
+      "days_ago": 12,
+      "symbols": [
+        {
+          "symbol": "NTPC",
+          "market_cap_cr": 313202.32
+        },
+        {
+          "symbol": "MUTHOOTFIN",
+          "market_cap_cr": 117746.69
+        },
+        {
+          "symbol": "SHYAMMETL",
+          "market_cap_cr": 36675.13
+        },
+        {
+          "symbol": "CDSL",
+          "market_cap_cr": 30409.5
+        },
+        {
+          "symbol": "ZENTEC",
+          "market_cap_cr": 15844.15
+        },
+        {
+          "symbol": "SARDAEN",
+          "market_cap_cr": 15772.59
+        },
+        {
+          "symbol": "RAINBOW",
+          "market_cap_cr": 13129.52
+        },
+        {
+          "symbol": "ATLANTAELE",
+          "market_cap_cr": 11866.69
+        },
+        {
+          "symbol": "QPOWER",
+          "market_cap_cr": 11563.96
+        },
+        {
+          "symbol": "ABLBL",
+          "market_cap_cr": 9780.04
+        },
+        {
+          "symbol": "NEOGEN",
+          "market_cap_cr": 8581.02
+        },
+        {
+          "symbol": "CLEAN",
+          "market_cap_cr": 7474.96
+        },
+        {
+          "symbol": "BIRLACORPN",
+          "market_cap_cr": 6551.24
+        },
+        {
+          "symbol": "LGBBROSLTD",
+          "market_cap_cr": 5390.14
+        },
+        {
+          "symbol": "LATENTVIEW",
+          "market_cap_cr": 4369.66
+        },
+        {
+          "symbol": "GHCL",
+          "market_cap_cr": 4109.03
+        },
+        {
+          "symbol": "NITINSPIN",
+          "market_cap_cr": 3781.64
+        },
+        {
+          "symbol": "VISHNU",
+          "market_cap_cr": 3743.74
+        },
+        {
+          "symbol": "PACEDIGITK",
+          "market_cap_cr": 3474.99
+        },
+        {
+          "symbol": "AURIONPRO",
+          "market_cap_cr": 3295.53
+        },
+        {
+          "symbol": "ADVENZYMES",
+          "market_cap_cr": 3157.81
+        },
+        {
+          "symbol": "GANECOS",
+          "market_cap_cr": 2347.6
+        },
+        {
+          "symbol": "EVEREADY",
+          "market_cap_cr": 2310.0
+        },
+        {
+          "symbol": "STUDDS",
+          "market_cap_cr": 1648.9
+        },
+        {
+          "symbol": "DLINKINDIA",
+          "market_cap_cr": 1462.8
+        },
+        {
+          "symbol": "RAMBHAJO",
+          "market_cap_cr": 1448.51
+        },
+        {
+          "symbol": "UTTAMSUGAR",
+          "market_cap_cr": 1401.19
+        },
+        {
+          "symbol": "ATULAUTO",
+          "market_cap_cr": 1131.01
+        },
+        {
+          "symbol": "SIGACHI",
+          "market_cap_cr": 1061.14
+        },
+        {
+          "symbol": "MEIL",
+          "market_cap_cr": 700.73
+        },
+        {
+          "symbol": "PRIORITY",
+          "market_cap_cr": 465.48
+        },
+        {
+          "symbol": "OMPOWER",
+          "market_cap_cr": 425.56
+        }
+      ]
+    },
+    {
+      "date": "2026-10-30",
+      "days_ago": 13,
+      "symbols": [
+        {
+          "symbol": "RELIANCE",
+          "market_cap_cr": 1812954.22
+        },
+        {
+          "symbol": "SUNPHARMA",
+          "market_cap_cr": 452274.64
+        },
+        {
+          "symbol": "BEL",
+          "market_cap_cr": 295899.85
+        },
+        {
+          "symbol": "IOC",
+          "market_cap_cr": 206410.14
+        },
+        {
+          "symbol": "VBL",
+          "market_cap_cr": 146341.97
+        },
+        {
+          "symbol": "BANKBARODA",
+          "market_cap_cr": 142807.16
+        },
+        {
+          "symbol": "GAIL",
+          "market_cap_cr": 123552.7
+        },
+        {
+          "symbol": "LODHA",
+          "market_cap_cr": 122518.48
+        },
+        {
+          "symbol": "ABCAPITAL",
+          "market_cap_cr": 114847.64
+        },
+        {
+          "symbol": "GVT&D",
+          "market_cap_cr": 107539.55
+        },
+        {
+          "symbol": "MAXHEALTH",
+          "market_cap_cr": 92104.35
+        },
+        {
+          "symbol": "PHOENIXLTD",
+          "market_cap_cr": 81979.76
+        },
+        {
+          "symbol": "DIXON",
+          "market_cap_cr": 79472.82
+        },
+        {
+          "symbol": "NTPCGREEN",
+          "market_cap_cr": 70410.41
+        },
+        {
+          "symbol": "GICRE",
+          "market_cap_cr": 59482.93
+        },
+        {
+          "symbol": "NAVINFLUOR",
+          "market_cap_cr": 51133.37
+        },
+        {
+          "symbol": "POLICYBZR",
+          "market_cap_cr": 48593.66
+        },
+        {
+          "symbol": "AJANTPHARM",
+          "market_cap_cr": 41536.38
+        },
+        {
+          "symbol": "NH",
+          "market_cap_cr": 37604.44
+        },
+        {
+          "symbol": "DELHIVERY",
+          "market_cap_cr": 33006.41
+        },
+        {
+          "symbol": "LICHSGFIN",
+          "market_cap_cr": 31848.65
+        },
+        {
+          "symbol": "GABRIEL",
+          "market_cap_cr": 29086.99
+        },
+        {
+          "symbol": "SYRMA",
+          "market_cap_cr": 29059.56
+        },
+        {
+          "symbol": "NIACL",
+          "market_cap_cr": 26567.41
+        },
+        {
+          "symbol": "SUNTV",
+          "market_cap_cr": 26342.59
+        },
+        {
+          "symbol": "MSUMI",
+          "market_cap_cr": 25790.53
+        },
+        {
+          "symbol": "AETHER",
+          "market_cap_cr": 23419.19
+        },
+        {
+          "symbol": "WELSPUNLIV",
+          "market_cap_cr": 23393.96
+        },
+        {
+          "symbol": "SJVN",
+          "market_cap_cr": 23001.1
+        },
+        {
+          "symbol": "AFFLE",
+          "market_cap_cr": 22606.92
+        },
+        {
+          "symbol": "IGL",
+          "market_cap_cr": 20013.42
+        },
+        {
+          "symbol": "SHRIPISTON",
+          "market_cap_cr": 19940.07
+        },
+        {
+          "symbol": "AARTIIND",
+          "market_cap_cr": 17545.94
+        },
+        {
+          "symbol": "ENGINERSIN",
+          "market_cap_cr": 17285.62
+        },
+        {
+          "symbol": "GMDCLTD",
+          "market_cap_cr": 15836.4
+        },
+        {
+          "symbol": "JNPR",
+          "market_cap_cr": 14441.18
+        },
+        {
+          "symbol": "CORONA",
+          "market_cap_cr": 14324.91
+        },
+        {
+          "symbol": "RKFORGE",
+          "market_cap_cr": 14311.28
+        },
+        {
+          "symbol": "TI",
+          "market_cap_cr": 12796.49
+        },
+        {
+          "symbol": "VINATIORGA",
+          "market_cap_cr": 11707.98
+        },
+        {
+          "symbol": "FINPIPE",
+          "market_cap_cr": 9328.25
+        },
+        {
+          "symbol": "INTELLECT",
+          "market_cap_cr": 7360.28
+        },
+        {
+          "symbol": "AVL",
+          "market_cap_cr": 7338.26
+        },
+        {
+          "symbol": "GMRP&UI",
+          "market_cap_cr": 7231.44
+        },
+        {
+          "symbol": "ZEEL",
+          "market_cap_cr": 7059.82
+        },
+        {
+          "symbol": "SHARDACROP",
+          "market_cap_cr": 6697.06
+        },
+        {
+          "symbol": "SKIPPER",
+          "market_cap_cr": 6444.06
+        },
+        {
+          "symbol": "IOLCP",
+          "market_cap_cr": 6019.67
+        },
+        {
+          "symbol": "SMARTWORKS",
+          "market_cap_cr": 5959.25
+        },
+        {
+          "symbol": "BORORENEW",
+          "market_cap_cr": 5954.79
+        },
+        {
+          "symbol": "GANESHHOU",
+          "market_cap_cr": 5321.76
+        },
+        {
+          "symbol": "QUESS",
+          "market_cap_cr": 5115.72
+        },
+        {
+          "symbol": "VADILALIND",
+          "market_cap_cr": 5054.48
+        },
+        {
+          "symbol": "ARTEMISMED",
+          "market_cap_cr": 5014.35
+        },
+        {
+          "symbol": "INDIGOPNTS",
+          "market_cap_cr": 4684.01
+        },
+        {
+          "symbol": "TEMPSENS",
+          "market_cap_cr": 4469.96
+        },
+        {
+          "symbol": "NETWORK18",
+          "market_cap_cr": 4345.15
+        },
+        {
+          "symbol": "DHANUKA",
+          "market_cap_cr": 4053.28
+        },
+        {
+          "symbol": "SHAREINDIA",
+          "market_cap_cr": 3981.41
+        },
+        {
+          "symbol": "RENUKA",
+          "market_cap_cr": 3958.99
+        },
+        {
+          "symbol": "LCCPROJECT",
+          "market_cap_cr": 3821.63
+        },
+        {
+          "symbol": "RTNPOWER",
+          "market_cap_cr": 3780.56
+        },
+        {
+          "symbol": "RESPONIND",
+          "market_cap_cr": 3623.48
+        },
+        {
+          "symbol": "RATNAVEER",
+          "market_cap_cr": 3129.62
+        },
+        {
+          "symbol": "SPORTKING",
+          "market_cap_cr": 2759.36
+        },
+        {
+          "symbol": "CRIZAC",
+          "market_cap_cr": 2745.13
+        },
+        {
+          "symbol": "DIAMONDYD",
+          "market_cap_cr": 2471.25
+        },
+        {
+          "symbol": "GLOBUSSPR",
+          "market_cap_cr": 2332.39
+        },
+        {
+          "symbol": "VIMTALABS",
+          "market_cap_cr": 2260.03
+        },
+        {
+          "symbol": "MEDIASSIST",
+          "market_cap_cr": 2053.93
+        },
+        {
+          "symbol": "ADVAIT",
+          "market_cap_cr": 2035.89
+        },
+        {
+          "symbol": "ASIANENE",
+          "market_cap_cr": 1926.31
+        },
+        {
+          "symbol": "SPANDANA",
+          "market_cap_cr": 1689.98
+        },
+        {
+          "symbol": "GOCOLORS",
+          "market_cap_cr": 1528.24
+        },
+        {
+          "symbol": "UDS",
+          "market_cap_cr": 1458.38
+        },
+        {
+          "symbol": "TTKHLTCARE",
+          "market_cap_cr": 1329.1
+        },
+        {
+          "symbol": "ANDHRAPAP",
+          "market_cap_cr": 1253.35
+        },
+        {
+          "symbol": "IRMENERGY",
+          "market_cap_cr": 1068.05
+        },
+        {
+          "symbol": "ARIHANTCAP",
+          "market_cap_cr": 1044.83
+        },
+        {
+          "symbol": "PRANAV",
+          "market_cap_cr": 965.18
+        },
+        {
+          "symbol": "PDMJEPAPER",
+          "market_cap_cr": 844.29
+        },
+        {
+          "symbol": "DMCC",
+          "market_cap_cr": 628.48
+        }
+      ]
+    },
+    {
+      "date": "2026-10-29",
+      "days_ago": 14,
+      "symbols": [
+        {
+          "symbol": "COALINDIA",
+          "market_cap_cr": 249159.11
+        },
+        {
+          "symbol": "ASIANPAINT",
+          "market_cap_cr": 243300.52
+        },
+        {
+          "symbol": "INDIGO",
+          "market_cap_cr": 218853.29
+        },
+        {
+          "symbol": "TRENT",
+          "market_cap_cr": 169574.13
+        },
+        {
+          "symbol": "LAURUSLABS",
+          "market_cap_cr": 129674.93
+        },
+        {
+          "symbol": "AMBUJACEM",
+          "market_cap_cr": 96758.79
+        },
+        {
+          "symbol": "GODREJCP",
+          "market_cap_cr": 89692.67
+        },
+        {
+          "symbol": "MOTILALOFS",
+          "market_cap_cr": 73370.26
+        },
+        {
+          "symbol": "APARINDS",
+          "market_cap_cr": 60120.31
+        },
+        {
+          "symbol": "WELCORP",
+          "market_cap_cr": 56870.63
+        },
+        {
+          "symbol": "SUZLON",
+          "market_cap_cr": 53415.35
+        },
+        {
+          "symbol": "BLUESTARCO",
+          "market_cap_cr": 32538.54
+        },
+        {
+          "symbol": "TIMKEN",
+          "market_cap_cr": 23294.49
+        },
+        {
+          "symbol": "MILKYMIST",
+          "market_cap_cr": 22910.54
+        },
+        {
+          "symbol": "DEEPAKNTR",
+          "market_cap_cr": 22166.6
+        },
+        {
+          "symbol": "GRINDWELL",
+          "market_cap_cr": 21189.59
+        },
+        {
+          "symbol": "PINELABS",
+          "market_cap_cr": 20353.22
+        },
+        {
+          "symbol": "FSL",
+          "market_cap_cr": 20052.42
+        },
+        {
+          "symbol": "CAMS",
+          "market_cap_cr": 18457.49
+        },
+        {
+          "symbol": "MTARTECH",
+          "market_cap_cr": 18440.37
+        },
+        {
+          "symbol": "BRIGADE",
+          "market_cap_cr": 18293.35
+        },
+        {
+          "symbol": "ALIVUS",
+          "market_cap_cr": 17500.34
+        },
+        {
+          "symbol": "SHADOWFAX",
+          "market_cap_cr": 17145.92
+        },
+        {
+          "symbol": "INDGN",
+          "market_cap_cr": 16049.59
+        },
+        {
+          "symbol": "PARADEEP",
+          "market_cap_cr": 14941.19
+        },
+        {
+          "symbol": "SHAILY",
+          "market_cap_cr": 14363.4
+        },
+        {
+          "symbol": "VEDPOWER",
+          "market_cap_cr": 13561.22
+        },
+        {
+          "symbol": "PRIVISCL",
+          "market_cap_cr": 13458.91
+        },
+        {
+          "symbol": "VGUARD",
+          "market_cap_cr": 13411.1
+        },
+        {
+          "symbol": "HORIZONIND",
+          "market_cap_cr": 13379.55
+        },
+        {
+          "symbol": "JSWHL",
+          "market_cap_cr": 12615.84
+        },
+        {
+          "symbol": "VOGL",
+          "market_cap_cr": 12047.9
+        },
+        {
+          "symbol": "PARAS",
+          "market_cap_cr": 10511.81
+        },
+        {
+          "symbol": "BLACKBUCK",
+          "market_cap_cr": 10419.05
+        },
+        {
+          "symbol": "IEX",
+          "market_cap_cr": 10286.56
+        },
+        {
+          "symbol": "VOLTAMP",
+          "market_cap_cr": 9835.86
+        },
+        {
+          "symbol": "STAR",
+          "market_cap_cr": 9552.81
+        },
+        {
+          "symbol": "PNGJL",
+          "market_cap_cr": 9299.52
+        },
+        {
+          "symbol": "THYROCARE",
+          "market_cap_cr": 7767.27
+        },
+        {
+          "symbol": "SANOFI",
+          "market_cap_cr": 7556.12
+        },
+        {
+          "symbol": "GARFIBRES",
+          "market_cap_cr": 7024.33
+        },
+        {
+          "symbol": "BLISSGVS",
+          "market_cap_cr": 6818.09
+        },
+        {
+          "symbol": "KRN",
+          "market_cap_cr": 6807.68
+        },
+        {
+          "symbol": "EQUITASBNK",
+          "market_cap_cr": 6619.91
+        },
+        {
+          "symbol": "RBA",
+          "market_cap_cr": 6404.43
+        },
+        {
+          "symbol": "WHEELS",
+          "market_cap_cr": 6282.29
+        },
+        {
+          "symbol": "SENORES",
+          "market_cap_cr": 5604.72
+        },
+        {
+          "symbol": "STYL",
+          "market_cap_cr": 5371.14
+        },
+        {
+          "symbol": "ACI",
+          "market_cap_cr": 5267.97
+        },
+        {
+          "symbol": "GREAVESCOT",
+          "market_cap_cr": 5199.01
+        },
+        {
+          "symbol": "SAMBHV",
+          "market_cap_cr": 4935.16
+        },
+        {
+          "symbol": "RAMRAT",
+          "market_cap_cr": 4926.49
+        },
+        {
+          "symbol": "CARERATING",
+          "market_cap_cr": 4813.23
+        },
+        {
+          "symbol": "PRAJIND",
+          "market_cap_cr": 4742.01
+        },
+        {
+          "symbol": "MANINFRA",
+          "market_cap_cr": 4538.02
+        },
+        {
+          "symbol": "ICRA",
+          "market_cap_cr": 4323.46
+        },
+        {
+          "symbol": "RPGLIFE",
+          "market_cap_cr": 4305.44
+        },
+        {
+          "symbol": "STEAMHOUSE",
+          "market_cap_cr": 4182.58
+        },
+        {
+          "symbol": "ARCIL",
+          "market_cap_cr": 4172.97
+        },
+        {
+          "symbol": "SYMPHONY",
+          "market_cap_cr": 3750.15
+        },
+        {
+          "symbol": "BOROLTD",
+          "market_cap_cr": 3713.8
+        },
+        {
+          "symbol": "GREENPLY",
+          "market_cap_cr": 3431.68
+        },
+        {
+          "symbol": "INDOSTAR",
+          "market_cap_cr": 3361.67
+        },
+        {
+          "symbol": "NILKAMAL",
+          "market_cap_cr": 3264.3
+        },
+        {
+          "symbol": "INDSWFTLAB",
+          "market_cap_cr": 3133.66
+        },
+        {
+          "symbol": "INDRAMEDCO",
+          "market_cap_cr": 3082.5
+        },
+        {
+          "symbol": "MONARCH",
+          "market_cap_cr": 2574.2
+        },
+        {
+          "symbol": "HUBTOWN",
+          "market_cap_cr": 2573.16
+        },
+        {
+          "symbol": "NIITMTS",
+          "market_cap_cr": 2453.69
+        },
+        {
+          "symbol": "NOCIL",
+          "market_cap_cr": 2373.43
+        },
+        {
+          "symbol": "ESAFSFB",
+          "market_cap_cr": 2326.62
+        },
+        {
+          "symbol": "STLNETWORK",
+          "market_cap_cr": 2233.59
+        },
+        {
+          "symbol": "MENONBE",
+          "market_cap_cr": 2076.68
+        },
+        {
+          "symbol": "GKENERGY",
+          "market_cap_cr": 2040.95
+        },
+        {
+          "symbol": "KRISHNADEF",
+          "market_cap_cr": 1898.07
+        },
+        {
+          "symbol": "SURYODAY",
+          "market_cap_cr": 1697.77
+        },
+        {
+          "symbol": "SILVERTUC",
+          "market_cap_cr": 1601.99
+        },
+        {
+          "symbol": "AYMSYNTEX",
+          "market_cap_cr": 1550.41
+        },
+        {
+          "symbol": "EPACK",
+          "market_cap_cr": 1548.23
+        },
+        {
+          "symbol": "AHCL",
+          "market_cap_cr": 1420.74
+        },
+        {
+          "symbol": "DCW",
+          "market_cap_cr": 1395.49
+        },
+        {
+          "symbol": "FINOPB",
+          "market_cap_cr": 1117.24
+        },
+        {
+          "symbol": "LINCOLN",
+          "market_cap_cr": 1037.74
+        },
+        {
+          "symbol": "DWARKESH",
+          "market_cap_cr": 796.24
+        },
+        {
+          "symbol": "OMAXAUTO",
+          "market_cap_cr": 429.75
+        }
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "days_ago": 15,
+      "symbols": [
+        {
+          "symbol": "HINDUNILVR",
+          "market_cap_cr": 463809.31
+        },
+        {
+          "symbol": "ADANIPORTS",
+          "market_cap_cr": 444664.11
+        },
+        {
+          "symbol": "ADANIENT",
+          "market_cap_cr": 371042.89
+        },
+        {
+          "symbol": "TVSMOTOR",
+          "market_cap_cr": 213789.21
+        },
+        {
+          "symbol": "HYUNDAI",
+          "market_cap_cr": 170877.39
+        },
+        {
+          "symbol": "PIDILITIND",
+          "market_cap_cr": 160794.45
+        },
+        {
+          "symbol": "CHOLAFIN",
+          "market_cap_cr": 159072.63
+        },
+        {
+          "symbol": "VAML",
+          "market_cap_cr": 149533.24
+        },
+        {
+          "symbol": "MEESHO",
+          "market_cap_cr": 117556.89
+        },
+        {
+          "symbol": "HEROMOTOCO",
+          "market_cap_cr": 106915.44
+        },
+        {
+          "symbol": "GMRAIRPORT",
+          "market_cap_cr": 105695.35
+        },
+        {
+          "symbol": "UNITDSPR",
+          "market_cap_cr": 103640.22
+        },
+        {
+          "symbol": "VEDL",
+          "market_cap_cr": 101826.5
+        },
+        {
+          "symbol": "JSWENERGY",
+          "market_cap_cr": 95276.93
+        },
+        {
+          "symbol": "NAUKRI",
+          "market_cap_cr": 77162.05
+        },
+        {
+          "symbol": "KPRMILL",
+          "market_cap_cr": 39395.39
+        },
+        {
+          "symbol": "HEXT",
+          "market_cap_cr": 30330.83
+        },
+        {
+          "symbol": "ACMESOLAR",
+          "market_cap_cr": 29625.11
+        },
+        {
+          "symbol": "PNBHOUSING",
+          "market_cap_cr": 29611.68
+        },
+        {
+          "symbol": "CRAFTSMAN",
+          "market_cap_cr": 28631.26
+        },
+        {
+          "symbol": "BANDHANBNK",
+          "market_cap_cr": 28320.75
+        },
+        {
+          "symbol": "TVSHLTD",
+          "market_cap_cr": 25878.88
+        },
+        {
+          "symbol": "FORCEMOT",
+          "market_cap_cr": 25852.08
+        },
+        {
+          "symbol": "CUB",
+          "market_cap_cr": 23371.68
+        },
+        {
+          "symbol": "SUNDRMFAST",
+          "market_cap_cr": 22542.57
+        },
+        {
+          "symbol": "RRKABEL",
+          "market_cap_cr": 22030.69
+        },
+        {
+          "symbol": "ANANTRAJ",
+          "market_cap_cr": 17445.03
+        },
+        {
+          "symbol": "PVRINOX",
+          "market_cap_cr": 16228.53
+        },
+        {
+          "symbol": "KPITTECH",
+          "market_cap_cr": 15298.6
+        },
+        {
+          "symbol": "ECLERX",
+          "market_cap_cr": 14572.21
+        },
+        {
+          "symbol": "KTKBANK",
+          "market_cap_cr": 13848.97
+        },
+        {
+          "symbol": "ARVIND",
+          "market_cap_cr": 13774.78
+        },
+        {
+          "symbol": "SUDEEPPHRM",
+          "market_cap_cr": 13615.96
+        },
+        {
+          "symbol": "CARTRADE",
+          "market_cap_cr": 12855.24
+        },
+        {
+          "symbol": "ZENSARTECH",
+          "market_cap_cr": 12738.83
+        },
+        {
+          "symbol": "PRUDENT",
+          "market_cap_cr": 12454.3
+        },
+        {
+          "symbol": "IIFLCAPS",
+          "market_cap_cr": 11102.17
+        },
+        {
+          "symbol": "AARTIPHARM",
+          "market_cap_cr": 9446.69
+        },
+        {
+          "symbol": "BSOFT",
+          "market_cap_cr": 9167.49
+        },
+        {
+          "symbol": "SANOFICONR",
+          "market_cap_cr": 8148.24
+        },
+        {
+          "symbol": "GOKULAGRO",
+          "market_cap_cr": 6734.47
+        },
+        {
+          "symbol": "AEROFLEX",
+          "market_cap_cr": 6656.24
+        },
+        {
+          "symbol": "KISSHT",
+          "market_cap_cr": 6413.6
+        },
+        {
+          "symbol": "DODLA",
+          "market_cap_cr": 5825.26
+        },
+        {
+          "symbol": "GOODLUCK",
+          "market_cap_cr": 5601.02
+        },
+        {
+          "symbol": "STYLAMIND",
+          "market_cap_cr": 5563.54
+        },
+        {
+          "symbol": "GULFOILLUB",
+          "market_cap_cr": 5507.6
+        },
+        {
+          "symbol": "MASFIN",
+          "market_cap_cr": 4818.68
+        },
+        {
+          "symbol": "AGI",
+          "market_cap_cr": 4528.82
+        },
+        {
+          "symbol": "ZOTA",
+          "market_cap_cr": 4511.59
+        },
+        {
+          "symbol": "YASHO",
+          "market_cap_cr": 4265.35
+        },
+        {
+          "symbol": "SHILCTECH",
+          "market_cap_cr": 4072.14
+        },
+        {
+          "symbol": "KSL",
+          "market_cap_cr": 3869.19
+        },
+        {
+          "symbol": "KSCL",
+          "market_cap_cr": 3691.02
+        },
+        {
+          "symbol": "RAYMONDLSL",
+          "market_cap_cr": 3406.55
+        },
+        {
+          "symbol": "STYRENIX",
+          "market_cap_cr": 3378.79
+        },
+        {
+          "symbol": "VSTIND",
+          "market_cap_cr": 3377.34
+        },
+        {
+          "symbol": "PNCINFRA",
+          "market_cap_cr": 3362.2
+        },
+        {
+          "symbol": "MOSCHIP",
+          "market_cap_cr": 3311.92
+        },
+        {
+          "symbol": "BAJAJELEC",
+          "market_cap_cr": 3267.64
+        },
+        {
+          "symbol": "REFEX",
+          "market_cap_cr": 3232.55
+        },
+        {
+          "symbol": "SATIN",
+          "market_cap_cr": 2981.39
+        },
+        {
+          "symbol": "VAIBHAVGBL",
+          "market_cap_cr": 2851.07
+        },
+        {
+          "symbol": "SASKEN",
+          "market_cap_cr": 2605.65
+        },
+        {
+          "symbol": "APCOTEXIND",
+          "market_cap_cr": 2570.21
+        },
+        {
+          "symbol": "GATEWAY",
+          "market_cap_cr": 2399.29
+        },
+        {
+          "symbol": "CNL",
+          "market_cap_cr": 2214.95
+        },
+        {
+          "symbol": "MANAKCOAT",
+          "market_cap_cr": 1882.51
+        },
+        {
+          "symbol": "BHAGERIA",
+          "market_cap_cr": 1676.16
+        },
+        {
+          "symbol": "INFOBEAN",
+          "market_cap_cr": 1615.06
+        },
+        {
+          "symbol": "UNITEDPOLY",
+          "market_cap_cr": 1203.12
+        },
+        {
+          "symbol": "KAMDHENU",
+          "market_cap_cr": 1040.43
+        },
+        {
+          "symbol": "ADROITIND",
+          "market_cap_cr": 888.77
+        },
+        {
+          "symbol": "EMKAY",
+          "market_cap_cr": 714.89
+        },
+        {
+          "symbol": "20MICRONS",
+          "market_cap_cr": 659.68
+        }
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "days_ago": 16,
+      "symbols": [
+        {
+          "symbol": "LT",
+          "market_cap_cr": 572262.24
+        },
+        {
+          "symbol": "MARUTI",
+          "market_cap_cr": 409477.91
+        },
+        {
+          "symbol": "BAJAJ-AUTO",
+          "market_cap_cr": 300772.8
+        },
+        {
+          "symbol": "SBILIFE",
+          "market_cap_cr": 182569.55
+        },
+        {
+          "symbol": "TATACAP",
+          "market_cap_cr": 151393.25
+        },
+        {
+          "symbol": "CIPLA",
+          "market_cap_cr": 113770.7
+        },
+        {
+          "symbol": "INDUSTOWER",
+          "market_cap_cr": 102083.71
+        },
+        {
+          "symbol": "JSWINFRA",
+          "market_cap_cr": 79697.7
+        },
+        {
+          "symbol": "MAZDOCK",
+          "market_cap_cr": 76924.56
+        },
+        {
+          "symbol": "WAAREEENER",
+          "market_cap_cr": 73983.92
+        },
+        {
+          "symbol": "SAIL",
+          "market_cap_cr": 73399.43
+        },
+        {
+          "symbol": "RADICO",
+          "market_cap_cr": 62143.72
+        },
+        {
+          "symbol": "SCHAEFFLER",
+          "market_cap_cr": 55470.61
+        },
+        {
+          "symbol": "MFSL",
+          "market_cap_cr": 47453.28
+        },
+        {
+          "symbol": "STARHEALTH",
+          "market_cap_cr": 33607.47
+        },
+        {
+          "symbol": "ACUTAAS",
+          "market_cap_cr": 32716.52
+        },
+        {
+          "symbol": "PPLPHARMA",
+          "market_cap_cr": 32627.35
+        },
+        {
+          "symbol": "UBL",
+          "market_cap_cr": 32220.41
+        },
+        {
+          "symbol": "HONAUT",
+          "market_cap_cr": 27977.79
+        },
+        {
+          "symbol": "CGCL",
+          "market_cap_cr": 23632.43
+        },
+        {
+          "symbol": "ACC",
+          "market_cap_cr": 23296.89
+        },
+        {
+          "symbol": "AWL",
+          "market_cap_cr": 21859.29
+        },
+        {
+          "symbol": "ABDL",
+          "market_cap_cr": 21202.03
+        },
+        {
+          "symbol": "ONESOURCE",
+          "market_cap_cr": 18415.76
+        },
+        {
+          "symbol": "SYNGENE",
+          "market_cap_cr": 18076.3
+        },
+        {
+          "symbol": "JSWCEMENT",
+          "market_cap_cr": 17127.96
+        },
+        {
+          "symbol": "PGEL",
+          "market_cap_cr": 16439.79
+        },
+        {
+          "symbol": "SKYGOLD",
+          "market_cap_cr": 16262.53
+        },
+        {
+          "symbol": "LTFOODS",
+          "market_cap_cr": 15001.33
+        },
+        {
+          "symbol": "KIRLOSBROS",
+          "market_cap_cr": 12971.45
+        },
+        {
+          "symbol": "CONCORDBIO",
+          "market_cap_cr": 12591.61
+        },
+        {
+          "symbol": "SGMART",
+          "market_cap_cr": 11482.43
+        },
+        {
+          "symbol": "HOMEFIRST",
+          "market_cap_cr": 11436.07
+        },
+        {
+          "symbol": "GRAVITA",
+          "market_cap_cr": 11255.05
+        },
+        {
+          "symbol": "VISL",
+          "market_cap_cr": 10350.8
+        },
+        {
+          "symbol": "UNIMECH",
+          "market_cap_cr": 10081.65
+        },
+        {
+          "symbol": "INDIAMART",
+          "market_cap_cr": 9833.4
+        },
+        {
+          "symbol": "TANLA",
+          "market_cap_cr": 9691.57
+        },
+        {
+          "symbol": "JUBLINGREA",
+          "market_cap_cr": 9554.48
+        },
+        {
+          "symbol": "KIRLPNU",
+          "market_cap_cr": 8586.19
+        },
+        {
+          "symbol": "MEDPLUS",
+          "market_cap_cr": 7508.57
+        },
+        {
+          "symbol": "RAYMOND",
+          "market_cap_cr": 7498.86
+        },
+        {
+          "symbol": "TCI",
+          "market_cap_cr": 6622.46
+        },
+        {
+          "symbol": "FDC",
+          "market_cap_cr": 6356.1
+        },
+        {
+          "symbol": "MOREPENLAB",
+          "market_cap_cr": 5200.08
+        },
+        {
+          "symbol": "IFBIND",
+          "market_cap_cr": 4609.83
+        },
+        {
+          "symbol": "TBZ",
+          "market_cap_cr": 4257.74
+        },
+        {
+          "symbol": "RAYMONDREL",
+          "market_cap_cr": 3980.11
+        },
+        {
+          "symbol": "VSSL",
+          "market_cap_cr": 3690.78
+        },
+        {
+          "symbol": "BBL",
+          "market_cap_cr": 3090.61
+        },
+        {
+          "symbol": "ROUTE",
+          "market_cap_cr": 2851.22
+        },
+        {
+          "symbol": "GANDHAR",
+          "market_cap_cr": 2580.01
+        },
+        {
+          "symbol": "KNACK",
+          "market_cap_cr": 2517.41
+        },
+        {
+          "symbol": "SIYSIL",
+          "market_cap_cr": 2307.52
+        },
+        {
+          "symbol": "INDOCO",
+          "market_cap_cr": 2115.57
+        },
+        {
+          "symbol": "OMAXE",
+          "market_cap_cr": 1889.36
+        },
+        {
+          "symbol": "DYCL",
+          "market_cap_cr": 1874.14
+        },
+        {
+          "symbol": "HUHTAMAKI",
+          "market_cap_cr": 1727.87
+        },
+        {
+          "symbol": "PFS",
+          "market_cap_cr": 1658.38
+        },
+        {
+          "symbol": "BHARATSE",
+          "market_cap_cr": 1331.61
+        },
+        {
+          "symbol": "IRISDOREME",
+          "market_cap_cr": 1094.41
+        },
+        {
+          "symbol": "CENTENKA",
+          "market_cap_cr": 1032.77
+        },
+        {
+          "symbol": "QUICKHEAL",
+          "market_cap_cr": 814.37
+        },
+        {
+          "symbol": "MANBA",
+          "market_cap_cr": 724.65
+        }
+      ]
+    },
+    {
+      "date": "2026-10-26",
+      "days_ago": 17,
+      "symbols": [
+        {
+          "symbol": "PAYTM",
+          "market_cap_cr": 123509.51
+        },
+        {
+          "symbol": "MANKIND",
+          "market_cap_cr": 108986.07
+        },
+        {
+          "symbol": "TATACONSUM",
+          "market_cap_cr": 107411.61
+        },
+        {
+          "symbol": "RECLTD",
+          "market_cap_cr": 80208.0
+        },
+        {
+          "symbol": "ATHERENERG",
+          "market_cap_cr": 76173.72
+        },
+        {
+          "symbol": "MAHABANK",
+          "market_cap_cr": 70600.79
+        },
+        {
+          "symbol": "APLAPOLLO",
+          "market_cap_cr": 61798.43
+        },
+        {
+          "symbol": "IOB",
+          "market_cap_cr": 60870.08
+        },
+        {
+          "symbol": "SONACOMS",
+          "market_cap_cr": 57794.29
+        },
+        {
+          "symbol": "AEGISLOG",
+          "market_cap_cr": 43524.0
+        },
+        {
+          "symbol": "SUPREMEIND",
+          "market_cap_cr": 42426.97
+        },
+        {
+          "symbol": "ITCHOTELS",
+          "market_cap_cr": 36533.84
+        },
+        {
+          "symbol": "AEGISVOPAK",
+          "market_cap_cr": 29595.57
+        },
+        {
+          "symbol": "DALBHARAT",
+          "market_cap_cr": 27881.68
+        },
+        {
+          "symbol": "SUMICHEM",
+          "market_cap_cr": 17802.03
+        },
+        {
+          "symbol": "ERIS",
+          "market_cap_cr": 17708.18
+        },
+        {
+          "symbol": "KFINTECH",
+          "market_cap_cr": 16672.65
+        },
+        {
+          "symbol": "AEQUS",
+          "market_cap_cr": 15967.87
+        },
+        {
+          "symbol": "NAZARA",
+          "market_cap_cr": 15348.36
+        },
+        {
+          "symbol": "TMB",
+          "market_cap_cr": 14105.95
+        },
+        {
+          "symbol": "DCMSHRIRAM",
+          "market_cap_cr": 14077.69
+        },
+        {
+          "symbol": "ABREL",
+          "market_cap_cr": 13381.14
+        },
+        {
+          "symbol": "FIVESTAR",
+          "market_cap_cr": 13257.24
+        },
+        {
+          "symbol": "JBMA",
+          "market_cap_cr": 11885.02
+        },
+        {
+          "symbol": "WEWORK",
+          "market_cap_cr": 9545.25
+        },
+        {
+          "symbol": "AAVAS",
+          "market_cap_cr": 9025.28
+        },
+        {
+          "symbol": "LEAPIND",
+          "market_cap_cr": 5521.69
+        },
+        {
+          "symbol": "LUMAXIND",
+          "market_cap_cr": 5300.91
+        },
+        {
+          "symbol": "SUNTECK",
+          "market_cap_cr": 4584.41
+        },
+        {
+          "symbol": "AVANTEL",
+          "market_cap_cr": 4303.97
+        },
+        {
+          "symbol": "SHANTIGEAR",
+          "market_cap_cr": 3884.13
+        },
+        {
+          "symbol": "ANTELOPUS",
+          "market_cap_cr": 2971.57
+        },
+        {
+          "symbol": "MACPOWER",
+          "market_cap_cr": 2384.69
+        },
+        {
+          "symbol": "PARACABLES",
+          "market_cap_cr": 2225.56
+        },
+        {
+          "symbol": "DEEPA",
+          "market_cap_cr": 2177.99
+        },
+        {
+          "symbol": "BRIGHOTEL",
+          "market_cap_cr": 2100.91
+        },
+        {
+          "symbol": "SMCGLOBAL",
+          "market_cap_cr": 2042.06
+        },
+        {
+          "symbol": "PNGSREVA",
+          "market_cap_cr": 1996.05
+        },
+        {
+          "symbol": "VENUSREM",
+          "market_cap_cr": 1931.0
+        },
+        {
+          "symbol": "DHANBANK",
+          "market_cap_cr": 1383.41
+        },
+        {
+          "symbol": "ASTEC",
+          "market_cap_cr": 1196.58
+        },
+        {
+          "symbol": "RIR",
+          "market_cap_cr": 1149.58
+        }
+      ]
+    },
+    {
+      "date": "2026-10-25",
+      "days_ago": 18,
+      "symbols": [
+        {
+          "symbol": "BHARATCOAL",
+          "market_cap_cr": 14841.98
+        },
+        {
+          "symbol": "RAILTEL",
+          "market_cap_cr": 8256.91
+        }
+      ]
+    },
+    {
+      "date": "2026-10-24",
+      "days_ago": 19,
+      "symbols": [
+        {
+          "symbol": "KOTAKBANK",
+          "market_cap_cr": 487833.05
+        },
+        {
+          "symbol": "AUBANK",
+          "market_cap_cr": 73548.19
+        },
+        {
+          "symbol": "IDFCFIRSTB",
+          "market_cap_cr": 69779.44
+        },
+        {
+          "symbol": "JKCEMENT",
+          "market_cap_cr": 40627.65
+        },
+        {
+          "symbol": "NETWEB",
+          "market_cap_cr": 24682.03
+        },
+        {
+          "symbol": "CASTROLIND",
+          "market_cap_cr": 18887.29
+        },
+        {
+          "symbol": "KAJARIACER",
+          "market_cap_cr": 18803.74
+        },
+        {
+          "symbol": "APOLLO",
+          "market_cap_cr": 16354.09
+        },
+        {
+          "symbol": "LUMAXTECH",
+          "market_cap_cr": 15961.86
+        },
+        {
+          "symbol": "SBFC",
+          "market_cap_cr": 9862.54
+        },
+        {
+          "symbol": "GAEL",
+          "market_cap_cr": 6833.27
+        },
+        {
+          "symbol": "SESHAPAPER",
+          "market_cap_cr": 1396.77
+        },
+        {
+          "symbol": "RAJOOENG",
+          "market_cap_cr": 991.65
+        },
+        {
+          "symbol": "MODIS",
+          "market_cap_cr": 849.57
+        }
+      ]
+    },
+    {
+      "date": "2026-10-23",
+      "days_ago": 20,
+      "symbols": [
+        {
+          "symbol": "INFY",
+          "market_cap_cr": 467183.72
+        },
+        {
+          "symbol": "ADANIPOWER",
+          "market_cap_cr": 400928.8
+        },
+        {
+          "symbol": "JSWSTEEL",
+          "market_cap_cr": 330649.83
+        },
+        {
+          "symbol": "SHRIRAMFIN",
+          "market_cap_cr": 236198.67
+        },
+        {
+          "symbol": "TORNTPHARM",
+          "market_cap_cr": 179807.49
+        },
+        {
+          "symbol": "TMCV",
+          "market_cap_cr": 166977.67
+        },
+        {
+          "symbol": "BPCL",
+          "market_cap_cr": 135144.45
+        },
+        {
+          "symbol": "CGPOWER",
+          "market_cap_cr": 129462.61
+        },
+        {
+          "symbol": "JINDALSTEL",
+          "market_cap_cr": 118646.45
+        },
+        {
+          "symbol": "DRREDDY",
+          "market_cap_cr": 115736.77
+        },
+        {
+          "symbol": "SBIFUNDS",
+          "market_cap_cr": 106210.37
+        },
+        {
+          "symbol": "SHREECEM",
+          "market_cap_cr": 90941.52
+        },
+        {
+          "symbol": "COFORGE",
+          "market_cap_cr": 90101.75
+        },
+        {
+          "symbol": "OFSS",
+          "market_cap_cr": 87083.12
+        },
+        {
+          "symbol": "INDUSINDBK",
+          "market_cap_cr": 72565.26
+        },
+        {
+          "symbol": "BANKINDIA",
+          "market_cap_cr": 68931.95
+        },
+        {
+          "symbol": "GODREJPROP",
+          "market_cap_cr": 56615.53
+        },
+        {
+          "symbol": "SBICARD",
+          "market_cap_cr": 56146.94
+        },
+        {
+          "symbol": "STLTECH",
+          "market_cap_cr": 36570.05
+        },
+        {
+          "symbol": "CRISIL",
+          "market_cap_cr": 31834.96
+        },
+        {
+          "symbol": "ATUL",
+          "market_cap_cr": 15333.26
+        },
+        {
+          "symbol": "CMPDI",
+          "market_cap_cr": 13732.36
+        },
+        {
+          "symbol": "SPLPETRO",
+          "market_cap_cr": 13208.97
+        },
+        {
+          "symbol": "UTIAMC",
+          "market_cap_cr": 10977.98
+        },
+        {
+          "symbol": "JKTYRE",
+          "market_cap_cr": 10549.95
+        },
+        {
+          "symbol": "WESTLIFE",
+          "market_cap_cr": 10443.25
+        },
+        {
+          "symbol": "JLHL",
+          "market_cap_cr": 9402.16
+        },
+        {
+          "symbol": "SSWL",
+          "market_cap_cr": 9008.14
+        },
+        {
+          "symbol": "NESCO",
+          "market_cap_cr": 7552.6
+        },
+        {
+          "symbol": "DCBBANK",
+          "market_cap_cr": 7344.4
+        },
+        {
+          "symbol": "NEWGEN",
+          "market_cap_cr": 6303.21
+        },
+        {
+          "symbol": "CSBBANK",
+          "market_cap_cr": 5353.77
+        },
+        {
+          "symbol": "SHAKTIPUMP",
+          "market_cap_cr": 4853.25
+        },
+        {
+          "symbol": "MASTEK",
+          "market_cap_cr": 4628.01
+        },
+        {
+          "symbol": "JSFB",
+          "market_cap_cr": 4413.06
+        },
+        {
+          "symbol": "MAHLOG",
+          "market_cap_cr": 4261.98
+        },
+        {
+          "symbol": "TRUALT",
+          "market_cap_cr": 2926.31
+        },
+        {
+          "symbol": "GNA",
+          "market_cap_cr": 2527.12
+        },
+        {
+          "symbol": "SAKAR",
+          "market_cap_cr": 2407.84
+        },
+        {
+          "symbol": "RAMCOSYS",
+          "market_cap_cr": 2051.27
+        },
+        {
+          "symbol": "NAVKARCORP",
+          "market_cap_cr": 1260.29
+        },
+        {
+          "symbol": "SKMEGGPROD",
+          "market_cap_cr": 1206.81
+        },
+        {
+          "symbol": "UNIECOM",
+          "market_cap_cr": 968.04
+        },
+        {
+          "symbol": "CUBEXTUB",
+          "market_cap_cr": 285.05
+        },
+        {
+          "symbol": "PONNIERODE",
+          "market_cap_cr": 284.44
+        }
+      ]
+    },
+    {
+      "date": "2026-10-22",
+      "days_ago": 21,
+      "symbols": [
+        {
+          "symbol": "ADANIENSOL",
+          "market_cap_cr": 175383.9
+        },
+        {
+          "symbol": "HINDPETRO",
+          "market_cap_cr": 83112.75
+        },
+        {
+          "symbol": "HAVELLS",
+          "market_cap_cr": 73625.54
+        },
+        {
+          "symbol": "NAM-INDIA",
+          "market_cap_cr": 71556.7
+        },
+        {
+          "symbol": "ATGL",
+          "market_cap_cr": 63832.97
+        },
+        {
+          "symbol": "JSL",
+          "market_cap_cr": 58579.14
+        },
+        {
+          "symbol": "SWIGGY",
+          "market_cap_cr": 53053.23
+        },
+        {
+          "symbol": "COLPAL",
+          "market_cap_cr": 47053.52
+        },
+        {
+          "symbol": "HATSUN",
+          "market_cap_cr": 23665.89
+        },
+        {
+          "symbol": "CHENNPETRO",
+          "market_cap_cr": 21225.83
+        },
+        {
+          "symbol": "SAGILITY",
+          "market_cap_cr": 20462.09
+        },
+        {
+          "symbol": "GRWRHITECH",
+          "market_cap_cr": 17956.31
+        },
+        {
+          "symbol": "CREDITACC",
+          "market_cap_cr": 17656.51
+        },
+        {
+          "symbol": "J&KBANK",
+          "market_cap_cr": 15129.65
+        },
+        {
+          "symbol": "CIEINDIA",
+          "market_cap_cr": 14349.38
+        },
+        {
+          "symbol": "MAHSCOOTER",
+          "market_cap_cr": 13750.86
+        },
+        {
+          "symbol": "NUVOCO",
+          "market_cap_cr": 12366.53
+        },
+        {
+          "symbol": "BLUESTONE",
+          "market_cap_cr": 11850.28
+        },
+        {
+          "symbol": "CYIENT",
+          "market_cap_cr": 11411.79
+        },
+        {
+          "symbol": "TTML",
+          "market_cap_cr": 7606.62
+        },
+        {
+          "symbol": "PAISALO",
+          "market_cap_cr": 7158.7
+        },
+        {
+          "symbol": "SAPPHIRE",
+          "market_cap_cr": 6968.54
+        },
+        {
+          "symbol": "MAHLIFE",
+          "market_cap_cr": 6842.9
+        },
+        {
+          "symbol": "BANSALWIRE",
+          "market_cap_cr": 4652.85
+        },
+        {
+          "symbol": "RALLIS",
+          "market_cap_cr": 3691.22
+        },
+        {
+          "symbol": "PITTIENG",
+          "market_cap_cr": 3556.38
+        },
+        {
+          "symbol": "ORIENTCEM",
+          "market_cap_cr": 2605.64
+        },
+        {
+          "symbol": "BETA",
+          "market_cap_cr": 2044.64
+        },
+        {
+          "symbol": "TINNARUBR",
+          "market_cap_cr": 1599.79
+        },
+        {
+          "symbol": "ACCELYA",
+          "market_cap_cr": 1496.66
+        },
+        {
+          "symbol": "FAIRCHEMOR",
+          "market_cap_cr": 862.76
+        }
+      ]
+    },
+    {
+      "date": "2026-10-21",
+      "days_ago": 22,
+      "symbols": [
+        {
+          "symbol": "ETERNAL",
+          "market_cap_cr": 351610.52
+        },
+        {
+          "symbol": "ADANIGREEN",
+          "market_cap_cr": 234228.45
+        },
+        {
+          "symbol": "INDHOTEL",
+          "market_cap_cr": 120844.54
+        },
+        {
+          "symbol": "SRF",
+          "market_cap_cr": 73421.46
+        },
+        {
+          "symbol": "VMM",
+          "market_cap_cr": 44929.18
+        },
+        {
+          "symbol": "M&MFIN",
+          "market_cap_cr": 39780.32
+        },
+        {
+          "symbol": "KEI",
+          "market_cap_cr": 39537.54
+        },
+        {
+          "symbol": "ABSLAMC",
+          "market_cap_cr": 26903.1
+        },
+        {
+          "symbol": "LMW",
+          "market_cap_cr": 18556.37
+        },
+        {
+          "symbol": "IGIL",
+          "market_cap_cr": 16831.13
+        },
+        {
+          "symbol": "PCJEWELLER",
+          "market_cap_cr": 15535.15
+        },
+        {
+          "symbol": "MHRIL",
+          "market_cap_cr": 4053.5
+        },
+        {
+          "symbol": "AYE",
+          "market_cap_cr": 3908.59
+        },
+        {
+          "symbol": "MARATHON",
+          "market_cap_cr": 2927.8
+        },
+        {
+          "symbol": "ADOR",
+          "market_cap_cr": 2605.38
+        },
+        {
+          "symbol": "RAJRATAN",
+          "market_cap_cr": 2400.25
+        },
+        {
+          "symbol": "WENDT",
+          "market_cap_cr": 1499.3
+        },
+        {
+          "symbol": "WAAREEINDO",
+          "market_cap_cr": 906.17
+        },
+        {
+          "symbol": "SWASTIKAIN",
+          "market_cap_cr": 659.03
+        }
+      ]
+    },
+    {
+      "date": "2026-10-20",
+      "days_ago": 23,
+      "symbols": [
+        {
+          "symbol": "KAPSTON",
+          "market_cap_cr": 1662.84
+        }
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "days_ago": 24,
+      "symbols": [
+        {
+          "symbol": "BAJFINANCE",
+          "market_cap_cr": 694193.91
+        },
+        {
+          "symbol": "ULTRACEMCO",
+          "market_cap_cr": 363545.7
+        },
+        {
+          "symbol": "HINDZINC",
+          "market_cap_cr": 239723.47
+        },
+        {
+          "symbol": "UNIONBANK",
+          "market_cap_cr": 156030.89
+        },
+        {
+          "symbol": "PIRAMALFIN",
+          "market_cap_cr": 50889.72
+        },
+        {
+          "symbol": "LTTS",
+          "market_cap_cr": 45265.95
+        },
+        {
+          "symbol": "IREDA",
+          "market_cap_cr": 34624.1
+        },
+        {
+          "symbol": "HFCL",
+          "market_cap_cr": 32145.71
+        },
+        {
+          "symbol": "SOBHA",
+          "market_cap_cr": 13886.3
+        },
+        {
+          "symbol": "GALLANTT",
+          "market_cap_cr": 12796.91
+        },
+        {
+          "symbol": "JPPOWER",
+          "market_cap_cr": 10416.43
+        },
+        {
+          "symbol": "WAAREERTL",
+          "market_cap_cr": 7860.8
+        },
+        {
+          "symbol": "SMLMAH",
+          "market_cap_cr": 7487.63
+        },
+        {
+          "symbol": "JUSTDIAL",
+          "market_cap_cr": 5582.26
+        },
+        {
+          "symbol": "TATVA",
+          "market_cap_cr": 3882.84
+        },
+        {
+          "symbol": "VARMORA",
+          "market_cap_cr": 3106.4
+        },
+        {
+          "symbol": "BEPL",
+          "market_cap_cr": 2793.19
+        },
+        {
+          "symbol": "DELTACORP",
+          "market_cap_cr": 2333.02
+        },
+        {
+          "symbol": "NELCO",
+          "market_cap_cr": 1841.79
+        },
+        {
+          "symbol": "GOCLCORP",
+          "market_cap_cr": 1815.9
+        }
+      ]
+    },
+    {
+      "date": "2026-10-17",
+      "days_ago": 26,
+      "symbols": [
+        {
+          "symbol": "HDFCBANK",
+          "market_cap_cr": 1252298.55
+        },
+        {
+          "symbol": "ICICIBANK",
+          "market_cap_cr": 1141375.39
+        },
+        {
+          "symbol": "AXISBANK",
+          "market_cap_cr": 418121.8
+        },
+        {
+          "symbol": "IDBI",
+          "market_cap_cr": 86718.13
+        },
+        {
+          "symbol": "YESBANK",
+          "market_cap_cr": 55526.16
+        },
+        {
+          "symbol": "CENTRALBK",
+          "market_cap_cr": 29245.08
+        },
+        {
+          "symbol": "PSB",
+          "market_cap_cr": 15503.85
+        },
+        {
+          "symbol": "INDIACEM",
+          "market_cap_cr": 10849.5
+        },
+        {
+          "symbol": "IXIGO",
+          "market_cap_cr": 7266.0
+        },
+        {
+          "symbol": "ROSSARI",
+          "market_cap_cr": 2381.39
+        },
+        {
+          "symbol": "KROSS",
+          "market_cap_cr": 1960.12
+        },
+        {
+          "symbol": "BAJAJHCARE",
+          "market_cap_cr": 1095.3
+        }
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "days_ago": 27,
+      "symbols": [
+        {
+          "symbol": "DLF",
+          "market_cap_cr": 190425.98
+        },
+        {
+          "symbol": "PNB",
+          "market_cap_cr": 155472.25
+        },
+        {
+          "symbol": "LTM",
+          "market_cap_cr": 131410.57
+        },
+        {
+          "symbol": "FEDERALBNK",
+          "market_cap_cr": 89667.2
+        },
+        {
+          "symbol": "BAJAJHFL",
+          "market_cap_cr": 68741.76
+        },
+        {
+          "symbol": "OBEROIRLTY",
+          "market_cap_cr": 67114.83
+        },
+        {
+          "symbol": "HSCL",
+          "market_cap_cr": 28384.82
+        },
+        {
+          "symbol": "URBANCO",
+          "market_cap_cr": 25893.21
+        },
+        {
+          "symbol": "JINDALSAW",
+          "market_cap_cr": 16116.89
+        },
+        {
+          "symbol": "CROMPTON",
+          "market_cap_cr": 13907.92
+        },
+        {
+          "symbol": "UJJIVANSFB",
+          "market_cap_cr": 11958.02
+        },
+        {
+          "symbol": "E2E",
+          "market_cap_cr": 11115.92
+        },
+        {
+          "symbol": "JAYNECOIND",
+          "market_cap_cr": 8984.64
+        },
+        {
+          "symbol": "RPEL",
+          "market_cap_cr": 8727.92
+        },
+        {
+          "symbol": "TEJASNET",
+          "market_cap_cr": 7489.0
+        },
+        {
+          "symbol": "SGFIN",
+          "market_cap_cr": 4690.4
+        },
+        {
+          "symbol": "SHOPERSTOP",
+          "market_cap_cr": 4026.37
+        },
+        {
+          "symbol": "SOLARA",
+          "market_cap_cr": 3250.76
+        },
+        {
+          "symbol": "INDORAMA",
+          "market_cap_cr": 2017.1
+        },
+        {
+          "symbol": "PAUSHAKLTD",
+          "market_cap_cr": 1806.46
+        },
+        {
+          "symbol": "AURUM",
+          "market_cap_cr": 1633.07
+        },
+        {
+          "symbol": "MODISONLTD",
+          "market_cap_cr": 1158.95
+        },
+        {
+          "symbol": "ONWARDTEC",
+          "market_cap_cr": 835.8
+        }
+      ]
+    },
+    {
+      "date": "2026-10-15",
+      "days_ago": 28,
+      "symbols": [
+        {
+          "symbol": "NESTLEIND",
+          "market_cap_cr": 243141.15
+        },
+        {
+          "symbol": "WIPRO",
+          "market_cap_cr": 194340.92
+        },
+        {
+          "symbol": "TECHM",
+          "market_cap_cr": 173880.22
+        },
+        {
+          "symbol": "JIOFIN",
+          "market_cap_cr": 152664.63
+        },
+        {
+          "symbol": "HDFCLIFE",
+          "market_cap_cr": 129877.37
+        },
+        {
+          "symbol": "INDIANB",
+          "market_cap_cr": 127409.32
+        },
+        {
+          "symbol": "POLYCAB",
+          "market_cap_cr": 121766.34
+        },
+        {
+          "symbol": "HDFCAMC",
+          "market_cap_cr": 117137.04
+        },
+        {
+          "symbol": "IRFC",
+          "market_cap_cr": 111461.29
+        },
+        {
+          "symbol": "PERSISTENT",
+          "market_cap_cr": 95123.25
+        },
+        {
+          "symbol": "LTF",
+          "market_cap_cr": 70776.89
+        },
+        {
+          "symbol": "TATACOMM",
+          "market_cap_cr": 49701.83
+        },
+        {
+          "symbol": "360ONE",
+          "market_cap_cr": 48578.5
+        },
+        {
+          "symbol": "KARURVYSYA",
+          "market_cap_cr": 36787.32
+        },
+        {
+          "symbol": "UCOBANK",
+          "market_cap_cr": 31486.83
+        },
+        {
+          "symbol": "ANGELONE",
+          "market_cap_cr": 31168.64
+        },
+        {
+          "symbol": "IIFL",
+          "market_cap_cr": 28304.03
+        },
+        {
+          "symbol": "METROBRAND",
+          "market_cap_cr": 22790.32
+        },
+        {
+          "symbol": "SOUTHBANK",
+          "market_cap_cr": 16061.55
+        },
+        {
+          "symbol": "CCL",
+          "market_cap_cr": 14217.14
+        },
+        {
+          "symbol": "LOTUSDEV",
+          "market_cap_cr": 11074.97
+        },
+        {
+          "symbol": "TIPSMUSIC",
+          "market_cap_cr": 10088.56
+        },
+        {
+          "symbol": "CYIENTDLM",
+          "market_cap_cr": 6628.51
+        },
+        {
+          "symbol": "FEDFINA",
+          "market_cap_cr": 6154.57
+        },
+        {
+          "symbol": "ORIENTELEC",
+          "market_cap_cr": 4317.04
+        },
+        {
+          "symbol": "ALOKINDS",
+          "market_cap_cr": 4071.5
+        },
+        {
+          "symbol": "SWSOLAR",
+          "market_cap_cr": 3719.85
+        },
+        {
+          "symbol": "HERITGFOOD",
+          "market_cap_cr": 3578.67
+        },
+        {
+          "symbol": "SBC",
+          "market_cap_cr": 3310.48
+        },
+        {
+          "symbol": "ORIENTHOT",
+          "market_cap_cr": 3105.84
+        },
+        {
+          "symbol": "KABRAEXTRU",
+          "market_cap_cr": 2515.25
+        },
+        {
+          "symbol": "5PAISA",
+          "market_cap_cr": 1627.05
+        }
+      ]
+    },
+    {
+      "date": "2026-10-14",
+      "days_ago": 29,
+      "symbols": [
+        {
+          "symbol": "BHEL",
+          "market_cap_cr": 150146.57
+        },
+        {
+          "symbol": "GROWW",
+          "market_cap_cr": 139060.54
+        },
+        {
+          "symbol": "CANBK",
+          "market_cap_cr": 120639.67
+        },
+        {
+          "symbol": "ICICIGI",
+          "market_cap_cr": 86044.44
+        },
+        {
+          "symbol": "HDBFS",
+          "market_cap_cr": 46946.52
+        },
+        {
+          "symbol": "MRPL",
+          "market_cap_cr": 30959.65
+        },
+        {
+          "symbol": "TATATECH",
+          "market_cap_cr": 27747.55
+        },
+        {
+          "symbol": "THELEELA",
+          "market_cap_cr": 22248.27
+        },
+        {
+          "symbol": "EMMVEE",
+          "market_cap_cr": 19733.15
+        },
+        {
+          "symbol": "CEATLTD",
+          "market_cap_cr": 14366.26
+        },
+        {
+          "symbol": "ELECON",
+          "market_cap_cr": 10218.05
+        },
+        {
+          "symbol": "BAJAJCON",
+          "market_cap_cr": 5716.51
+        },
+        {
+          "symbol": "HATHWAY",
+          "market_cap_cr": 1813.99
+        },
+        {
+          "symbol": "RIIL",
+          "market_cap_cr": 1117.17
+        },
+        {
+          "symbol": "SONA",
+          "market_cap_cr": 636.71
+        }
+      ]
+    },
+    {
+      "date": "2026-10-13",
+      "days_ago": 30,
+      "symbols": [
+        {
+          "symbol": "TATAELXSI",
+          "market_cap_cr": 24062.47
+        },
+        {
+          "symbol": "TARIL",
+          "market_cap_cr": 9479.24
+        },
+        {
+          "symbol": "HEROMOTORS",
+          "market_cap_cr": 5566.41
+        },
+        {
+          "symbol": "SSRETAIL",
+          "market_cap_cr": 5206.47
+        },
+        {
+          "symbol": "ARSSBL",
+          "market_cap_cr": 3198.41
+        },
+        {
+          "symbol": "EIMCOELECO",
+          "market_cap_cr": 1515.24
+        },
+        {
+          "symbol": "PNBGILTS",
+          "market_cap_cr": 1409.47
+        },
+        {
+          "symbol": "SEJALLTD",
+          "market_cap_cr": 1051.08
+        },
+        {
+          "symbol": "ICICILIFE",
+          "market_cap_cr": null
+        }
+      ]
+    }
+  ]
+}

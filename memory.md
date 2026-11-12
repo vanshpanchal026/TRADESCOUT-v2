@@ -10,9 +10,9 @@
 ## 1. Project Snapshot
 
 - **Product Name:** TRADESCOUT
-- **Inspiration:** Reverse-engineered architecture of ScanTheCharts.com with adaptations from RepoTrace & FinRAG.AI
+- **Inspiration:** Reverse-engineered architecture of ScanTheCharts.com with adaptations from RepoTrace & FinRAG.AI (Imported from conversation `27c18536-f6cb-409a-bfed-4ac05e6bc0e8`)
 - **Mission:** High-performance, zero-scraper technical market screener, breadth diagnostic dashboard, and TradingView charting suite for Indian equity swing traders.
-- **Current Milestone:** Phase 0 Completed — Full Documentation, Architecture Specifications & Engineering Plans Established. Ready for Phase 1 Scaffolding.
+- **Current Milestone:** Phase 0 Completed — Full Documentation, Reverse-Engineering Research Vault, Architecture Specifications & Engineering Plans Established. Ready for Phase 1 Scaffolding.
 
 ---
 
@@ -86,6 +86,12 @@ TRADESCOUT/
 ├── Security-and-Scale.md  # Security controls, rate limits & scaling
 ├── TechStack.md           # Technology rationale and cost matrix
 ├── Testing-Strategy.md    # Unit, integration, E2E & golden sets
-└── infra/
-    └── docker-compose.yml # PostgreSQL 16 + Redis 7 + pgAdmin
+├── infra/
+│   └── docker-compose.yml # PostgreSQL 16 + Redis 7 + pgAdmin
+└── research/              # Reverse-engineering vault & benchmark data
+    ├── README.md                              # Research index and mocking guide
+    ├── scanthecharts-architecture-teardown.md# Full architecture teardown of target
+    ├── data-sources-benchmark-report.md      # Parquet & zero-cost data source tests
+    ├── cost-and-resource-breakdown.md        # Funds and cloud infrastructure breakdown
+    └── api-fixtures/                         # 24 real JSON payloads from ScanTheCharts
 ```

@@ -1,0 +1,29 @@
+{
+  "symbol": "RELIANCE",
+  "calls": [
+    {
+      "period": "2026Q4",
+      "label": "Nov 2026",
+      "transcript": {
+        "url": "https://nsearchives.nseindia.com/corporate/kavinavora_01112026230907_SE_01112026.pdf",
+        "date": "2026-11-01"
+      },
+      "ppt": {
+        "url": "https://nsearchives.nseindia.com/corporate/kavinavora_30102026194557_SE_30102026_IP.pdf",
+        "date": "2026-10-30"
+      }
+    },
+    {
+      "period": "2026Q3",
+      "label": "Jul 2026",
+      "transcript": {
+        "url": "https://nsearchives.nseindia.com/corporate/kavinavora_19072026180618_SE_Transcript.pdf",
+        "date": "2026-07-19"
+      },
+      "ppt": {
+        "url": "https://nsearchives.nseindia.com/corporate/kavinavora_17072026192250_SE_Presentation_1.pdf",
+        "date": "2026-07-17"
+      }
+    }
+  ]
+}

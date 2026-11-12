@@ -1,0 +1,557 @@
+{
+  "chunks_1169-f778b0e4b6d5a9f8.js": {
+    "size_bytes": 101788,
+    "routes": [],
+    "apis": [],
+    "domains": [
+      "www.w3.org"
+    ],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_1501-3ea84a6a9d3d4b29.js": {
+    "size_bytes": 11728,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "Cursor (Esc)",
+      "Trend line",
+      "Text",
+      "Measure",
+      "Hide drawing tools",
+      "Colour",
+      "Drawing tools"
+    ]
+  },
+  "chunks_1632-46de1168ce3d781f.js": {
+    "size_bytes": 23490,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_2440-ece286d945e62b82.js": {
+    "size_bytes": 6384,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_2652-9a591215528b3710.js": {
+    "size_bytes": 285362,
+    "routes": [],
+    "apis": [
+      "/api/news"
+    ],
+    "domains": [],
+    "tech_tags": [
+      "lightweight-charts",
+      "Canvas API"
+    ],
+    "titles_sample": [
+      "Chart style",
+      "Setups",
+      "Pivot / breakout line",
+      "Tight areas",
+      "Inside bars",
+      "Events",
+      "Earnings dates",
+      "News markers",
+      "Circuit limits",
+      "Price levels"
+    ]
+  },
+  "chunks_2972-50e3a789e8d61e76.js": {
+    "size_bytes": 21014,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_3236-d20caaf38df65474.js": {
+    "size_bytes": 11728,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_3520-7e647bc100f0aff7.js": {
+    "size_bytes": 39735,
+    "routes": [],
+    "apis": [
+      "/api/live/status"
+    ],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "Leading",
+      "Weakening",
+      "Lagging",
+      "Improving",
+      "Zoom in",
+      "Zoom out",
+      "Fit all",
+      "Stage 1",
+      "Stage 2",
+      "Stage 3"
+    ]
+  },
+  "chunks_391-2e08f26857d01cc1.js": {
+    "size_bytes": 159571,
+    "routes": [],
+    "apis": [],
+    "domains": [
+      "www.tradingview.com",
+      "www.w3.org"
+    ],
+    "tech_tags": [
+      "lightweight-charts",
+      "TradingView",
+      "Canvas API"
+    ],
+    "titles_sample": []
+  },
+  "chunks_3990-0ab511b7e4ea8b38.js": {
+    "size_bytes": 28390,
+    "routes": [],
+    "apis": [
+      "/api/news"
+    ],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "News",
+      "Category",
+      "Deals over",
+      "Deal type",
+      "News",
+      "Category",
+      "Show",
+      "Deals over",
+      "Deal type",
+      "Bulk & block deals"
+    ]
+  },
+  "chunks_4077-fcf1b118a3dd805e.js": {
+    "size_bytes": 202112,
+    "routes": [],
+    "apis": [
+      "/api/catalysts"
+    ],
+    "domains": [],
+    "tech_tags": [
+      "lightweight-charts",
+      "Canvas API",
+      "Framer Motion / Animations"
+    ],
+    "titles_sample": [
+      "On the price",
+      "Volume and strength",
+      "Trend",
+      "Oscillators",
+      "string",
+      "Show ",
+      "Average type for ",
+      "Period for ",
+      "Colour of ",
+      "Remove"
+    ]
+  },
+  "chunks_4090-856c39ae3b9912cd.js": {
+    "size_bytes": 12217,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_44530001-fa928e7bdf9dc258.js": {
+    "size_bytes": 69188,
+    "routes": [],
+    "apis": [],
+    "domains": [
+      "github.com"
+    ],
+    "tech_tags": [
+      "Supabase"
+    ],
+    "titles_sample": []
+  },
+  "chunks_5275-0e90041b6c38d03e.js": {
+    "size_bytes": 9416,
+    "routes": [],
+    "apis": [],
+    "domains": [
+      "caeaenwgmwirobaqkdao.supabase.co"
+    ],
+    "tech_tags": [
+      "Supabase"
+    ],
+    "titles_sample": []
+  },
+  "chunks_5283-0ef4e1262f80b9dd.js": {
+    "size_bytes": 198396,
+    "routes": [],
+    "apis": [
+      "/api/broadcast"
+    ],
+    "domains": [
+      "github.com",
+      "supabase.com"
+    ],
+    "tech_tags": [
+      "Supabase"
+    ],
+    "titles_sample": []
+  },
+  "chunks_5396-e112c1ce353eda40.js": {
+    "size_bytes": 19335,
+    "routes": [
+      "/groups",
+      "/heatmap",
+      "/markets",
+      "/news",
+      "/results",
+      "/rrg",
+      "/scanners",
+      "/scanners/",
+      "/scanners/custom",
+      "/warmup",
+      "/watchlists"
+    ],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "The custom scanner",
+      "Every scanner",
+      "Groups",
+      "Sector rotation",
+      "The earnings calendar",
+      "News",
+      "The heatmap",
+      "Market breadth",
+      "The market read",
+      "Intraday screens"
+    ]
+  },
+  "chunks_5481-13e33989f890f4b8.js": {
+    "size_bytes": 19078,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "10 SMA",
+      "20 SMA",
+      "50 EMA",
+      "200 SMA",
+      "Liquid Stocks:",
+      "Watchlist:",
+      "Stage:",
+      "S1 \\xb7 Basing",
+      "S2 \\xb7 Uptrend",
+      "S3 \\xb7 Topping"
+    ]
+  },
+  "chunks_5573-dc15aeb9e424addd.js": {
+    "size_bytes": 12877,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "Surging",
+      "Strong",
+      "Steady",
+      "Dull",
+      "Weak"
+    ]
+  },
+  "chunks_5672-966f3ffdcd7a7a22.js": {
+    "size_bytes": 26144,
+    "routes": [
+      "/scanners/",
+      "/scanners/big-volume-day",
+      "/watchlists"
+    ],
+    "apis": [
+      "/api/live/dashboard",
+      "/api/live/intraday/"
+    ],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "Nifty 50",
+      "Midcap 150",
+      "Smallcap 250",
+      "Indices & macro",
+      "Breadth",
+      "Your watchlist today",
+      "More screens",
+      "Top gainers",
+      "High volume day",
+      "Top losers"
+    ]
+  },
+  "chunks_5d015edf-3f07b84b1fbfc14c.js": {
+    "size_bytes": 890,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_6117-6b444173b9a8f3dd.js": {
+    "size_bytes": 59961,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [
+      "Framer Motion / Animations"
+    ],
+    "titles_sample": [
+      "EPS YoY > 100%",
+      "PAT YoY > 50%",
+      "Sales YoY > 25%",
+      "Accelerating",
+      "Margin up",
+      "Turnaround",
+      "RS \u2265 70",
+      "Margin",
+      "Net margin",
+      "Close (Esc)"
+    ]
+  },
+  "chunks_6476-1f1d687e887ad66d.js": {
+    "size_bytes": 23670,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "Timeframe",
+      "Daily",
+      "Weekly",
+      "Chart type",
+      "Candlesticks",
+      "Bars",
+      "Indicators",
+      "Moving averages",
+      "Volume",
+      "Chart options"
+    ]
+  },
+  "chunks_6894-dcaebf3725b0009a.js": {
+    "size_bytes": 78762,
+    "routes": [
+      "/news",
+      "/scanners",
+      "/watchlists"
+    ],
+    "apis": [
+      "/api/cues",
+      "/api/news"
+    ],
+    "domains": [],
+    "tech_tags": [
+      "TradingView"
+    ],
+    "titles_sample": [
+      "20-day",
+      "50-day",
+      "200-day",
+      "Stocks above their ",
+      "Participation, ",
+      "Stage 2 and Stage 4 share of stocks.",
+      "Market condition",
+      "Market read",
+      "Indices",
+      "Today"
+    ]
+  },
+  "chunks_7158-0c7727d615a3244d.js": {
+    "size_bytes": 65745,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [
+      "Framer Motion / Animations"
+    ],
+    "titles_sample": []
+  },
+  "chunks_7260-eb3bd03c80573b82.js": {
+    "size_bytes": 290764,
+    "routes": [],
+    "apis": [],
+    "domains": [
+      "docs.sentry.io",
+      "example.com",
+      "nextjs.org"
+    ],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_8542-c4468d61a9c76f93.js": {
+    "size_bytes": 60532,
+    "routes": [],
+    "apis": [
+      "/api/scan",
+      "/api/scan/options"
+    ],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "Delete",
+      "Delete this ",
+      "Close",
+      "Delete",
+      "Delete this ",
+      "Close"
+    ]
+  },
+  "chunks_8663-847d885add973ff0.js": {
+    "size_bytes": 19291,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "Needs attention",
+      "Good day",
+      "Caution",
+      "Info",
+      "NEEDS ATTENTION",
+      "Needs attention",
+      "EARNINGS THIS WEEK",
+      "Earnings this week",
+      "GOOD DAY",
+      "Good day"
+    ]
+  },
+  "chunks_9272-325d7efb84c280bc.js": {
+    "size_bytes": 9780,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_9610-d15d304c48308903.js": {
+    "size_bytes": 10212,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": [
+      "Watchlist options",
+      "New watchlist"
+    ]
+  },
+  "chunks_app_global-error-1feb5da65b6e87c8.js": {
+    "size_bytes": 1708,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_app_layout-e36fa0cd319e1a2e.js": {
+    "size_bytes": 15603,
+    "routes": [
+      "/markets",
+      "/scanners",
+      "/watchlists"
+    ],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [
+      "Framer Motion / Animations"
+    ],
+    "titles_sample": []
+  },
+  "chunks_app_members_page-7e0b4ec3585dbc7e.js": {
+    "size_bytes": 1204,
+    "routes": [],
+    "apis": [],
+    "domains": [
+      "caeaenwgmwirobaqkdao.supabase.co"
+    ],
+    "tech_tags": [
+      "Supabase"
+    ],
+    "titles_sample": []
+  },
+  "chunks_app_not-found-e4bfd492e8a1bbc0.js": {
+    "size_bytes": 609,
+    "routes": [],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_fd9d1056-4cf066094dd2daba.js": {
+    "size_bytes": 173221,
+    "routes": [],
+    "apis": [],
+    "domains": [
+      "react.dev",
+      "www.w3.org"
+    ],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_main-app-5f11cc469eddaa6a.js": {
+    "size_bytes": 3116,
+    "routes": [
+      "/account",
+      "/feedback",
+      "/groups",
+      "/heatmap",
+      "/leaders",
+      "/markets",
+      "/news",
+      "/results",
+      "/rrg",
+      "/scanners",
+      "/scanners/:slug",
+      "/scanners/custom",
+      "/screen",
+      "/settings",
+      "/soojh",
+      "/stock/:symbol",
+      "/warmup",
+      "/watchlists"
+    ],
+    "apis": [],
+    "domains": [],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_polyfills-42372ed130431b0a.js": {
+    "size_bytes": 112541,
+    "routes": [],
+    "apis": [],
+    "domains": [
+      "github.com"
+    ],
+    "tech_tags": [],
+    "titles_sample": []
+  },
+  "chunks_webpack-ecf02a41ed31591f.js": {
+    "size_bytes": 5263,
+    "routes": [],
+    "apis": [],
+    "domains": [
+      "vercel.live"
+    ],
+    "tech_tags": [],
+    "titles_sample": []
+  }
+}

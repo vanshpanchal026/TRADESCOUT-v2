@@ -1,0 +1,68 @@
+{
+  "/api/scanners": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 57329,
+    "preview": "{\"data\":[{\"slug\":\"all-stocks\",\"category\":\"custom\",\"name\":\"All Stocks\",\"description\":\"Every stock in the universe, with no pattern test at all \u2014 the starting point rather than a setup. What comes back is exactly what the Filters panel lets through, so clearing the filters lists the whole EQ universe and tightening them turns this into a screen of your own. Sorted by market cap, largest first.\",\"sort_default\":\"market_cap_cr\",\"sort_dir\":\"desc\",\"columns\":[],\"params\":[]},{\"slug\":\"trend-template\",\"nam"
+  },
+  "/api/scanners/trend-template": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 25526,
+    "preview": "{\"data\":[{\"symbol\":\"LAURUSLABS\",\"conditions_met\":8,\"failed\":\"\u2014\",\"trending_bars\":154,\"cmp\":2400,\"stack\":\"\u2713\",\"slope_200\":8.59,\"from_52w_high\":3.5,\"above_52w_low\":161.5,\"ext_from_50\":15.8,\"sma_50\":2073.22,\"sma_150\":1674.33,\"sma_200\":1507.96,\"company_name\":\"Laurus Labs Limited\",\"rs_rating\":97,\"industry\":\"Pharmaceuticals\",\"sector\":\"Healthcare\",\"themes\":[\"Generics & APIs\",\"Pharma CDMO\"],\"about\":\"Makes generic APIs and finished medicines, chiefly HIV antiretrovirals and cancer drugs, and runs a fast-gr"
+  },
+  "/api/scanners/recent-breakout": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 25749,
+    "preview": "{\"data\":[{\"symbol\":\"ROTO\",\"age\":0,\"breakout_date\":\"2026-11-12\",\"level\":72.08,\"above_pct\":6.77,\"vol_ratio\":82.7,\"since_pct\":0,\"breakout_close\":76.96,\"breakout_vol\":23188695,\"level_age\":66,\"prior_move\":32,\"touches\":1,\"levels_broken\":1,\"level_date\":\"2026-08-07\",\"cmp\":76.96,\"company_name\":\"Roto Pumps Limited\",\"rs_rating\":83,\"industry\":\"Compressors, Pumps & Diesel Engines\",\"sector\":\"Capital Goods\",\"themes\":[\"Industrial Machinery\",\"Farm Mechanisation\"],\"about\":\"Manufactures progressive cavity and twin"
+  },
+  "/api/scanners/4pct-breakout": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 24068,
+    "preview": "{\"data\":[{\"symbol\":\"PROZONER\",\"change_pct\":19.98,\"rvol\":9.11,\"vol_vs_prev\":45.92,\"volume\":2224457,\"prev_volume\":48442,\"turnover_cr\":14.18,\"cmp\":63.76,\"company_name\":\"Prozone Realty Limited\",\"rs_rating\":89,\"industry\":\"Residential, Commercial Projects\",\"sector\":\"Realty\",\"themes\":[\"Housing & Home Imp\",\"GCC & Offices\"],\"about\":\"Runs shopping malls in Aurangabad and Coimbatore and develops residential and commercial projects on its land bank in cities including Nagpur, Indore and Coimbatore.\",\"market"
+  },
+  "/api/scanners/high-volume": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 24974,
+    "preview": "{\"data\":[{\"symbol\":\"ANTGRAPHIC\",\"event_code\":\"HVY\",\"age\":0,\"event_date\":\"2026-11-12\",\"event_rvol\":17.49,\"vs_prior\":311.9,\"close_pos\":0.89,\"move_pct\":18.03,\"move_vs_adr\":2.32,\"event_adr\":7.79,\"since_pct\":0,\"event_vol\":3905695,\"cmp\":0.72,\"company_name\":\"Antarctica Limited\",\"rs_rating\":26,\"industry\":\"Packaging\",\"sector\":\"Capital Goods\",\"themes\":[\"Paper & Packaging\",\"Packaged Foods\"],\"about\":\"Small company in printing and packaging, with limited operations.\",\"market_cap_cr\":11.17,\"price\":0.72,\"ret_1"
+  },
+  "/api/scanners/1m-gainers": {
+    "status": 200,
+    "content_type": "application/json",
+    "length": 24101,
+    "preview": "{\"data\":[{\"symbol\":\"TRANSWORLD\",\"gain_pct\":62.38,\"cmp\":247.34,\"turnover_cr\":11.71,\"volume\":473428,\"ref_close\":152.32,\"ref_date\":\"2026-10-13\",\"company_name\":\"TRANSWORLD SHIPPING LINES LIMITED\",\"rs_rating\":92,\"industry\":\"Shipping\",\"sector\":\"Services\",\"themes\":[\"Shipping\",\"Ports & Maritime\"],\"about\":\"Runs container feeder ships between Indian ports and international transhipment hubs, plus two dry bulk carriers on the spot market; its container ships are chartered long-term to group firm Avana Logi"
+  },
+  "/scanners/trend-template": {
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "length": 29480,
+    "preview": "<!DOCTYPE html><html lang=\"en\" class=\"__variable_fd3dff\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/2f3f6e90d819dac7.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/488a706636f03d65.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/f4b0c6a8b8df264e.css?dpl=dpl_2BiqhXmQp"
+  },
+  "/scanners/recent-breakout": {
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "length": 29523,
+    "preview": "<!DOCTYPE html><html lang=\"en\" class=\"__variable_fd3dff\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/2f3f6e90d819dac7.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/488a706636f03d65.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/f4b0c6a8b8df264e.css?dpl=dpl_2BiqhXmQp"
+  },
+  "/scanners/4pct-breakout": {
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "length": 29499,
+    "preview": "<!DOCTYPE html><html lang=\"en\" class=\"__variable_fd3dff\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/2f3f6e90d819dac7.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/488a706636f03d65.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/f4b0c6a8b8df264e.css?dpl=dpl_2BiqhXmQp"
+  },
+  "/scanners/high-volume": {
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "length": 29476,
+    "preview": "<!DOCTYPE html><html lang=\"en\" class=\"__variable_fd3dff\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/2f3f6e90d819dac7.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/488a706636f03d65.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/f4b0c6a8b8df264e.css?dpl=dpl_2BiqhXmQp"
+  },
+  "/scanners/1m-gainers": {
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "length": 29362,
+    "preview": "<!DOCTYPE html><html lang=\"en\" class=\"__variable_fd3dff\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/2f3f6e90d819dac7.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/488a706636f03d65.css?dpl=dpl_2BiqhXmQpnKormTZQNsv9GrA3nKZ\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/f4b0c6a8b8df264e.css?dpl=dpl_2BiqhXmQp"
+  }
+}

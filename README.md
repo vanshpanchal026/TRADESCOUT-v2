@@ -387,6 +387,12 @@ TRADESCOUT/
 ├── README.md                     # ← You are here
 ├── PRD.md                        # Product Requirements Document
 ├── TechStack.md                  # Technology Stack Decisions
+├── research/                     # Reverse-engineering vault & benchmark data
+│   ├── README.md                 # Research index & mock usage guide
+│   ├── scanthecharts-architecture-teardown.md # Target architecture teardown
+│   ├── data-sources-benchmark-report.md       # Parquet & zero-cost data source tests
+│   ├── cost-and-resource-breakdown.md         # Funds & infrastructure analysis
+│   └── api-fixtures/                          # 24 real JSON payloads from ScanTheCharts
 └── LICENSE                       # MIT License
 ```
 

@@ -1,0 +1,84 @@
+{
+  "symbol": "RELIANCE",
+  "as_of": "9 Nov 2026",
+  "card": {
+    "name": "Reliance Industries",
+    "files": [
+      "Investor presentation (Nov 2026)",
+      "Annual Report 2025-26 (May 2026)",
+      "ICRA credit rating (Oct 2026)"
+    ],
+    "snapshot": [
+      {
+        "text": "The company refines oil, makes petrochemicals, and also runs retail stores, mobile and broadband services, and media businesses in India.",
+        "src": "ICRA credit rating"
+      },
+      {
+        "text": "Its retail arm serves shoppers in stores and online, plus 4 Mn+ business customers such as small shops, hotels and restaurants.",
+        "src": "Investor presentation, p.23"
+      },
+      {
+        "text": "Its telecom arm, Jio, sells mobile and home internet services and had a total customer base of 542.4 Mn in July\u2013September 2026.",
+        "src": "Investor presentation, p.15"
+      },
+      {
+        "text": "In July\u2013September 2026, Jio Platforms listed on the stock market after India's largest IPO, which raised \u20b930,188 crore.",
+        "src": "Investor presentation, p.14"
+      },
+      {
+        "text": "In July\u2013September 2026, the company reported its highest-ever quarterly net profit, at \u20b929,550 crore.",
+        "src": "Investor presentation, p.6"
+      },
+      {
+        "text": "In July\u2013September 2026, the retail arm opened 303 stores but closed weak ones, so its net store count fell by 222.",
+        "src": "Investor presentation, p.23"
+      },
+      {
+        "text": "The company launched its Campa drinks brand in Kenya and in Australian supermarkets Coles and Woolworths, backed by local production in Australia.",
+        "src": "Investor presentation, p.38"
+      },
+      {
+        "text": "The company has started 6 new food and beverage factory projects across the country.",
+        "src": "Investor presentation, p.38"
+      }
+    ],
+    "watch": [
+      {
+        "title": "Retail online scale to value",
+        "when": "2027-28 and 2028-29",
+        "text": "Retail says online scale should convert into value; watch whether that happens.",
+        "src": "Investor presentation, p.9"
+      },
+      {
+        "title": "Festive season in electronics",
+        "when": "Q3",
+        "text": "Consumer electronics aims to win festive sales, accepting lower margins to gain customers.",
+        "src": "Investor presentation, p.32"
+      },
+      {
+        "title": "Oil demand rebound",
+        "when": "2027",
+        "text": "Company expects global oil demand to rebound by 2.0 mb/d, supporting refining.",
+        "src": "Investor presentation, p.56"
+      },
+      {
+        "title": "Coal bed methane wells",
+        "when": "No timeline",
+        "text": "Second phase of a 40-well gas campaign is ongoing; completion adds production.",
+        "src": "Investor presentation, p.66"
+      }
+    ],
+    "events": [
+      {
+        "date": "October 21, 2026",
+        "text": "ICRA reaffirmed top debt ratings and assigned its highest rating to new bank loan facilities.",
+        "src": "ICRA credit rating"
+      },
+      {
+        "date": "Oct '26",
+        "text": "Second new ethane carrier ship was received, after one earlier ship became operational.",
+        "src": "Investor presentation, p.63"
+      }
+    ]
+  }
+}
