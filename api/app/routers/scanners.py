@@ -52,6 +52,7 @@ async def get_redis_client(request: Request) -> AsyncGenerator[Redis, None]:
     finally:
         await client.aclose()
 
+
 SUPPORTED_SLUGS: dict[str, dict[str, str]] = {
     "trend-template": {
         "title": "Minervini Trend Template",

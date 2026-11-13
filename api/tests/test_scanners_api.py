@@ -227,4 +227,3 @@ def test_get_jwt_secret_fails_closed_in_production(monkeypatch):
         get_jwt_secret()
     assert exc_info.value.status_code == 500
     assert "Server authentication configuration error" in exc_info.value.detail
-

@@ -9,6 +9,7 @@ from app.core.config import settings
 from app.core.redis import close_redis_pool, init_redis_pool
 from app.middleware.request_id import RequestIDMiddleware
 from app.routers.health import router as health_router
+from app.routers.market import router as market_router
 from app.routers.scanners import router as scanners_router
 from app.routers.stocks import router as stocks_router
 from app.routers.watchlists import router as watchlists_router
@@ -76,6 +77,7 @@ def create_application() -> FastAPI:
 
     # Include Routes
     app.include_router(health_router)
+    app.include_router(market_router, prefix="/api")
     app.include_router(scanners_router, prefix="/api")
     app.include_router(stocks_router, prefix="/api")
     app.include_router(watchlists_router, prefix="/api")

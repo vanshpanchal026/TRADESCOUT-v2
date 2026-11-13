@@ -106,4 +106,3 @@ async def test_symbol_history_path_traversal_validation():
 
     with pytest.raises(ValueError, match="Invalid benchmark format"):
         await load_benchmark_history("../invalid/path")
-

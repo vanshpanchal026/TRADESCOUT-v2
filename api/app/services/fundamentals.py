@@ -233,7 +233,7 @@ async def get_stock_fundamentals(
                 ebitda = round(sales * (opm / 100.0), 1) if sales and opm else None
                 quarters_list.append(
                     QuarterlyMetric(
-                        quarter=q.get("quarter", f"Q{i+1}"),
+                        quarter=q.get("quarter", f"Q{i + 1}"),
                         date=q.get("date"),
                         sales=sales,
                         ebitda=ebitda,
