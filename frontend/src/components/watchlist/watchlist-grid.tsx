@@ -102,6 +102,7 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
   const handleRemove = React.useCallback(
     async (symbol: string, e: React.MouseEvent) => {
       e.stopPropagation();
+      setData((prev) => prev.filter((it) => it.symbol !== symbol));
       try {
         const res = await fetch(`/api/watchlists/${watchlistId}/items/${symbol}`, {
           method: "DELETE",
@@ -460,6 +461,7 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
       } else if (e.key === "Delete" || e.key === "Backspace") {
         const activeRow = rows[selectedIndex];
         if (activeRow) {
+          setData((prev) => prev.filter((it) => it.symbol !== activeRow.original.symbol));
           fetch(`/api/watchlists/${watchlistId}/items/${activeRow.original.symbol}`, {
             method: "DELETE",
             headers: getAuthHeaders(),

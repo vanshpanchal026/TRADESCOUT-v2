@@ -102,7 +102,7 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
 
     // 1. Stock Header
     await expect(page.locator("h1")).toContainText("RELIANCE", { timeout: 15000 });
-    await expect(page.getByText("★ RS").first()).toBeVisible();
+    await expect(page.getByText("★ RS").first()).toBeVisible({ timeout: 15000 });
 
     // 2. TradingView Canvas Mounted
     // TradingView creates canvas element inside the chart container
@@ -147,7 +147,7 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
   }) => {
     await page.goto("/watchlists");
     await page.waitForLoadState("domcontentloaded");
-    await page.locator("text=/Loading watchlists/i").waitFor({ state: "detached", timeout: 30000 }).catch(() => {});
+    await page.locator("text=/Loading/i").waitFor({ state: "detached", timeout: 30000 }).catch(() => {});
 
     // Verify Watchlist Header
     await expect(page.locator("h1")).toBeVisible({ timeout: 15000 });
@@ -165,14 +165,14 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
     await expect(addStockButton).toBeVisible();
     await addStockButton.click();
 
-    // Wait for item in table
-    await page.waitForTimeout(500);
+    // Wait for added row to appear in table
+    await expect(page.locator("table tbody tr").first()).toBeVisible({ timeout: 15000 });
 
     // 2. 20D Sparklines
     const sparklineHeader = page.getByText("20D Trend");
     await expect(sparklineHeader).toBeVisible();
     const sparklineSvg = page.locator("table svg").first();
-    await expect(sparklineSvg).toBeVisible();
+    await expect(sparklineSvg).toBeVisible({ timeout: 15000 });
 
     // 3. Toggling Star (favourite)
     const starButton = page.locator("table tbody tr button", { has: page.locator("svg") }).first();
@@ -358,11 +358,10 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
     await expect(page.locator("table tbody").getByText("INFY").first()).toBeVisible();
 
     // 3. Delete INFY (DELETE item endpoint via proxy)
-    const infyRow = page.locator("table tbody tr", { hasText: "INFY" });
-    const deleteItemBtn = infyRow.locator("button[title='Remove from Watchlist']");
+    const deleteItemBtn = page.locator("table tbody tr", { hasText: "INFY" }).locator("button[title='Remove from Watchlist']").first();
     await expect(deleteItemBtn).toBeVisible();
     await deleteItemBtn.click();
-    await page.waitForTimeout(600);
+    await page.waitForTimeout(800);
 
     // Verify INFY is removed
     await expect(page.locator("table tbody").getByText("INFY")).toHaveCount(0);

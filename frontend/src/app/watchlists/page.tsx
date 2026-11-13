@@ -110,9 +110,8 @@ export default function WatchlistsDashboardPage() {
   };
 
   const handleDeleted = () => {
-    loadWatchlists().then(() => {
-      setActiveId("");
-    });
+    setActiveId("");
+    loadWatchlists();
   };
 
   // Metrics calculation

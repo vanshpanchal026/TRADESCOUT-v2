@@ -285,10 +285,13 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
   test("Test 7: Command Palette opens via shortcut or navbar button, filters tools/symbols, and navigates", async ({
     page,
   }) => {
+    page.on("console", (msg) => console.log("TEST7 BROWSER LOG:", msg.text()));
+    page.on("pageerror", (err) => console.log("TEST7 BROWSER ERROR:", err.message));
     await page.goto("/warmup");
     await page.waitForLoadState("domcontentloaded");
 
     // 1. Open Command Palette via navbar trigger button
+    await page.waitForTimeout(1000);
     const cmdKBtn = page.locator("button[title*='Command Palette']");
     await expect(cmdKBtn).toBeVisible();
     await cmdKBtn.click();

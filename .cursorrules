@@ -7,18 +7,18 @@
 
 ## 1. PROJECT TOPOLOGY & REPOSITORY ARCHITECTURE
 - This repository is a strict Monorepo organized as follows:
-  - `api/`    -> Python 3.12+ FastAPI backend, Polars indicator engine, Redis services.
-  - `web/`    -> Next.js 14 App Router, TypeScript, Tailwind CSS, Radix UI, TradingView LC v4.
-  - `infra/`  -> Docker Compose, Traefik/Nginx, local database services.
-  - `tests/`  -> Global E2E (Playwright) and golden indicator verification suites.
-  - `docs/`   -> Project specifications, PRD, architecture, and API docs.
+  - `backend/`  -> Python 3.12+ FastAPI backend, Polars indicator engine, Redis services.
+  - `frontend/` -> Next.js 14 App Router, TypeScript, Tailwind CSS, Radix UI, TradingView LC v4.
+  - `infra/`     -> Docker Compose, Traefik/Nginx, local database services.
+  - `tests/`     -> Global E2E (Playwright) and golden indicator verification suites.
+  - `docs/`      -> Project specifications, PRD, architecture, and API docs.
 - NEVER mix frontend and backend dependencies in the root directory.
-- All Python dependencies belong in `api/requirements.txt` or `api/pyproject.toml`.
-- All Node.js dependencies belong in `web/package.json` managed via `pnpm`.
+- All Python dependencies belong in `backend/requirements.txt` or `backend/pyproject.toml`.
+- All Node.js dependencies belong in `frontend/package.json` managed via `pnpm`.
 
 ---
 
-## 2. PYTHON & FASTAPI CONVENTIONS (`api/`)
+## 2. PYTHON & FASTAPI CONVENTIONS (`backend/`)
 - **Version:** Python 3.12 or newer. Always use type hints everywhere (`typing` or built-in generics).
 - **Framework:** FastAPI with Pydantic v2.
   - Use `pydantic.model_validator` instead of deprecated v1 `@root_validator` or `@validator`.
@@ -38,8 +38,8 @@
 
 ---
 
-## 3. TYPESCRIPT & NEXT.JS CONVENTIONS (`web/`)
-- **Framework:** Next.js 14+ with App Router (inside `web/src/app/`). NEVER use the legacy `pages/` directory.
+## 3. TYPESCRIPT & NEXT.JS CONVENTIONS (`frontend/`)
+- **Framework:** Next.js 14+ with App Router (inside `frontend/src/app/`). NEVER use the legacy `pages/` directory.
 - **Rendering Paradigms:**
   - Default to React Server Components (RSC) for data fetching, metadata, and static structure.
   - Use `'use client'` ONLY on interactive components: charts, filter selectors, modals, and client hooks.
