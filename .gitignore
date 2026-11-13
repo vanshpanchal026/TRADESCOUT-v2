@@ -89,8 +89,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Next.js Build Output
-frontend/.next/
+# Legacy Directory Ignore
+api/
+web/
+
 frontend/out/
 web/.next/
 web/out/
