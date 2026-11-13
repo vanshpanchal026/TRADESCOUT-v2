@@ -3,6 +3,7 @@ import { Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Footer from "@/components/common/Footer";
+import Navbar from "@/components/common/Navbar";
 
 const hankenGrotesk = Hanken_Grotesk({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased bg-background text-foreground min-h-screen flex flex-col justify-between">
         <ThemeProvider>
+          <Navbar />
           <div className="flex-1">
             {children}
           </div>

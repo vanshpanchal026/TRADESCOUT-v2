@@ -91,11 +91,17 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
   test("Test 3: Stock Detail & Charting (/stock/RELIANCE) mounts TradingView canvas, displays 5Y fundamentals, and auto-saves notes", async ({
     page,
   }) => {
+    page.on("console", (msg) => console.log("BROWSER LOG:", msg.text()));
+    page.on("pageerror", (err) => console.log("BROWSER ERROR:", err.message));
+    page.on("requestfailed", (req) => console.log("FAILED REQ:", req.url(), req.failure()?.errorText));
+
     await page.goto("/stock/RELIANCE");
     await page.waitForLoadState("domcontentloaded");
+    // Wait for parquet streaming loader to finish
+    await page.locator("text=/Streaming OHLCV Parquet/i").waitFor({ state: "detached", timeout: 30000 }).catch(() => {});
 
     // 1. Stock Header
-    await expect(page.locator("h1")).toContainText("RELIANCE");
+    await expect(page.locator("h1")).toContainText("RELIANCE", { timeout: 15000 });
     await expect(page.getByText("★ RS").first()).toBeVisible();
 
     // 2. TradingView Canvas Mounted
@@ -141,9 +147,10 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
   }) => {
     await page.goto("/watchlists");
     await page.waitForLoadState("domcontentloaded");
+    await page.locator("text=/Loading watchlists/i").waitFor({ state: "detached", timeout: 30000 }).catch(() => {});
 
     // Verify Watchlist Header
-    await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator("h1")).toBeVisible({ timeout: 15000 });
 
     // 1. Adding a symbol via autocomplete
     const quickAddInput = page.locator("input[placeholder*='Add NSE Symbol']");
@@ -192,9 +199,10 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
   }) => {
     await page.goto("/rrg");
     await page.waitForLoadState("domcontentloaded");
+    await page.locator("text=/Loading Relative Rotation/i").waitFor({ state: "detached", timeout: 30000 }).catch(() => {});
 
     // Header check
-    await expect(page.locator("h1")).toContainText("Relative Rotation Graph");
+    await expect(page.locator("h1")).toContainText("Relative Rotation Graph", { timeout: 15000 });
 
     // 1. Verify 4 Quadrants rendered (watermarks / metric cards)
     await expect(page.getByText("Leading (RS+, MOM+)").first()).toBeVisible();
@@ -237,9 +245,10 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
   }) => {
     await page.goto("/heatmap");
     await page.waitForLoadState("domcontentloaded");
+    await page.locator("text=/Computing Market Cap/i").waitFor({ state: "detached", timeout: 30000 }).catch(() => {});
 
     // Header check
-    await expect(page.locator("h1")).toContainText("Market Treemap Heatmap");
+    await expect(page.locator("h1")).toContainText("Market Treemap Heatmap", { timeout: 15000 });
 
     // 1. Verify Treemap SVG renders with tiles
     const treemapSvg = page.locator("svg[viewBox='0 0 1000 620']");

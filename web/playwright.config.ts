@@ -31,7 +31,7 @@ export default defineConfig({
   webServer: {
     command: "pnpm start -p 3000",
     url: "http://localhost:3000",
-    reuseExistingServer: true,
+    reuseExistingServer: false,
     timeout: 120000,
   },
 });
