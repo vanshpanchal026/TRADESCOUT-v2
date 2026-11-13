@@ -342,7 +342,7 @@ VERDICT: PASS (or FAIL with specific error log)
 
 ---
 
-## PROMPT 6: Phase 6 — The Warmup Dashboard, RRG & Heatmap
+## PROMPT 6: Phase 6 — The Warmup Dashboard, Relative Rotation Graph (RRG) & Market Heatmap
 
 ```markdown
 You are the Quantitative Market Visualization Specialist executing Phase 6 of TRADESCOUT under the Gravitas reliability runtime.
@@ -350,44 +350,90 @@ You are the Quantitative Market Visualization Specialist executing Phase 6 of TR
 ### Context & Grounding
 - Working Directory: `C:\Users\pc\OneDrive\Desktop\TRADESCOUT`
 - Read these files before touching anything:
-  1. `AppFlow.md` (Section 3.1 The Warmup & Section 3.4 RRG)
-  2. `DesignDocument.md`
-  3. `API-Spec.md`
+  1. `docs/AppFlow.md` (Section 3.1 The Warmup & Section 3.4 RRG)
+  2. `docs/DesignDocument.md`
+  3. `docs/API-Spec.md` (Market & Breadth endpoints)
   4. `.cursorrules`
+  5. `memory.md`
 
 ### Allowed Write Scope
-- `api/app/api/v1/market.py`
+- `api/app/routers/market.py`
 - `api/app/services/rrg.py`
+- `api/app/models/market.py`
+- `api/app/main.py`
+- `api/tests/test_market_and_rrg_api.py`
 - `web/src/app/warmup/**`
+- `web/src/components/warmup/**`
 - `web/src/app/rrg/**`
+- `web/src/components/rrg/**`
 - `web/src/app/heatmap/**`
-- `web/src/app/groups/**`
+- `web/src/components/heatmap/**`
 - `memory.md`
 
 ### Task Specification
-1. **The Warmup Dashboard (`web/src/app/warmup/page.tsx`):**
-   - Market Participation radial gauge (% of NSE 500 above 50 SMA).
-   - RME Sentiment diagnostic index (Washed Out / Neutral / Overextended).
-   - Weinstein Stage 2 vs Stage 4 distribution ratio bar.
-   - Daily pre-market cues feed and earnings horizon ribbon.
-2. **Relative Rotation Graph (`web/src/app/rrg/page.tsx`):**
-   - Compute JdK RS-Ratio (X-axis) and RS-Momentum (Y-axis) relative to benchmark index.
-   - Interactive 2D canvas plotting sectors and top momentum stocks across 4 quadrants:
-     - Leading (Green), Weakening (Yellow), Lagging (Red), Improving (Blue).
-     - Trailing trajectory tails showing 5, 10, or 20-session rotation clockwise.
-3. **Market Heatmap (`web/src/app/heatmap/page.tsx`):**
-   - Treemap visualization sized by Market Capitalization and colored by 1-day percentage gain/loss.
-   - Drill-down navigation: Market -> Sector -> Stock Detail.
+
+1. **RRG Vectorized Polars Service (`api/app/services/rrg.py`):**
+   - Implement JdK Relative Rotation Graph computation using vectorized Polars:
+     - Relative Strength: $RS(t) = \frac{Price_{symbol}(t)}{Price_{benchmark}(t)} \times 100$
+     - JdK RS-Ratio: Normalized 10-period rolling moving average of $RS(t)$ centered at 100.
+     - JdK RS-Momentum: Rate of change of the RS-Ratio centered at 100.
+   - Quadrant classification:
+     - **Leading:** RS-Ratio $\ge 100$, RS-Momentum $\ge 100$ (Cyan / Bright Green)
+     - **Weakening:** RS-Ratio $\ge 100$, RS-Momentum $< 100$ (Amber / Yellow)
+     - **Lagging:** RS-Ratio $< 100$, RS-Momentum $< 100$ (Rose / Red)
+     - **Improving:** RS-Ratio $< 100$, RS-Momentum $\ge 100$ (Indigo / Blue)
+   - Generate clockwise rotation history tails for each symbol/sector across 5, 10, and 20 trading sessions.
+
+2. **Market & RRG REST API (`api/app/routers/market.py`):**
+   - `GET /api/market/warmup`: Return aggregated morning market breadth metrics:
+     - Market Participation: % of stocks above 20 SMA, 50 SMA, 200 SMA.
+     - RME Sentiment Index score (0-100) and regime tag (`Oversold / Washout`, `Neutral`, `Overextended`).
+     - Weinstein Stage Distribution (percentage in Stage 1, Stage 2 Markup, Stage 3, Stage 4 Capitulation).
+     - New 52-Week Highs vs New 52-Week Lows ratio.
+     - Pre-market sentiment & economic horizon cues.
+   - `GET /api/market/rrg`: Accepts query params `benchmark` (default `NIFTY 50`) and `group` (`sectors` or `top-momentum`). Returns current coordinates and trailing history points.
+   - `GET /api/market/heatmap`: Returns hierarchically grouped sector and stock nodes with market capitalization weights and 1-day percentage price change.
+
+3. **The Warmup Dashboard UI (`web/src/app/warmup/page.tsx` & `web/src/components/warmup/`):**
+   - High-contrast institutional dark-mode morning dashboard.
+   - **Market Participation Gauge:** Circular SVG radial progress dial showing stocks above 50 SMA.
+   - **RME Sentiment Gauge:** Color-coded meter highlighting market temperature.
+   - **Stage Distribution Bar:** Stacked progress bar showing Stage 2 Markup vs Stage 4 Capitulation balance.
+   - **Breadth Summary Cards:** Net New Highs/Lows, Advance/Decline ratio, Average Volume Multiple.
+
+4. **Interactive Relative Rotation Graph UI (`web/src/app/rrg/page.tsx` & `web/src/components/rrg/`):**
+   - 2D Canvas or SVG interactive scatter chart centered at $(100, 100)$.
+   - 4 Quadrants clearly labeled: Leading (Top-Right), Weakening (Bottom-Right), Lagging (Bottom-Left), Improving (Top-Left).
+   - Trailing trajectory tails illustrating clockwise rotational momentum.
+   - Toggle filters: Sector view vs Top Liquid Momentum stocks.
+   - Tail length selector (5D, 10D, 20D) and hover tooltip showing symbol, quadrant, RS-Ratio, and RS-Momentum.
+   - Click node to navigate to `/stock/[symbol]`.
+
+5. **Market Heatmap UI (`web/src/app/heatmap/page.tsx` & `web/src/components/heatmap/`):**
+   - Treemap visualization sized by Market Cap and colored by 1D change % (`#00E5FF` green for gainers, `#EF4444` red for decliners).
+   - Index selector pills (`NIFTY 50`, `NIFTY NEXT 50`, `NIFTY MIDCAP 100`, `NIFTY 500`).
+   - Sector grouping tiles with nested stock boxes.
+   - Click stock tile navigates to `/stock/[symbol]`.
+
+6. **Automated Unit & Integration Tests (`api/tests/test_market_and_rrg_api.py`):**
+   - Test `GET /api/market/warmup` schema validation and metrics sanity.
+   - Test `GET /api/market/rrg` quadrant boundaries, RS-Ratio, and tail coordinate generation.
+   - Test `GET /api/market/heatmap` hierarchy and grouping.
+   - Verify all tests pass with 0 failures and 0 warnings.
 
 ### Hard Constraints
-- RRG calculations must use vectorized Polars expressions.
-- Heatmap must render smoothly on both mobile viewports and 4K desktop screens.
+- ZERO scraping. Use existing Polars Parquet pipeline data.
+- NO Pandas or NumPy. Use vectorized Polars expressions only.
+- Smooth rendering on desktop and mobile viewports with zero canvas memory leaks.
 
 ### Evidence & Verification Mandate
-1. Test market breadth endpoint: `curl http://localhost:8000/api/market-breadth`
-2. Test RRG endpoint: `curl http://localhost:8000/api/rrg?benchmark=NIFTY50`
-3. Run frontend production build: `cd web && pnpm build` (Ensure clean static generation).
-4. Update `memory.md` status board for Phase 6 to `[x] COMPLETE`.
+Run the following commands and paste the exact terminal output:
+1. `cd api && pytest tests/test_market_and_rrg_api.py -v` (Must pass with 100% success).
+2. `cd api && pytest tests/ -v` (Verify full test suite, target 68+ tests, passes).
+3. `cd api && ruff check .` (Must pass with 0 errors).
+4. `cd web && pnpm tsc --noEmit` (TypeScript compilation must pass with 0 errors).
+5. `cd web && pnpm build` (Next.js production build must compile `/warmup`, `/rrg`, `/heatmap`).
+6. Update `memory.md` status board for Phase 6 to `[x] COMPLETE`.
 
 Conclude your final response with:
 VERDICT: PASS (or FAIL with specific error log)
