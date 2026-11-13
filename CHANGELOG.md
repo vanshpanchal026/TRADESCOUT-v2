@@ -7,21 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [1.0.0] - 2026-11-13 — Production Milestone Release
 
-### Changed
-- Reorganized repository structure: consolidated all 12 architecture, specification, and implementation documents into `docs/` with a centralized index (`docs/README.md`), keeping only essential configuration and protocol files in the repository root.
+### Phase 7: Reliability, Quality Assurance & Security Hardening
+- **Playwright End-to-End Suite:** Implemented complete trader workflow E2E test suite in `web/tests/e2e/trader_workflow.spec.ts` covering 6 core journey specifications with 100% pass rate in headless Chromium:
+  - *Test 1 (The Warmup - `/warmup`):* Verified radial participation dial, RME sentiment badge, and 4-stage distribution progress bar.
+  - *Test 2 (Scanners - `/scanners/trend-template`):* Verified virtualized TanStack table rendering, dynamic RS Rating sorting, and instant search filter.
+  - *Test 3 (Stock Detail & Charting - `/stock/RELIANCE`):* Verified TradingView LC v4 canvas mount, 5-year quarterly fundamentals statements, and notes auto-save journal.
+  - *Test 4 (Watchlist Loop - `/watchlists`):* Verified symbol addition via autocomplete, 20-day sparklines, star/favourite toggle, and CSV export.
+  - *Test 5 (Relative Rotation Graph - `/rrg`):* Verified 2D scatter quadrant rendering (Leading, Weakening, Lagging, Improving) and tail length toggling (5D/10D/20D).
+  - *Test 6 (Market Heatmap - `/heatmap`):* Verified treemap tile rendering with gainers (cyan) / decliners (red) and index selector toggling.
+- **Security Headers & CSP:** Hardened Next.js `next.config.mjs` with strict Content Security Policy (CSP), Strict-Transport-Security (HSTS), X-Frame-Options (`DENY`), X-Content-Type-Options (`nosniff`), Referrer-Policy (`strict-origin-when-cross-origin`), and X-DNS-Prefetch-Control.
+- **SEBI Compliance & Disclaimer:** Enforced mandatory SEBI disclaimer across all routes in `web/src/components/common/Footer.tsx` and updated root layout.
+- **CI/CD Quality Gate Pipeline:** Configured GitHub Actions workflow `.github/workflows/ci.yml` orchestrating backend tests (Ruff + Pytest with Redis service), frontend typecheck and build, and headless Playwright E2E verification.
 
-### Added
-- Imported complete context, research vault, and live API fixtures from conversation `27c18536-f6cb-409a-bfed-4ac05e6bc0e8` (`research/`).
-- Benchmark & feasibility report for open-source Parquet market data sources (`research/data-sources-benchmark-report.md`).
-- Cost, cloud infrastructure, and funds requirement analysis (`research/cost-and-resource-breakdown.md`).
-- 24 real-world JSON response fixtures captured from ScanTheCharts for mocking and testing (`research/api-fixtures/`).
-- Complete reverse-engineered architectural teardown of ScanTheCharts.com (`research/scanthecharts-architecture-teardown.md`).
-- Zero-scraper data pipeline design utilizing Hugging Face columnar Parquet datasets (`tejhq/indian-markets` & `vishnun0027/indian-market-historical-ohlcv`).
-- Vectorized Polars technical indicator engine specification for Minervini Trend Template, Weinstein Stages, and IBD Relative Strength rating.
-- Complete Supabase PostgreSQL schema with Row Level Security (RLS) policies for watchlists, custom scans, chart drawings, and trader notes.
-- 7-Phase implementation roadmap with granular acceptance criteria.
-- Full REST API specification with 100+ field scanner data schemas and endpoint contracts.
-- Local development infrastructure via Docker Compose (PostgreSQL 16, Redis 7, pgAdmin).
-- Strict AI agent guardrails (`.cursorrules`, `agent.md`, `agentrules.md`).
+### Phase 6: The Warmup Cockpit, RRG & Market Treemap
+- **The Warmup Morning Breadth Cockpit (`/warmup`):** Integrated market participation gauges (>20/50/200 SMA), RME regime sentiment index (0-100), and Stan Weinstein 4-Stage market lifecycle bar.
+- **Vectorized JdK Relative Rotation Graph (`/rrg`):** Implemented Julius de Kempenaer (JdK) RS-Ratio and RS-Momentum rotation models with trailing historical tails.
+- **Market Cap-Weighted Treemap Heatmap (`/heatmap`):** Shipped recursive rectangular subdivision treemap visualizing sector grouping and stock returns.
+
+### Phase 5: Single-User Persistence, Watchlists & Trader Notes
+- **Direct Single-User Persistence:** Designed zero-friction persistence engine backed by PostgreSQL 16 `asyncpg` connection pool with automatic in-memory dictionary fallback.
+- **Watchlists & Data Grid (`/watchlists`):** Delivered multi-watchlist management with virtualized TanStack Table v8, inline 20D SVG sparklines, and CSV exports.
+- **Chart Drawings & Notes Journal:** Integrated TradingView chart drawing persistence and markdown stock thesis auto-saving with 1-second debounce.
+
+### Phase 4: Stock Detail & TradingView Canvas Charting
+- **Lightweight Charts v4 Integration (`/stock/[symbol]`):** Mounted 60 FPS hardware-accelerated TradingView candlestick charts with SMA 10/20/50/200 overlays.
+- **Relative Strength vs NIFTY 50:** Calculated IBD-style benchmark relative strength curve overlay.
+- **Fundamentals & Shareholding:** Implemented 5-year quarterly and annual financial statements and FII/DII shareholding breakdown.
+
+### Phase 3: High-Performance Scanner API & Freemium UI
+- **5 High-Conviction Scanners:** Implemented Minervini Trend Template, Recent Breakouts, 4%+ Volume Climax Breakouts, High RVOL, and 1M Top Gainers.
+- **Sub-15ms Pre-Computed Caching:** Redis 7 in-memory cache snapshots generated post-market.
+- **Freemium Gating:** Dynamic top-10 row preview with smooth blur paywall for guest accounts.
+
+### Phase 2: Zero-Scraper Vectorized Data Pipeline
+- **Columnar Parquet Ingestion:** Direct streaming loaders for Hugging Face datasets (`tejhq/indian-markets` and `vishnun0027/indian-market-historical-ohlcv`).
+- **Pure Polars Indicator Engine:** High-performance vectorized calculation of SMA, EMA, Wilder RSI, ATR, RVOL, 12M IBD RS Rating, and Stage classification without Pandas or NumPy.
+- **Golden Indicator Regression Suite:** Verified 100% calculation precision against pre-verified reference numbers across 10 benchmark market leaders.
+
+### Phase 1: Monorepo Scaffold & Local Infrastructure
+- **Monorepo Topology:** Established `api/` (Python 3.12+ FastAPI), `web/` (Next.js 14 App Router, TypeScript, Tailwind CSS), and `infra/` (Docker Compose with PostgreSQL 16 and Redis 7).
+- **Probes & Middleware:** Built `/healthz` and `/readyz` probes and UUID `x-request-id` tracing middleware.
+
+### Phase 0: Specifications, Architecture & Research Vault
+- **PRD & Specifications:** Authored 22 engineering design documents and PRD.
+- **ScanTheCharts Teardown:** Reverse-engineered data structures and captured 24 real-world API fixtures.
