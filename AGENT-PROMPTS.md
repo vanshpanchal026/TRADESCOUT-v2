@@ -239,52 +239,102 @@ VERDICT: PASS (or FAIL with specific error log)
 
 ---
 
-## PROMPT 5: Phase 5 — Supabase Authentication, RLS & Watchlists
+## PROMPT 5: Phase 5 — Watchlists, Chart Drawings & Cloud State (Single-User Direct Persistence)
 
 ```markdown
-You are the Security & Database Systems Engineer executing Phase 5 of TRADESCOUT under the Gravitas reliability runtime.
+You are the Full-Stack Database & Persistence Engineer executing Phase 5 of TRADESCOUT under the Gravitas reliability runtime.
 
 ### Context & Grounding
 - Working Directory: `C:\Users\pc\OneDrive\Desktop\TRADESCOUT`
 - Read these files before touching anything:
-  1. `Backend scheme.md`
-  2. `Security-and-Scale.md`
-  3. `AppFlow.md`
+  1. `docs/Backend scheme.md` (Table schemas & relations)
+  2. `docs/API-Spec.md` (Watchlist & Persistence endpoints)
+  3. `docs/AppFlow.md` (Watchlist UX & shortcut flows)
   4. `.cursorrules`
+  5. `memory.md`
 
 ### Allowed Write Scope
-- `supabase/**`
-- `api/app/core/security.py`
+- `api/app/routers/watchlists.py`
+- `api/app/services/database.py`
+- `api/app/models/watchlist.py`
+- `api/app/main.py`
+- `api/tests/test_watchlists_api.py`
 - `web/src/app/watchlists/**`
-- `web/src/app/(auth)/**`
-- `web/src/lib/supabase/**`
+- `web/src/components/watchlist/**`
+- `web/src/components/chart/TradingViewChart.tsx` (Hook drawing auto-save)
+- `web/src/components/stock/NotesAndFilings.tsx` (Hook note auto-save)
 - `memory.md`
 
-### Task Specification
-1. **Supabase Client & Auth SSR (`web/`):**
-   - Setup `@supabase/ssr` client for Next.js App Router (browser client, server client, middleware cookie session handler).
-   - Implement Auth UI: `/login`, `/signup`, `/reset-password` supporting Email/Password and Magic Link.
-2. **FastAPI JWT Authentication Dependency (`api/`):**
-   - Implement `get_current_user` dependency validating Supabase JWT with `SUPABASE_JWT_SECRET`.
-   - Protect watchlist, favourites, chart drawings, and trader notes routes.
-3. **Watchlist Management Engine (`web/src/app/watchlists/`):**
-   - CRUD watchlists backed by Supabase PostgreSQL.
-   - Enforce Tier Limits via database triggers (Free: max 1 watchlist, 20 stocks; Pro: unlimited).
-   - Mini sparkline previews for all watchlist symbols.
-   - Quick-add shortcut (`W` key) from any scanner table row.
-4. **Cloud Drawings & Trader Notes Persistence:**
-   - Save serialized TradingView chart drawings in `chart_drawings` table.
-   - Auto-saving journal in `stock_notes` table.
+### User Directive & Architecture Design: SINGLE-USER MODE (NO LOGIN REQUIRED)
+- **NO Login / Signup Screens:** The application is for personal use. Do NOT implement `/login`, `/signup`, or auth paywall redirects.
+- **Direct Access:** All features must open and operate immediately without requiring any credentials, cookies, or JWT verification.
+- **Default Single-User Profile:** All watchlist, favourite, drawing, and note records bind to default profile ID `00000000-0000-0000-0000-000000000001` (`trader`).
+- **Database Engine:** Uses PostgreSQL 16 (running via Docker on `127.0.0.1:5432`) with `asyncpg` connection pool. (Also 100% compatible with Supabase PostgreSQL).
+
+### Granular Task Specification
+
+1. **Database Service & Connection Pool (`api/app/services/database.py`):**
+   - Initialize `asyncpg` connection pool during FastAPI lifespan startup using `settings.DATABASE_URL` (`postgresql://tradescout:tradescout_dev@localhost:5432/tradescout`).
+   - Graceful fallback: If PostgreSQL is unreachable, use in-memory dictionary cache so endpoints never crash during development/testing.
+   - Run or verify table initialization (`profiles`, `watchlists`, `watchlist_items`, `favourites`, `chart_drawings`, `stock_notes`, `ui_prefs`) if not already present.
+
+2. **Watchlist & User State REST API (`api/app/routers/watchlists.py`):**
+   - `GET /api/watchlists`: Return all watchlists for default user with item counts.
+   - `POST /api/watchlists`: Create new watchlist (`name`, `description`).
+   - `GET /api/watchlists/{id}`: Return watchlist details and all stock items with latest cached EOD market metrics (CMP, 1D change %, RSI, RS rating, 52W high proximity).
+   - `PUT /api/watchlists/{id}`: Rename/update watchlist.
+   - `DELETE /api/watchlists/{id}`: Delete watchlist.
+   - `POST /api/watchlists/{id}/items`: Add stock symbol to watchlist (`symbol`, `notes`).
+   - `DELETE /api/watchlists/{id}/items/{symbol}`: Remove symbol from watchlist.
+   - `GET /api/favourites`: Return list of starred symbols.
+   - `POST /api/favourites/{symbol}/toggle`: Toggle favourite status (returns `{"symbol": symbol, "is_favourite": bool}`).
+   - `GET /api/stock/{symbol}/drawings`: Retrieve saved TradingView chart drawings JSON.
+   - `POST /api/stock/{symbol}/drawings`: Persist user's chart drawings JSON.
+   - `GET /api/stock/{symbol}/notes`: Retrieve user's markdown notes for the stock.
+   - `POST /api/stock/{symbol}/notes`: Persist user's markdown notes for the stock.
+
+3. **Frontend Watchlists Dashboard (`web/src/app/watchlists/page.tsx`):**
+   - Clean, dark-mode institutional layout matching ScanTheCharts.
+   - **Watchlist Selector Bar:** Tabs/Dropdown to switch between watchlists, "+ New Watchlist" modal button, and delete/rename actions.
+   - **Symbol Search & Quick-Add:** Instant autocomplete search input to type any NSE symbol (e.g., `RELIANCE`, `TRENT`, `DIXON`) and add it to the active list.
+   - **Watchlist Table Grid:** Virtualized TanStack Table v8 displaying:
+     - Symbol & Company Name
+     - CMP (Current Market Price) & 1D Change % (Green/Red badge)
+     - 20-Day Mini Sparkline canvas
+     - 14-period RSI & 12M RS Rating
+     - Distance to 52-Week High
+     - Notes tooltip & Delete button
+     - Click on row navigates to `/stock/[symbol]`.
+   - **CSV Export:** Button to download active watchlist symbols as CSV.
+
+4. **Cross-View Synchronization & Keyboard Shortcuts:**
+   - **Global 'W' Key / Star Shortcut:** On any scanner table row (`/scanners/[slug]`) and stock detail page (`/stock/[symbol]`), pressing `W` or clicking the Star icon instantly toggles the stock in the Primary Watchlist / Favourites.
+   - **Chart Drawings Auto-Save:** In `TradingViewChart.tsx`, auto-sync drawings to `/api/stock/{symbol}/drawings` on draw/modify and load them on mount.
+   - **Stock Notes Auto-Save:** In `NotesAndFilings.tsx`, auto-sync notes to `/api/stock/{symbol}/notes` with auto-save debounce (1000ms).
+
+5. **Automated Unit & Integration Tests (`api/tests/test_watchlists_api.py`):**
+   - Test default user watchlist listing (returns seeded "Primary Watchlist").
+   - Test creating a new custom watchlist.
+   - Test adding and removing stocks (`RELIANCE`, `TCS`) from watchlist.
+   - Test toggling favourites on and off.
+   - Test saving and retrieving chart drawings JSON.
+   - Test saving and retrieving markdown stock notes.
+   - Verify all tests pass with 0 failures and 0 warnings.
 
 ### Hard Constraints
-- Every user query must be guarded by Supabase PostgreSQL Row Level Security (RLS).
-- Never expose `SUPABASE_SERVICE_ROLE_KEY` to client browser bundles.
+- ZERO login / signup screens or auth paywalls.
+- No Pandas or NumPy. Use Polars or pure Python/asyncpg for database mappings.
+- All endpoints must return standard Pydantic models with `status: "success"` or standard errors.
+- Never crash if database is temporarily restarting; provide graceful logging.
 
 ### Evidence & Verification Mandate
-1. Run Supabase migration script against your Supabase project.
-2. Verify RLS: Attempt to query another user's watchlist using an authenticated client token and confirm zero rows returned.
-3. Verify Free tier constraint trigger: Attempt inserting 21st item in free watchlist and confirm database exception.
-4. Update `memory.md` status board for Phase 5 to `[x] COMPLETE`.
+Run the following commands and paste the exact terminal output:
+1. `cd api && pytest tests/test_watchlists_api.py -v` (Must pass with 100% success).
+2. `cd api && pytest tests/ -v` (Verify entire test suite, target 60+ tests, passes).
+3. `cd api && ruff check .` (Must pass with 0 errors).
+4. `cd web && pnpm tsc --noEmit` (TypeScript compilation must pass with 0 errors).
+5. `cd web && pnpm build` (Next.js production build must compile all routes including `/watchlists`).
+6. Update `memory.md` status board for Phase 5 to `[x] COMPLETE`.
 
 Conclude your final response with:
 VERDICT: PASS (or FAIL with specific error log)
