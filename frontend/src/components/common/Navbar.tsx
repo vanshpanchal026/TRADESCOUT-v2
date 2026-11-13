@@ -148,7 +148,6 @@ export function Navbar() {
                 type="button"
                 onClick={() => {
                   window.dispatchEvent(new CustomEvent("open-command-palette"));
-                  window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }));
                 }}
                 className="absolute right-1.5 top-1.5 px-1.5 py-0.5 rounded text-[10px] font-mono bg-muted text-muted-foreground border border-border hover:text-foreground"
                 title="Open Command Palette (Cmd+K)"

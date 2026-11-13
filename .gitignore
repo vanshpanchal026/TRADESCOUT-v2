@@ -14,8 +14,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
-frontend/
-backend/
 playwright-report/
 test-results/
 
@@ -92,6 +90,8 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Next.js Build Output
+frontend/.next/
+frontend/out/
 web/.next/
 web/out/
 .next/
