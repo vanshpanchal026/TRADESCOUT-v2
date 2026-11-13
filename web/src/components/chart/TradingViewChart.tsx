@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   CandlestickSeries,
   ColorType,
@@ -14,6 +14,15 @@ import {
   type ISeriesApi,
 } from "lightweight-charts";
 import { OHLCVBar, RSLinePoint } from "@/lib/types";
+
+export interface UserDrawing {
+  id: string;
+  type: "horizontal_line";
+  price: number;
+  color: string;
+  title: string;
+  lineStyle?: "solid" | "dashed" | "dotted";
+}
 
 interface TradingViewChartProps {
   symbol: string;
@@ -34,8 +43,11 @@ export default function TradingViewChart({
   rsRating = 88,
   pivotPrice = null,
 }: TradingViewChartProps) {
+  const symClean = (symbol || "").toUpperCase().trim();
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
+  const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+  const activePriceLinesRef = useRef<Map<string, IPriceLine>>(new Map());
 
   // Indicators toggle state
   const [showSma10, setShowSma10] = useState(true);
@@ -49,6 +61,14 @@ export default function TradingViewChart({
 
   // Time range selector
   const [selectedRange, setSelectedRange] = useState<"1M" | "3M" | "6M" | "1Y" | "ALL">("1Y");
+
+  // Drawings persistence state
+  const [drawings, setDrawings] = useState<UserDrawing[]>([]);
+  const [drawingStatus, setDrawingStatus] = useState<string | null>(null);
+
+  // Favourites state & Global 'W' shortcut feedback
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Pre-calculate technical indicator series
   const { sma10Data, sma20Data, sma50Data, sma200Data, volumeData, rsiData, rsLineData, calculatedPivot } =
@@ -73,7 +93,6 @@ export default function TradingViewChart({
       const vols: { time: string; value: number; color: string }[] = [];
       const rsi: { time: string; value: number }[] = [];
 
-      // 50-day moving average of volume for spike detection
       const volWindow: number[] = [];
       let pivotHigh = 0;
 
@@ -120,7 +139,6 @@ export default function TradingViewChart({
         const avgVol = volWindow.reduce((a, b) => a + b, 0) / volWindow.length;
         const isSpike = avgVol > 0 && bar.volume >= 2.0 * avgVol;
 
-        // Bullish cyan / Bearish slate, high volume spike purple/magenta
         let volColor = close >= bar.open ? "rgba(0, 229, 255, 0.45)" : "rgba(100, 116, 139, 0.45)";
         if (isSpike) {
           volColor = close >= bar.open ? "#D946EF" : "#F43F5E";
@@ -161,10 +179,65 @@ export default function TradingViewChart({
       };
     }, [bars, rsLine, pivotPrice]);
 
+  // 1. Initial Load: Chart Drawings & Favourites
+  useEffect(() => {
+    if (!symClean) return;
+
+    let isMounted = true;
+
+    // Load drawings from Cloud API with local fallback
+    async function loadSavedDrawings() {
+      try {
+        const res = await fetch(`/api/stock/${symClean}/drawings`);
+        if (res.ok) {
+          const data = await res.json();
+          const list = data.drawing_data || data.drawings || [];
+          if (isMounted && Array.isArray(list)) {
+            setDrawings(list);
+            return;
+          }
+        }
+      } catch {
+        // Fallback
+      }
+
+      try {
+        const local = localStorage.getItem(`stc-drawings-${symClean}`);
+        if (local && isMounted) {
+          setDrawings(JSON.parse(local));
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    // Check favourite status
+    async function checkFavourite() {
+      try {
+        const res = await fetch("/api/favourites");
+        if (res.ok) {
+          const data = await res.json();
+          if (isMounted && Array.isArray(data.favourites)) {
+            setIsFavourite(data.favourites.includes(symClean));
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    loadSavedDrawings();
+    checkFavourite();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [symClean]);
+
+  // 2. Main Lightweight Charts Initialization
   useEffect(() => {
     if (!containerRef.current || !bars || bars.length === 0) return;
 
-    // 1. Initialize Canvas Chart
     const container = containerRef.current;
     const chart = createChart(container, {
       width: container.clientWidth,
@@ -210,7 +283,7 @@ export default function TradingViewChart({
 
     chartRef.current = chart;
 
-    // 2. Candlestick Series (Bullish Cyan #00E5FF, Bearish Slate #64748B)
+    // Candlestick Series
     const candleSeries = chart.addSeries(
       CandlestickSeries,
       {
@@ -225,8 +298,9 @@ export default function TradingViewChart({
       0
     );
     candleSeries.setData(bars);
+    candleSeriesRef.current = candleSeries;
 
-    // 3. Breakout Pivot Dashed Line
+    // Breakout Pivot Dashed Line
     let pivotLine: IPriceLine | null = null;
     if (showPivot && calculatedPivot) {
       pivotLine = candleSeries.createPriceLine({
@@ -239,13 +313,13 @@ export default function TradingViewChart({
       });
     }
 
-    // 4. Moving Average Overlays (in pane 0)
+    // Moving Average Overlays
     let s10Series: ISeriesApi<"Line"> | null = null;
     if (showSma10 && sma10Data.length > 0) {
       s10Series = chart.addSeries(
         LineSeries,
         {
-          color: "#EAB308", // Yellow
+          color: "#EAB308",
           lineWidth: 1,
           priceLineVisible: false,
           lastValueVisible: false,
@@ -261,7 +335,7 @@ export default function TradingViewChart({
       s20Series = chart.addSeries(
         LineSeries,
         {
-          color: "#22C55E", // Green
+          color: "#22C55E",
           lineWidth: 1,
           priceLineVisible: false,
           lastValueVisible: false,
@@ -277,7 +351,7 @@ export default function TradingViewChart({
       s50Series = chart.addSeries(
         LineSeries,
         {
-          color: "#3B82F6", // Blue
+          color: "#3B82F6",
           lineWidth: 2,
           priceLineVisible: false,
           lastValueVisible: false,
@@ -293,7 +367,7 @@ export default function TradingViewChart({
       s200Series = chart.addSeries(
         LineSeries,
         {
-          color: "#EF4444", // Red
+          color: "#EF4444",
           lineWidth: 2,
           priceLineVisible: false,
           lastValueVisible: false,
@@ -304,7 +378,7 @@ export default function TradingViewChart({
       s200Series.setData(sma200Data);
     }
 
-    // 5. Volume Histogram Sub-Overlay (at bottom of pane 0)
+    // Volume Histogram
     let volSeries: ISeriesApi<"Histogram"> | null = null;
     if (showVolume && volumeData.length > 0) {
       volSeries = chart.addSeries(
@@ -324,11 +398,10 @@ export default function TradingViewChart({
       });
     }
 
-    // 6. Sub-Pane: RSI (14) or IBD Relative Strength Line in pane 1
-    let subSeries: ISeriesApi<"Line"> | null = null;
+    // Sub-Pane: RSI / RS
     if (showSubPane) {
       if (subPaneMode === "rsi" && rsiData.length > 0) {
-        subSeries = chart.addSeries(
+        const subSeries = chart.addSeries(
           LineSeries,
           {
             color: "#A855F7",
@@ -356,7 +429,7 @@ export default function TradingViewChart({
           title: "30",
         });
       } else if (subPaneMode === "rs" && rsLineData.length > 0) {
-        subSeries = chart.addSeries(
+        const subSeries = chart.addSeries(
           LineSeries,
           {
             color: "#00E5FF",
@@ -378,10 +451,23 @@ export default function TradingViewChart({
       }
     }
 
-    // Fit content
+    // Attach saved user drawings as price lines
+    activePriceLinesRef.current.clear();
+    drawings.forEach((d) => {
+      const pl = candleSeries.createPriceLine({
+        price: d.price,
+        color: d.color || "#00E5FF",
+        lineWidth: 1,
+        lineStyle: d.lineStyle === "solid" ? LineStyle.Solid : LineStyle.Dashed,
+        axisLabelVisible: true,
+        title: d.title || `Level ₹${d.price}`,
+      });
+      activePriceLinesRef.current.set(d.id, pl);
+    });
+
     chart.timeScale().fitContent();
 
-    // 7. Auto-Resize Observer
+    // Resize Observer
     const resizeObserver = new ResizeObserver((entries) => {
       if (!entries || entries.length === 0 || !entries[0].contentRect) return;
       const { width, height } = entries[0].contentRect;
@@ -392,14 +478,24 @@ export default function TradingViewChart({
 
     resizeObserver.observe(container);
 
-    // 8. Strict Cleanup (Prevent Canvas Memory Leaks)
+    const priceLinesMap = activePriceLinesRef.current;
+
     return () => {
       resizeObserver.disconnect();
       if (pivotLine && candleSeries) {
         candleSeries.removePriceLine(pivotLine);
       }
+      priceLinesMap.forEach((pl) => {
+        try {
+          candleSeries.removePriceLine(pl);
+        } catch {
+          // ignore
+        }
+      });
+      priceLinesMap.clear();
       chart.remove();
       chartRef.current = null;
+      candleSeriesRef.current = null;
     };
   }, [
     bars,
@@ -419,7 +515,104 @@ export default function TradingViewChart({
     subPaneMode,
     showPivot,
     calculatedPivot,
+    drawings,
   ]);
+
+  // 3. Persist Drawing Changes helper
+  const persistDrawings = async (updatedList: UserDrawing[]) => {
+    setDrawings(updatedList);
+    try {
+      localStorage.setItem(`stc-drawings-${symClean}`, JSON.stringify(updatedList));
+    } catch {
+      // ignore
+    }
+
+    setDrawingStatus("Syncing drawing...");
+    try {
+      const res = await fetch(`/api/stock/${symClean}/drawings`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ drawing_data: updatedList }),
+      });
+      if (res.ok) {
+        setDrawingStatus("Drawings saved");
+        setTimeout(() => setDrawingStatus(null), 2000);
+      } else {
+        setDrawingStatus("Saved in browser");
+        setTimeout(() => setDrawingStatus(null), 2000);
+      }
+    } catch {
+      setDrawingStatus("Saved in browser");
+      setTimeout(() => setDrawingStatus(null), 2000);
+    }
+  };
+
+  // Add horizontal level
+  const handleAddDrawing = () => {
+    if (!bars || bars.length === 0) return;
+    const ltp = bars[bars.length - 1].close;
+    const priceStr = window.prompt(`Enter price level for horizontal line (Current LTP: ₹${ltp.toFixed(2)}):`, ltp.toFixed(2));
+    if (!priceStr) return;
+
+    const price = parseFloat(priceStr);
+    if (isNaN(price) || price <= 0) return;
+
+    const label = window.prompt("Enter label (e.g. Pivot, Resistance, Key Level):", "Key Level") || "Key Level";
+
+    const newDrawing: UserDrawing = {
+      id: `draw_${Date.now()}`,
+      type: "horizontal_line",
+      price,
+      color: "#00E5FF",
+      title: `${label} ₹${price}`,
+      lineStyle: "dashed",
+    };
+
+    const nextList = [...drawings, newDrawing];
+    persistDrawings(nextList);
+  };
+
+  // Clear all drawings
+  const handleClearDrawings = () => {
+    if (drawings.length === 0) return;
+    if (window.confirm("Remove all saved chart drawings for this stock?")) {
+      persistDrawings([]);
+    }
+  };
+
+  // 4. Toggle Favourite and 'W' key action
+  const handleToggleFavourite = useCallback(async () => {
+    if (!symClean) return;
+    try {
+      const res = await fetch(`/api/favourites/${symClean}/toggle`, {
+        method: "POST",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setIsFavourite(data.is_favourite);
+        setToastMessage(data.is_favourite ? `★ Added ${symClean} to Favourites` : `☆ Removed ${symClean} from Favourites`);
+        setTimeout(() => setToastMessage(null), 2500);
+      }
+    } catch {
+      setIsFavourite((prev) => !prev);
+    }
+  }, [symClean]);
+
+  // Global 'W' Key listener
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+      if (e.key === "w" || e.key === "W") {
+        e.preventDefault();
+        handleToggleFavourite();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleToggleFavourite]);
 
   // Handle Range Selection
   const handleRangeChange = (range: "1M" | "3M" | "6M" | "1Y" | "ALL") => {
@@ -464,6 +657,13 @@ export default function TradingViewChart({
 
   return (
     <div className="relative flex flex-col w-full h-full bg-slate-900/60 rounded-xl border border-slate-800/80 overflow-hidden backdrop-blur-md">
+      {/* Toast notification pill */}
+      {toastMessage && (
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-50 px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/30 animate-bounce">
+          {toastMessage}
+        </div>
+      )}
+
       {/* Top Controls Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-slate-800 bg-slate-950/40">
         {/* Left: Indicator Toggles */}
@@ -548,23 +748,67 @@ export default function TradingViewChart({
           >
             Sub-Pane: {subPaneMode.toUpperCase()}
           </button>
+
+          <div className="h-4 w-[1px] bg-slate-800 mx-1" />
+
+          {/* Drawing Tools */}
+          <button
+            onClick={handleAddDrawing}
+            className="px-2.5 py-1 rounded-md transition-all border border-cyan-500/40 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 font-medium"
+            title="Add auto-saved horizontal line"
+          >
+            + Draw Line
+          </button>
+          {drawings.length > 0 && (
+            <button
+              onClick={handleClearDrawings}
+              className="px-2 py-1 rounded-md text-[11px] border border-slate-800 bg-slate-900 text-slate-400 hover:text-rose-400"
+            >
+              Clear ({drawings.length})
+            </button>
+          )}
+          {drawingStatus && (
+            <span className="text-[11px] text-slate-400 font-mono italic animate-pulse">
+              {drawingStatus}
+            </span>
+          )}
         </div>
 
-        {/* Right: Time Range Buttons */}
-        <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
-          {(["1M", "3M", "6M", "1Y", "ALL"] as const).map((rng) => (
-            <button
-              key={rng}
-              onClick={() => handleRangeChange(rng)}
-              className={`px-2.5 py-1 rounded font-medium transition-all ${
-                selectedRange === rng
-                  ? "bg-cyan-500 text-slate-950 font-bold shadow"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
-            >
-              {rng}
-            </button>
-          ))}
+        {/* Right: Star & Range Buttons */}
+        <div className="flex items-center gap-2">
+          {/* Star Shortcut (Press 'W') */}
+          <button
+            onClick={handleToggleFavourite}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all border ${
+              isFavourite
+                ? "bg-amber-500/20 border-amber-500/50 text-amber-400 shadow-sm shadow-amber-500/20"
+                : "bg-slate-900 border-slate-800 text-slate-400 hover:text-amber-400"
+            }`}
+            title="Press 'W' to toggle favourite"
+          >
+            <span>{isFavourite ? "★" : "☆"}</span>
+            <span>{isFavourite ? "Starred" : "Favourite"}</span>
+            <kbd className="hidden sm:inline-block px-1 py-0.2 rounded bg-slate-800 text-[10px] text-slate-400">
+              W
+            </kbd>
+          </button>
+
+          {/* Time Range Buttons */}
+          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+            {(["1M", "3M", "6M", "1Y", "ALL"] as const).map((rng) => (
+              <button
+                key={rng}
+                onClick={() => handleRangeChange(rng)}
+                className={`px-2.5 py-1 rounded font-medium transition-all ${
+                  selectedRange === rng
+                    ? "bg-cyan-500 text-slate-950 font-bold shadow"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                {rng}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -602,9 +846,14 @@ export default function TradingViewChart({
           <span className="flex items-center gap-1">
             <span className="w-2.5 h-2.5 rounded-sm bg-fuchsia-500 inline-block" /> High-Vol Spike (&gt;2.0× 50D)
           </span>
+          {drawings.length > 0 && (
+            <span className="flex items-center gap-1 text-cyan-400">
+              <span className="w-2.5 h-0.5 bg-cyan-400 inline-block" /> {drawings.length} Saved Drawing(s)
+            </span>
+          )}
         </div>
         <div className="text-slate-500">
-          Hardware-accelerated HTML5 Canvas (60 FPS) · {bars.length} sessions
+          Hardware-accelerated HTML5 Canvas (60 FPS) · Cloud Drawings Auto-Saved
         </div>
       </div>
     </div>
