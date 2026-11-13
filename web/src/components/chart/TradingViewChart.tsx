@@ -14,6 +14,7 @@ import {
   type ISeriesApi,
 } from "lightweight-charts";
 import { OHLCVBar, RSLinePoint } from "@/lib/types";
+import { getAuthHeaders } from "@/lib/auth";
 
 export interface UserDrawing {
   id: string;
@@ -188,7 +189,7 @@ export default function TradingViewChart({
     // Load drawings from Cloud API with local fallback
     async function loadSavedDrawings() {
       try {
-        const res = await fetch(`/api/stock/${symClean}/drawings`);
+        const res = await fetch(`/api/stock/${symClean}/drawings`, { headers: getAuthHeaders() });
         if (res.ok) {
           const data = await res.json();
           const list = data.drawing_data || data.drawings || [];
@@ -531,7 +532,7 @@ export default function TradingViewChart({
     try {
       const res = await fetch(`/api/stock/${symClean}/drawings`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify({ drawing_data: updatedList }),
       });
       if (res.ok) {

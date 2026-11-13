@@ -41,9 +41,9 @@ export async function OPTIONS(request: Request) {
     headers: {
       "Access-Control-Allow-Origin": allowedOrigin,
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-      "Access-Control-Allow-Headers": "Authorization, Content-Type, x-request-id, X-Request-ID",
+      "Access-Control-Allow-Headers": "Authorization, Content-Type, x-request-id, X-Request-ID, x-user-id",
       "Access-Control-Max-Age": "86400",
-      "Vary": "Origin",
+      "Vary": "Origin, Authorization, Accept-Encoding",
     },
   });
 }
@@ -65,6 +65,13 @@ async function proxyRequest(request: Request, path: string[]) {
     forwardHeaders.set("authorization", authHeader);
   }
 
+  // Only allow x-user-id forwarding in development mode for identity switcher testing
+  const isDev = process.env.NODE_ENV !== "production";
+  const userIdHeader = request.headers.get("x-user-id");
+  if (isDev && userIdHeader) {
+    forwardHeaders.set("x-user-id", userIdHeader);
+  }
+
   const reqId = request.headers.get("x-request-id") || crypto.randomUUID();
   forwardHeaders.set("x-request-id", reqId);
 
@@ -76,6 +83,11 @@ async function proxyRequest(request: Request, path: string[]) {
   const acceptHeader = request.headers.get("accept");
   if (acceptHeader) {
     forwardHeaders.set("accept", acceptHeader);
+  }
+
+  const acceptEncoding = request.headers.get("accept-encoding");
+  if (acceptEncoding) {
+    forwardHeaders.set("accept-encoding", acceptEncoding);
   }
 
   try {
@@ -95,7 +107,12 @@ async function proxyRequest(request: Request, path: string[]) {
 
     const responseHeaders = new Headers(backendResponse.headers);
     responseHeaders.set("Access-Control-Allow-Origin", allowedOrigin);
-    responseHeaders.set("Vary", "Origin");
+
+    const backendVary = backendResponse.headers.get("vary");
+    const mergedVary = backendVary
+      ? `Origin, ${backendVary}`
+      : "Origin, Authorization, Accept-Encoding, X-User-Id";
+    responseHeaders.set("Vary", mergedVary);
     responseHeaders.set("x-request-id", reqId);
 
     return new Response(backendResponse.body, {
@@ -114,7 +131,7 @@ async function proxyRequest(request: Request, path: string[]) {
         headers: {
           "x-request-id": reqId,
           "Access-Control-Allow-Origin": allowedOrigin,
-          "Vary": "Origin",
+          "Vary": "Origin, Authorization, Accept-Encoding",
         },
       }
     );
@@ -126,5 +143,21 @@ export async function GET(request: Request, { params }: { params: { path: string
 }
 
 export async function POST(request: Request, { params }: { params: { path: string[] } }) {
+  return proxyRequest(request, params.path);
+}
+
+export async function PUT(request: Request, { params }: { params: { path: string[] } }) {
+  return proxyRequest(request, params.path);
+}
+
+export async function DELETE(request: Request, { params }: { params: { path: string[] } }) {
+  return proxyRequest(request, params.path);
+}
+
+export async function PATCH(request: Request, { params }: { params: { path: string[] } }) {
+  return proxyRequest(request, params.path);
+}
+
+export async function HEAD(request: Request, { params }: { params: { path: string[] } }) {
   return proxyRequest(request, params.path);
 }

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { FolderPlus, X } from "lucide-react";
+import { getAuthHeaders } from "@/lib/auth";
 
 interface NewWatchlistModalProps {
   isOpen: boolean;
@@ -27,7 +28,7 @@ export function NewWatchlistModal({ isOpen, onClose, onCreated }: NewWatchlistMo
     try {
       const res = await fetch("/api/watchlists", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify({
           name: name.trim(),
           description: description.trim() || undefined,

@@ -44,6 +44,10 @@ class Settings(BaseSettings):
         default=None,
         description="Supabase JWT secret for auth verification",
     )
+    INTERNAL_SERVICE_SECRET: str = Field(
+        default="tradescout-internal-secret-edge",
+        description="Internal service secret for edge proxy",
+    )
 
     # Redis Cache Settings
     REDIS_URL: str = Field(default="redis://localhost:6379/0", description="Redis connection URL")
@@ -54,6 +58,24 @@ class Settings(BaseSettings):
         default="postgresql://tradescout:tradescout_dev@localhost:5432/tradescout",
         description="PostgreSQL connection URL",
     )
+    DATABASE_POOL_MIN: int = Field(default=5, description="Minimum database connection pool size")
+    DATABASE_POOL_MAX: int = Field(default=50, description="Maximum database connection pool size")
+    DATABASE_POOL_TIMEOUT: float = Field(default=10.0, description="Connection pool acquire timeout in seconds")
+    DATABASE_COMMAND_TIMEOUT: float = Field(default=15.0, description="Database statement command timeout in seconds")
+    DATABASE_STATEMENT_CACHE_SIZE: int = Field(
+        default=0,
+        description="Statement cache size (0 for PgBouncer / Supavisor transaction pooler compatibility)",
+    )
+
+    # Rate Limiting & Concurrency
+    RATE_LIMIT_ENABLED: bool = Field(default=True, description="Enable request rate limiting")
+    RATE_LIMIT_ANONYMOUS: str = Field(default="120/minute", description="Rate limit for unauthenticated users")
+    RATE_LIMIT_PRO: str = Field(default="600/minute", description="Rate limit for authenticated Pro users")
+    RATE_LIMIT_SCANNER_ANON: str = Field(
+        default="60/minute",
+        description="Rate limit for scanner endpoints for anonymous users",
+    )
+    CACHE_MUTEX_TIMEOUT_SECS: int = Field(default=30, description="Distributed lock timeout for heavy recalculation")
 
     @property
     def APP_NAME(self) -> str:

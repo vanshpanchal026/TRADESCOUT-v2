@@ -94,3 +94,37 @@ CREATE TABLE IF NOT EXISTS ui_prefs (
 INSERT INTO watchlists (id, user_id, name, description, is_default, sort_order)
 VALUES ('00000000-0000-0000-0000-000000000002'::uuid, '00000000-0000-0000-0000-000000000001'::uuid, 'Primary Watchlist', 'Default swing trading watchlist', true, 0)
 ON CONFLICT (id) DO NOTHING;
+
+-- ============================================================================
+-- 8. ROW LEVEL SECURITY (RLS) FOR 10K MULTI-TENANT ISOLATION
+-- ============================================================================
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE watchlists ENABLE ROW LEVEL SECURITY;
+ALTER TABLE watchlist_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE favourites ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chart_drawings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE stock_notes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ui_prefs ENABLE ROW LEVEL SECURITY;
+
+-- Allow users to manage only their own isolated tenant rows
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Users can only access their own profile') THEN
+        CREATE POLICY "Users can only access their own profile" ON profiles FOR ALL USING (auth.uid() = id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Users can only access their own watchlists') THEN
+        CREATE POLICY "Users can only access their own watchlists" ON watchlists FOR ALL USING (auth.uid() = user_id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Users can only access their own favourites') THEN
+        CREATE POLICY "Users can only access their own favourites" ON favourites FOR ALL USING (auth.uid() = user_id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Users can only access their own chart drawings') THEN
+        CREATE POLICY "Users can only access their own chart drawings" ON chart_drawings FOR ALL USING (auth.uid() = user_id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Users can only access their own stock notes') THEN
+        CREATE POLICY "Users can only access their own stock notes" ON stock_notes FOR ALL USING (auth.uid() = user_id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Users can only access their own UI preferences') THEN
+        CREATE POLICY "Users can only access their own UI preferences" ON ui_prefs FOR ALL USING (auth.uid() = user_id);
+    END IF;
+END $$;

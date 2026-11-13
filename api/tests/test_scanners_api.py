@@ -20,8 +20,8 @@ import pytest
 from httpx import ASGITransport
 from jose import jwt
 
+from app.core.auth import get_jwt_secret
 from app.main import app
-from app.routers.scanners import get_jwt_secret
 
 
 @pytest.fixture

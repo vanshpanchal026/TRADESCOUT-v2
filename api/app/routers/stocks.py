@@ -13,7 +13,7 @@ from typing import Any
 
 import polars as pl
 import structlog
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from redis.asyncio import Redis
 
 from app.core.config import settings
@@ -97,6 +97,7 @@ def compute_rs_rating(closes: list[float]) -> int:
 @router.get("/stock/{symbol}", response_model=StockDetailResponse)
 async def get_stock_overview(
     symbol: str,
+    http_response: Response = Response(),
     redis: Redis = Depends(get_redis_client),
 ) -> dict[str, Any]:
     """Fetch complete stock technical summary and market overview."""
@@ -107,6 +108,7 @@ async def get_stock_overview(
     cached_json = await redis.get(cache_key)
     if cached_json:
         try:
+            http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
             return json.loads(cached_json)
         except Exception:
             pass
@@ -276,6 +278,7 @@ async def get_stock_overview(
     except Exception:
         pass
 
+    http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
     return result
 
 
@@ -283,6 +286,7 @@ async def get_stock_overview(
 async def get_stock_history(
     symbol: str,
     days: int = Query(default=500, ge=1, le=5000, description="Number of trading sessions to return"),
+    http_response: Response = Response(),
 ) -> list[dict[str, Any]]:
     """Stream historical daily OHLCV formatted for TradingView Lightweight Charts v4."""
     sym_clean = clean_symbol(symbol)
@@ -326,6 +330,7 @@ async def get_stock_history(
 
     # Limit to requested number of trading days
     sliced = df.select(["time", "open", "high", "low", "close", "volume"]).tail(days)
+    http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
     return sliced.to_dicts()
 
 
@@ -333,6 +338,7 @@ async def get_stock_history(
 async def get_stock_rs_line(
     symbol: str,
     period: str = Query(default="1y", description="RS lookback period (3m, 6m, 1y, 2y, 5y)"),
+    http_response: Response = Response(),
 ) -> dict[str, Any]:
     """Calculate normalized Relative Strength line against NIFTY 50 benchmark."""
     sym_clean = clean_symbol(symbol)
@@ -415,6 +421,7 @@ async def get_stock_rs_line(
     # Overall stock RS rating
     rs_rating = compute_rs_rating([float(c) for c in joined["s_close"].to_list()])
 
+    http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
     return {
         "symbol": sym_clean,
         "benchmark": "NIFTY 50",
@@ -430,6 +437,7 @@ async def get_stock_rs_line(
 @router.get("/stock/{symbol}/fundamentals", response_model=StockFundamentalsResponse)
 async def get_stock_fundamentals_endpoint(
     symbol: str,
+    http_response: Response = Response(),
     redis: Redis = Depends(get_redis_client),
 ) -> StockFundamentalsResponse:
     """Return 5-year quarterly metrics: Sales, EBITDA, Net Profit, EPS, Promoter %, FII %, DII %."""
@@ -440,13 +448,14 @@ async def get_stock_fundamentals_endpoint(
     cached_json = await redis.get(cache_key)
     if cached_json:
         try:
+            http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
             return StockFundamentalsResponse.model_validate_json(cached_json)
         except Exception:
             pass
 
     # Fetch symbol overview to get accurate CMP and Market Cap
     try:
-        overview = await get_stock_overview(sym_clean, redis)
+        overview = await get_stock_overview(symbol=sym_clean, redis=redis)
         cmp = overview.get("cmp", 1000.0)
         market_cap = overview.get("market_cap", 50000.0)
         company_name = overview.get("name") or overview.get("company_name")
@@ -482,4 +491,5 @@ async def get_stock_fundamentals_endpoint(
     except Exception:
         pass
 
+    http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
     return fundamentals

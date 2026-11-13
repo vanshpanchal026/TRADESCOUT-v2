@@ -4,6 +4,7 @@ Phase 5: Single-User Direct Cloud Persistence (PostgreSQL / Supabase Ready).
 No auth paywalls, zero cookies/JWT required. Binds to DEFAULT_USER_ID ('trader').
 """
 
+import asyncio
 import json
 from collections.abc import AsyncGenerator
 from typing import Any
@@ -13,6 +14,7 @@ import structlog
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from redis.asyncio import Redis
 
+from app.core.auth import get_current_user_id
 from app.core.config import settings
 from app.models.watchlist import (
     ChartDrawingsRequest,
@@ -33,7 +35,6 @@ from app.models.watchlist import (
     WatchlistUpdateRequest,
 )
 from app.services.database import (
-    DEFAULT_USER_ID,
     add_watchlist_item,
     create_watchlist,
     delete_watchlist,
@@ -174,9 +175,10 @@ async def enrich_item(
 @router.get("/watchlists", response_model=WatchlistListResponse)
 async def list_watchlists(
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> WatchlistListResponse:
-    """Return all watchlists for default user with item counts."""
-    watchlists = await get_watchlists(db_pool, user_id=DEFAULT_USER_ID)
+    """Return all watchlists for authenticated user with item counts."""
+    watchlists = await get_watchlists(db_pool, user_id=user_id)
     summaries = [WatchlistSummary(**w) for w in watchlists]
     return WatchlistListResponse(status="success", watchlists=summaries, total=len(summaries))
 
@@ -185,6 +187,7 @@ async def list_watchlists(
 async def create_new_watchlist(
     payload: WatchlistCreateRequest,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> WatchlistResponse:
     """Create a new custom watchlist."""
     created = await create_watchlist(
@@ -192,7 +195,7 @@ async def create_new_watchlist(
         name=payload.name,
         description=payload.description,
         is_default=payload.is_default,
-        user_id=DEFAULT_USER_ID,
+        user_id=user_id,
     )
     return WatchlistResponse(status="success", watchlist=WatchlistSummary(**created))
 
@@ -202,9 +205,10 @@ async def get_watchlist_detail(
     watchlist_id: str,
     db_pool: Any = Depends(get_db_pool),
     redis: Redis | None = Depends(get_redis_client),
+    user_id: str = Depends(get_current_user_id),
 ) -> WatchlistDetailResponse:
     """Return watchlist details along with enriched stock data and sparklines."""
-    w = await get_watchlist(db_pool, watchlist_id, user_id=DEFAULT_USER_ID)
+    w = await get_watchlist(db_pool, watchlist_id, user_id=user_id)
     if not w:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -212,7 +216,10 @@ async def get_watchlist_detail(
         )
 
     raw_items = await get_watchlist_items(db_pool, watchlist_id)
-    enriched = [await enrich_item(item, redis) for item in raw_items]
+    if raw_items:
+        enriched = list(await asyncio.gather(*[enrich_item(item, redis) for item in raw_items]))
+    else:
+        enriched = []
 
     return WatchlistDetailResponse(
         status="success",
@@ -233,6 +240,7 @@ async def update_existing_watchlist(
     watchlist_id: str,
     payload: WatchlistUpdateRequest,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> WatchlistResponse:
     """Rename or update description / order of an existing watchlist."""
     updated = await update_watchlist(
@@ -242,7 +250,7 @@ async def update_existing_watchlist(
         description=payload.description,
         is_default=payload.is_default,
         sort_order=payload.sort_order,
-        user_id=DEFAULT_USER_ID,
+        user_id=user_id,
     )
     if not updated:
         raise HTTPException(
@@ -256,9 +264,10 @@ async def update_existing_watchlist(
 async def delete_existing_watchlist(
     watchlist_id: str,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> StandardMessageResponse:
     """Delete a watchlist."""
-    success = await delete_watchlist(db_pool, watchlist_id, user_id=DEFAULT_USER_ID)
+    success = await delete_watchlist(db_pool, watchlist_id, user_id=user_id)
     if not success:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -280,9 +289,10 @@ async def add_item_to_watchlist(
     watchlist_id: str,
     payload: WatchlistItemCreateRequest,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> WatchlistItemResponse:
     """Add a stock symbol to the watchlist."""
-    w = await get_watchlist(db_pool, watchlist_id, user_id=DEFAULT_USER_ID)
+    w = await get_watchlist(db_pool, watchlist_id, user_id=user_id)
     if not w:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -306,8 +316,16 @@ async def remove_item_from_watchlist(
     watchlist_id: str,
     symbol: str,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> StandardMessageResponse:
     """Remove a symbol from the watchlist."""
+    w = await get_watchlist(db_pool, watchlist_id, user_id=user_id)
+    if not w:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "not_found", "message": f"Watchlist '{watchlist_id}' not found"},
+        )
+
     sym = clean_sym(symbol)
     await remove_watchlist_item(db_pool, watchlist_id, sym)
     return StandardMessageResponse(
@@ -326,9 +344,10 @@ async def remove_item_from_watchlist(
 @router.get("/favourites", response_model=FavouritesResponse)
 async def list_favourites(
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> FavouritesResponse:
     """Return list of all starred stock symbols."""
-    favs = await get_favourites(db_pool, user_id=DEFAULT_USER_ID)
+    favs = await get_favourites(db_pool, user_id=user_id)
     return FavouritesResponse(status="success", favourites=favs, total=len(favs))
 
 
@@ -336,10 +355,11 @@ async def list_favourites(
 async def toggle_stock_favourite(
     symbol: str,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> FavouriteToggleResponse:
     """Toggle star / favourite state for a stock symbol."""
     sym = clean_sym(symbol)
-    is_fav = await toggle_favourite(db_pool, sym, user_id=DEFAULT_USER_ID)
+    is_fav = await toggle_favourite(db_pool, sym, user_id=user_id)
     return FavouriteToggleResponse(status="success", symbol=sym, is_favourite=is_fav)
 
 
@@ -347,10 +367,11 @@ async def toggle_stock_favourite(
 async def add_or_toggle_favourite_body(
     payload: WatchlistItemCreateRequest,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> FavouriteToggleResponse:
     """POST /favourites body compatibility endpoint."""
     sym = clean_sym(payload.symbol)
-    is_fav = await toggle_favourite(db_pool, sym, user_id=DEFAULT_USER_ID)
+    is_fav = await toggle_favourite(db_pool, sym, user_id=user_id)
     return FavouriteToggleResponse(status="success", symbol=sym, is_favourite=is_fav)
 
 
@@ -364,10 +385,11 @@ async def add_or_toggle_favourite_body(
 async def retrieve_chart_drawings(
     symbol: str,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> ChartDrawingsResponse:
     """Retrieve saved TradingView chart drawings JSON for a stock."""
     sym = clean_sym(symbol)
-    entry = await get_chart_drawings(db_pool, sym, user_id=DEFAULT_USER_ID)
+    entry = await get_chart_drawings(db_pool, sym, user_id=user_id)
     drawings_data = entry.get("drawing_data", [])
     return ChartDrawingsResponse(
         status="success",
@@ -384,11 +406,12 @@ async def persist_chart_drawings(
     symbol: str,
     payload: ChartDrawingsRequest,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> ChartDrawingsResponse:
     """Persist user's TradingView chart drawings JSON for a stock."""
     sym = clean_sym(symbol)
     data_to_save = payload.drawings if payload.drawings is not None else payload.drawing_data
-    saved = await save_chart_drawings(db_pool, sym, data_to_save, user_id=DEFAULT_USER_ID)
+    saved = await save_chart_drawings(db_pool, sym, data_to_save, user_id=user_id)
     res_data = saved.get("drawing_data", [])
     return ChartDrawingsResponse(
         status="success",
@@ -408,10 +431,11 @@ async def persist_chart_drawings(
 async def retrieve_stock_notes(
     symbol: str,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> StockNotesResponse:
     """Retrieve user's markdown notes for the stock."""
     sym = clean_sym(symbol)
-    entry = await get_stock_notes(db_pool, sym, user_id=DEFAULT_USER_ID)
+    entry = await get_stock_notes(db_pool, sym, user_id=user_id)
     return StockNotesResponse(
         status="success",
         symbol=sym,
@@ -425,10 +449,11 @@ async def persist_stock_notes(
     symbol: str,
     payload: StockNotesRequest,
     db_pool: Any = Depends(get_db_pool),
+    user_id: str = Depends(get_current_user_id),
 ) -> StockNotesResponse:
     """Persist user's markdown notes for the stock."""
     sym = clean_sym(symbol)
-    saved = await save_stock_notes(db_pool, sym, payload.content, user_id=DEFAULT_USER_ID)
+    saved = await save_stock_notes(db_pool, sym, payload.content, user_id=user_id)
     return StockNotesResponse(
         status="success",
         symbol=sym,

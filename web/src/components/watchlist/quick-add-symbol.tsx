@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Plus, Search } from "lucide-react";
+import { getAuthHeaders } from "@/lib/auth";
 
 interface QuickAddSymbolProps {
   watchlistId: string;
@@ -57,7 +58,7 @@ export function QuickAddSymbol({ watchlistId, onSymbolAdded }: QuickAddSymbolPro
     try {
       const res = await fetch(`/api/watchlists/${watchlistId}/items`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify({
           symbol: sym,
           notes: note.trim() || undefined,

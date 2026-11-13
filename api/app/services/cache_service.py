@@ -129,7 +129,10 @@ async def generate_and_cache_all_scanners(df_indicators: pl.DataFrame, redis_cli
             "data": rows,
         }
         redis_key = f"scanner:{slug}:latest"
-        await redis_client.set(redis_key, json.dumps(payload, default=str), ex=ttl_seconds)
+        stale_key = f"scanner:{slug}:stale"
+        dumped_json = json.dumps(payload, default=str)
+        await redis_client.set(redis_key, dumped_json, ex=ttl_seconds)
+        await redis_client.set(stale_key, dumped_json, ex=ttl_seconds * 2)
         counts[slug] = len(rows)
         logger.info("cache.scanner_saved", slug=slug, count=len(rows))
 

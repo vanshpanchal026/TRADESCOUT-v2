@@ -5,7 +5,7 @@ import { Activity, Flame, TrendingUp, Volume2, Zap } from "lucide-react";
 import { ScannerApiResponse } from "@/lib/types";
 import { ScannerGrid } from "@/components/scanner/scanner-grid";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 const SCANNER_TABS = [
   {
@@ -54,7 +54,7 @@ async function getScannerData(slug: string): Promise<ScannerApiResponse | null> 
 
   try {
     const res = await fetch(`${backendBase}/api/scanners/${slug}`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

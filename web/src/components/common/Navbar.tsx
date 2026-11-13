@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { UserSwitcher } from "@/components/common/UserSwitcher";
+import { CommandPalette } from "@/components/common/CommandPalette";
 import {
   Activity,
   Zap,
@@ -132,26 +134,40 @@ export function Navbar() {
 
           {/* Search Bar & Right Controls */}
           <div className="flex items-center gap-2.5">
-            {/* Quick Symbol Jump Input */}
+            {/* Quick Symbol Jump Input with Cmd+K hint */}
             <form onSubmit={handleSearch} className="relative hidden sm:block">
               <input
                 type="text"
                 value={searchSymbol}
                 onChange={(e) => setSearchSymbol(e.target.value)}
-                placeholder="Jump to symbol (e.g. RELIANCE)..."
-                className="w-48 md:w-56 pl-8 pr-3 py-1.5 text-xs rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent text-foreground font-mono placeholder:font-sans placeholder:text-muted-foreground/70"
+                placeholder="Jump to symbol..."
+                className="w-40 md:w-52 pl-8 pr-12 py-1.5 text-xs rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent text-foreground font-mono placeholder:font-sans placeholder:text-muted-foreground/70"
               />
               <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
+              <button
+                type="button"
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent("open-command-palette"));
+                  window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }));
+                }}
+                className="absolute right-1.5 top-1.5 px-1.5 py-0.5 rounded text-[10px] font-mono bg-muted text-muted-foreground border border-border hover:text-foreground"
+                title="Open Command Palette (Cmd+K)"
+              >
+                ⌘K
+              </button>
             </form>
 
-            {/* Market Status Pill */}
+            {/* High Performance L1 Cache Badge */}
             <div className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium border border-bull/30 bg-bull/10 text-bull">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-bull opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-bull"></span>
               </span>
-              <span>NSE EOD Active</span>
+              <span>⚡ 4ms Redis L1</span>
             </div>
+
+            {/* Multi-Tenant Identity Switcher */}
+            <UserSwitcher />
 
             {/* Theme Toggle */}
             <ThemeToggle />
@@ -212,6 +228,7 @@ export function Navbar() {
           </div>
         )}
       </div>
+      <CommandPalette />
     </nav>
   );
 }

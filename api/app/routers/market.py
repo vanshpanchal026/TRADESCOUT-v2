@@ -12,10 +12,11 @@ from typing import Any
 
 import polars as pl
 import structlog
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from redis.asyncio import Redis
 
 from app.core.config import settings
+from app.core.locks import distributed_cache_lock, wait_for_cached_payload
 from app.models.market import (
     AdvanceDecline,
     EarningsHorizonItem,
@@ -183,32 +184,8 @@ def resolve_stock_meta(symbol: str, company_name: str | None = None, cmp_val: fl
     return {"name": name, "sector": sector, "mcap": round(mcap, 2)}
 
 
-# -----------------------------------------------------------------------------
-# 1. GET /api/market/warmup
-# -----------------------------------------------------------------------------
-
-
-@router.get("/warmup", response_model=WarmupResponse)
-async def get_market_warmup(redis: Redis = Depends(get_redis_client)) -> WarmupResponse:
-    """Return aggregated morning market readiness metrics, breadth indicators, and pre-market cues."""
-    cache_key = "market:warmup:v1"
-    cached = await redis.get(cache_key)
-    if cached:
-        try:
-            return WarmupResponse.model_validate_json(cached)
-        except Exception:
-            pass
-
-    # 1. Load EOD dataset and process indicators via Polars
-    try:
-        df_eod = await load_eod_data(year=2026)
-    except Exception as exc:
-        logger.error("market.warmup_data_error", error=str(exc))
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Unable to load market data for warmup computation.",
-        ) from exc
-
+def _compute_warmup_response(df_eod: pl.DataFrame) -> WarmupResponse:
+    """Execute vectorized Polars computations to produce morning warmup metrics."""
     # Filter for equity series
     df = df_eod.filter(pl.col("series") == "EQ").sort(["symbol", "date"])
 
@@ -275,7 +252,6 @@ async def get_market_warmup(redis: Redis = Depends(get_redis_client)) -> WarmupR
     above_200_pct = round((above_200_count / max(total_traded, 1)) * 100.0, 1)
 
     # RME Sentiment Index Calculation (0-100)
-    # Composite: 50% * above_50_pct + 30% * above_20_pct + 20% * above_200_pct
     rme_score = round(0.50 * above_50_pct + 0.30 * above_20_pct + 0.20 * above_200_pct, 1)
     if rme_score < 35.0:
         rme_regime = "Oversold / Washout"
@@ -374,7 +350,7 @@ async def get_market_warmup(redis: Redis = Depends(get_redis_client)) -> WarmupR
         ),
     ]
 
-    response = WarmupResponse(
+    return WarmupResponse(
         date=str(latest_date),
         market_status=get_market_status(),
         last_synced=datetime.now(UTC).isoformat(),
@@ -422,9 +398,71 @@ async def get_market_warmup(redis: Redis = Depends(get_redis_client)) -> WarmupR
         earnings_horizon=earnings,
     )
 
-    # Cache for 10 minutes in Redis
-    await redis.set(cache_key, response.model_dump_json(), ex=600)
-    return response
+
+# -----------------------------------------------------------------------------
+# 1. GET /api/market/warmup
+# -----------------------------------------------------------------------------
+
+
+@router.get("/warmup", response_model=WarmupResponse)
+async def get_market_warmup(
+    http_response: Response,
+    redis: Redis = Depends(get_redis_client),
+) -> WarmupResponse:
+    """Return aggregated morning market readiness metrics, breadth indicators, and pre-market cues."""
+    cache_key = "market:warmup:v1"
+    stale_key = "market:warmup:stale"
+
+    cached = await redis.get(cache_key)
+    if cached:
+        try:
+            http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+            return WarmupResponse.model_validate_json(cached)
+        except Exception:
+            pass
+
+    # Guard computation with distributed mutex to prevent thundering herd / cache stampede
+    async with distributed_cache_lock(
+        redis, "warmup:refresh", timeout_secs=settings.CACHE_MUTEX_TIMEOUT_SECS
+    ) as acquired:
+        if not acquired:
+            # Another worker is already calculating warmup; wait for it
+            logger.info("market.waiting_for_peer_warmup")
+            polled = await wait_for_cached_payload(redis, cache_key, max_wait_secs=6.0)
+            if polled:
+                try:
+                    http_response.headers["Cache-Control"] = (
+                        "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+                    )
+                    return WarmupResponse.model_validate_json(polled)
+                except Exception:
+                    pass
+
+            # Stale-while-revalidate fallback if available
+            stale = await redis.get(stale_key)
+            if stale:
+                try:
+                    http_response.headers["Cache-Control"] = "public, max-age=30, s-maxage=60"
+                    return WarmupResponse.model_validate_json(stale)
+                except Exception:
+                    pass
+
+        # Load EOD dataset and process indicators via Polars completely inside lock
+        try:
+            df_eod = await load_eod_data(year=2026)
+        except Exception as exc:
+            logger.error("market.warmup_data_error", error=str(exc))
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Unable to load market data for warmup computation.",
+            ) from exc
+
+        response = _compute_warmup_response(df_eod)
+        payload_json = response.model_dump_json()
+        await redis.set(cache_key, payload_json, ex=600)
+        await redis.set(stale_key, payload_json, ex=172800)
+        http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+        return response
 
 
 # -----------------------------------------------------------------------------
@@ -434,60 +472,86 @@ async def get_market_warmup(redis: Redis = Depends(get_redis_client)) -> WarmupR
 
 @router.get("/rrg", response_model=RRGResponse)
 async def get_relative_rotation_graph(
+    http_response: Response,
     benchmark: str = Query(default="NIFTY 50", description="Benchmark index name"),
     group: str = Query(default="sectors", pattern="^(sectors|top-momentum)$", description="Group filter"),
     redis: Redis = Depends(get_redis_client),
 ) -> RRGResponse:
     """Return Relative Rotation Graph coordinates, clockwise trails, and quadrant stats."""
     cache_key = f"market:rrg:{benchmark}:{group}:v1"
+    stale_key = f"market:rrg:{benchmark}:{group}:stale"
+
     cached = await redis.get(cache_key)
     if cached:
         try:
+            http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
             return RRGResponse.model_validate_json(cached)
         except Exception:
             pass
 
-    # 1. Load universe and benchmark data
-    try:
-        df_eod = await load_eod_data(year=2026)
-    except Exception as exc:
-        logger.error("market.rrg_eod_load_error", error=str(exc))
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to load stock universe for RRG computation.",
-        ) from exc
+    async with distributed_cache_lock(redis, f"rrg:{benchmark}:{group}", timeout_secs=30) as acquired:
+        if not acquired:
+            polled = await wait_for_cached_payload(redis, cache_key, max_wait_secs=5.0)
+            if polled:
+                try:
+                    http_response.headers["Cache-Control"] = (
+                        "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+                    )
+                    return RRGResponse.model_validate_json(polled)
+                except Exception:
+                    pass
+            stale = await redis.get(stale_key)
+            if stale:
+                try:
+                    http_response.headers["Cache-Control"] = "public, max-age=30, s-maxage=60"
+                    return RRGResponse.model_validate_json(stale)
+                except Exception:
+                    pass
 
-    try:
-        df_bench = await load_benchmark_history(benchmark)
-    except Exception as exc:
-        logger.warning("market.rrg_benchmark_fallback", benchmark=benchmark, error=str(exc))
-        # Synthesize benchmark from average close of top stocks
-        df_bench = (
-            df_eod.filter(pl.col("series") == "EQ")
-            .group_by("date")
-            .agg(pl.col("close").mean().alias("close"))
-            .sort("date")
+        # 1. Load universe and benchmark data
+        try:
+            df_eod = await load_eod_data(year=2026)
+        except Exception as exc:
+            logger.error("market.rrg_eod_load_error", error=str(exc))
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to load stock universe for RRG computation.",
+            ) from exc
+
+        try:
+            df_bench = await load_benchmark_history(benchmark)
+        except Exception as exc:
+            logger.warning("market.rrg_benchmark_fallback", benchmark=benchmark, error=str(exc))
+            # Synthesize benchmark from average close of top stocks
+            df_bench = (
+                df_eod.filter(pl.col("series") == "EQ")
+                .group_by("date")
+                .agg(pl.col("close").mean().alias("close"))
+                .sort("date")
+            )
+
+        # 2. Build RRG items via vectorized Polars service
+        items, counts, latest_date = build_rrg_payload(
+            df_universe=df_eod,
+            df_benchmark=df_bench,
+            benchmark_name=benchmark,
+            group=group,
         )
 
-    # 2. Build RRG items via vectorized Polars service
-    items, counts, latest_date = build_rrg_payload(
-        df_universe=df_eod,
-        df_benchmark=df_bench,
-        benchmark_name=benchmark,
-        group=group,
-    )
+        response = RRGResponse(
+            benchmark=benchmark,
+            group=group,
+            date=latest_date,
+            quadrant_counts=counts,
+            items=items,
+        )
 
-    response = RRGResponse(
-        benchmark=benchmark,
-        group=group,
-        date=latest_date,
-        quadrant_counts=counts,
-        items=items,
-    )
-
-    # Cache for 15 minutes
-    await redis.set(cache_key, response.model_dump_json(), ex=900)
-    return response
+        # Cache for 15 minutes fresh, 48 hours stale
+        payload_json = response.model_dump_json()
+        await redis.set(cache_key, payload_json, ex=900)
+        await redis.set(stale_key, payload_json, ex=172800)
+        http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+        return response
 
 
 # -----------------------------------------------------------------------------
@@ -497,6 +561,7 @@ async def get_relative_rotation_graph(
 
 @router.get("/heatmap", response_model=HeatmapResponse)
 async def get_market_heatmap(
+    http_response: Response,
     index: str = Query(
         default="NIFTY 50",
         description="Index selector: 'NIFTY 50', 'NIFTY NEXT 50', 'NIFTY MIDCAP 100', 'NIFTY 500'",
@@ -506,22 +571,43 @@ async def get_market_heatmap(
 ) -> HeatmapResponse:
     """Return hierarchically grouped sector and stock nodes with market capitalization weights and 1D change %."""
     cache_key = f"market:heatmap:{index}:{group_by}:v1"
+    stale_key = f"market:heatmap:{index}:{group_by}:stale"
     cached = await redis.get(cache_key)
     if cached:
         try:
+            http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
             return HeatmapResponse.model_validate_json(cached)
         except Exception:
             pass
 
-    # 1. Load universe EOD records
-    try:
-        df_eod = await load_eod_data(year=2026)
-    except Exception as exc:
-        logger.error("market.heatmap_load_error", error=str(exc))
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to load market data for heatmap.",
-        ) from exc
+    async with distributed_cache_lock(redis, f"heatmap:{index}:{group_by}", timeout_secs=30) as acquired:
+        if not acquired:
+            polled = await wait_for_cached_payload(redis, cache_key, max_wait_secs=5.0)
+            if polled:
+                try:
+                    http_response.headers["Cache-Control"] = (
+                        "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+                    )
+                    return HeatmapResponse.model_validate_json(polled)
+                except Exception:
+                    pass
+            stale = await redis.get(stale_key)
+            if stale:
+                try:
+                    http_response.headers["Cache-Control"] = "public, max-age=30, s-maxage=60"
+                    return HeatmapResponse.model_validate_json(stale)
+                except Exception:
+                    pass
+
+        # 1. Load universe EOD records
+        try:
+            df_eod = await load_eod_data(year=2026)
+        except Exception as exc:
+            logger.error("market.heatmap_load_error", error=str(exc))
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to load market data for heatmap.",
+            ) from exc
 
     eq = df_eod.filter(pl.col("series") == "EQ").sort(["symbol", "date"])
 
@@ -625,6 +711,9 @@ async def get_market_heatmap(
         sectors=sectors,
     )
 
-    # Cache for 10 minutes
-    await redis.set(cache_key, response.model_dump_json(), ex=600)
+    # Cache for 10 minutes fresh, 48 hours stale
+    payload_json = response.model_dump_json()
+    await redis.set(cache_key, payload_json, ex=600)
+    await redis.set(stale_key, payload_json, ex=172800)
+    http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
     return response

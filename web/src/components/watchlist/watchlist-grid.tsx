@@ -24,6 +24,7 @@ import {
 
 import { Sparkline } from "@/components/scanner/sparkline";
 import { WatchlistItem } from "./types";
+import { getAuthHeaders } from "@/lib/auth";
 
 interface WatchlistGridProps {
   items: WatchlistItem[];
@@ -51,7 +52,7 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
     let isMounted = true;
     async function loadFavs() {
       try {
-        const res = await fetch("/api/favourites");
+        const res = await fetch("/api/favourites", { headers: getAuthHeaders() });
         if (res.ok) {
           const json = await res.json();
           if (isMounted && Array.isArray(json.favourites)) {
@@ -63,8 +64,15 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
       }
     }
     loadFavs();
+
+    const handleUserChange = () => {
+      loadFavs();
+    };
+    window.addEventListener("ts-user-changed", handleUserChange);
+
     return () => {
       isMounted = false;
+      window.removeEventListener("ts-user-changed", handleUserChange);
     };
   }, []);
 
@@ -72,7 +80,10 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
   const handleToggleFav = async (symbol: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     try {
-      const res = await fetch(`/api/favourites/${symbol}/toggle`, { method: "POST" });
+      const res = await fetch(`/api/favourites/${symbol}/toggle`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+      });
       if (res.ok) {
         const json = await res.json();
         setFavouriteSymbols((prev) => {
@@ -87,15 +98,14 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
     }
   };
 
-  // Remove item helper
+  // Remove item helper without blocking window.confirm popup
   const handleRemove = React.useCallback(
     async (symbol: string, e: React.MouseEvent) => {
       e.stopPropagation();
-      if (!window.confirm(`Remove ${symbol} from watchlist?`)) return;
-
       try {
         const res = await fetch(`/api/watchlists/${watchlistId}/items/${symbol}`, {
           method: "DELETE",
+          headers: getAuthHeaders(),
         });
         if (res.ok) {
           onItemRemoved(symbol);
@@ -450,11 +460,10 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
       } else if (e.key === "Delete" || e.key === "Backspace") {
         const activeRow = rows[selectedIndex];
         if (activeRow) {
-          if (window.confirm(`Remove ${activeRow.original.symbol} from watchlist?`)) {
-            fetch(`/api/watchlists/${watchlistId}/items/${activeRow.original.symbol}`, {
-              method: "DELETE",
-            }).then(() => onItemRemoved(activeRow.original.symbol));
-          }
+          fetch(`/api/watchlists/${watchlistId}/items/${activeRow.original.symbol}`, {
+            method: "DELETE",
+            headers: getAuthHeaders(),
+          }).then(() => onItemRemoved(activeRow.original.symbol));
         }
       }
     }

@@ -13,11 +13,12 @@ from typing import Any
 
 import polars as pl
 import structlog
-from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, status
-from jose import JWTError, jwt
+from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, Response, status
 from redis.asyncio import Redis
 
+from app.core.auth import extract_user_identity
 from app.core.config import settings
+from app.core.locks import distributed_cache_lock, wait_for_cached_payload
 from app.models.scanners import (
     MarketBreadthResponse,
     MarketMetadataResponse,
@@ -94,60 +95,8 @@ SENSITIVE_INTERNAL_FIELDS: set[str] = {
 }
 
 
-def get_jwt_secret() -> str:
-    """Retrieve Supabase JWT secret from environment or settings.
-
-    Fails closed in production if secret is not configured.
-    """
-    secret = os.getenv("SUPABASE_JWT_SECRET") or getattr(settings, "SUPABASE_JWT_SECRET", None)
-    if not secret:
-        if settings.ENVIRONMENT == "production":
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Server authentication configuration error.",
-            )
-        return "tradescout-dev-supabase-jwt-secret-tradescout"
-    return secret
 
 
-def verify_supabase_jwt(authorization: str | None) -> tuple[bool, str]:
-    """Verify Supabase Bearer JWT and return (is_pro, user_id).
-
-    Returns (False, "guest") if unauthenticated.
-    Raises HTTPException 401 if token is present but invalid or expired.
-    """
-    if not authorization or not authorization.strip():
-        return False, "guest"
-
-    parts = authorization.strip().split()
-    if len(parts) != 2 or parts[0].lower() != "bearer":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail={
-                "error": "unauthorized",
-                "message": "Invalid Authorization header format. Expected 'Bearer <token>'.",
-            },
-        )
-
-    token = parts[1]
-    secret = get_jwt_secret()
-
-    try:
-        payload = jwt.decode(token, secret, algorithms=["HS256"], options={"verify_aud": False})
-    except JWTError as exc:
-        logger.warning("auth.jwt_verification_failed", error=str(exc))
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail={"error": "unauthorized", "message": f"JWT signature verification failed: {exc!s}"},
-        ) from exc
-
-    user_id = payload.get("sub", "unknown")
-    user_metadata = payload.get("user_metadata", {})
-    app_metadata = payload.get("app_metadata", {})
-    plan = user_metadata.get("plan") or app_metadata.get("plan") or payload.get("plan")
-
-    is_pro = str(plan).lower() in ("pro", "premium")
-    return is_pro, user_id
 
 
 def sanitize_row_for_guest(row: dict[str, Any]) -> dict[str, Any]:
@@ -219,90 +168,99 @@ def get_current_market_status() -> str:
 
 
 async def ensure_scanner_cache(redis: Redis) -> None:
-    """Lazy computation pipeline: load Parquet, calculate indicators, and populate Redis."""
-    try:
-        parquet_path = os.path.join(".cache", "parquet", "nse_2026.parquet")
-        if os.path.exists(parquet_path):
-            df = pl.read_parquet(parquet_path)
-        else:
-            df = await load_eod_data(2026)
+    """Lazy computation pipeline: protected by distributed mutex to prevent thundering herd."""
+    async with distributed_cache_lock(
+        redis, "scanners:refresh", timeout_secs=settings.CACHE_MUTEX_TIMEOUT_SECS
+    ) as acquired:
+        if not acquired:
+            logger.info("scanners.waiting_for_peer_calculation")
+            await wait_for_cached_payload(redis, "scanner:trend-template:latest", max_wait_secs=8.0)
+            return
 
-        df = df.filter(pl.col("series") == "EQ").sort(["symbol", "date"])
-        df_calc = compute_indicators(df)
+        try:
+            parquet_path = os.path.join(".cache", "parquet", "nse_2026.parquet")
+            if os.path.exists(parquet_path):
+                df = pl.read_parquet(parquet_path)
+            else:
+                df = await load_eod_data(2026)
 
-        # Ensure high_52w, slope_200, and rs_rating are calculated even with partial year records
-        h52 = pl.col("high").rolling_max(window_size=252, min_samples=20).over("symbol")
-        l52 = pl.col("low").rolling_min(window_size=252, min_samples=20).over("symbol")
-        prev_s200 = pl.coalesce(
-            [
-                pl.col("sma_200").shift(20).over("symbol"),
-                pl.col("sma_200").shift(10).over("symbol"),
-                pl.col("sma_200").shift(5).over("symbol"),
-                pl.col("sma_200").shift(1).over("symbol"),
-            ]
-        )
-        sl200 = ((pl.col("sma_200") - prev_s200) / prev_s200) * 100.0
-        f52h = ((pl.col("close") - h52) / h52) * 100.0
-        f52l = ((pl.col("close") - l52) / l52) * 100.0
+            df = df.filter(pl.col("series") == "EQ").sort(["symbol", "date"])
+            df_calc = compute_indicators(df)
 
-        c1 = ((pl.col("close") > pl.col("sma_150")) & (pl.col("close") > pl.col("sma_200"))).fill_null(False)
-        c2 = (pl.col("sma_150") > pl.col("sma_200")).fill_null(False)
-        c3 = (sl200 > 0.0).fill_null(False)
-        c4 = ((pl.col("sma_50") > pl.col("sma_150")) & (pl.col("sma_50") > pl.col("sma_200"))).fill_null(False)
-        c5 = (pl.col("close") > pl.col("sma_50")).fill_null(False)
-        c6 = (f52l >= 30.0).fill_null(False)
-        c7 = (f52h >= -25.0).fill_null(False)
-        c8 = (c4 & c2).fill_null(False)
+            # Ensure high_52w, slope_200, and rs_rating are calculated even with partial year records
+            h52 = pl.col("high").rolling_max(window_size=252, min_samples=20).over("symbol")
+            l52 = pl.col("low").rolling_min(window_size=252, min_samples=20).over("symbol")
+            prev_s200 = pl.coalesce(
+                [
+                    pl.col("sma_200").shift(20).over("symbol"),
+                    pl.col("sma_200").shift(10).over("symbol"),
+                    pl.col("sma_200").shift(5).over("symbol"),
+                    pl.col("sma_200").shift(1).over("symbol"),
+                ]
+            )
+            sl200 = ((pl.col("sma_200") - prev_s200) / prev_s200) * 100.0
+            f52h = ((pl.col("close") - h52) / h52) * 100.0
+            f52l = ((pl.col("close") - l52) / l52) * 100.0
 
-        conds = (
-            c1.cast(pl.Int32)
-            + c2.cast(pl.Int32)
-            + c3.cast(pl.Int32)
-            + c4.cast(pl.Int32)
-            + c5.cast(pl.Int32)
-            + c6.cast(pl.Int32)
-            + c7.cast(pl.Int32)
-            + c8.cast(pl.Int32)
-        )
+            c1 = ((pl.col("close") > pl.col("sma_150")) & (pl.col("close") > pl.col("sma_200"))).fill_null(False)
+            c2 = (pl.col("sma_150") > pl.col("sma_200")).fill_null(False)
+            c3 = (sl200 > 0.0).fill_null(False)
+            c4 = ((pl.col("sma_50") > pl.col("sma_150")) & (pl.col("sma_50") > pl.col("sma_200"))).fill_null(False)
+            c5 = (pl.col("close") > pl.col("sma_50")).fill_null(False)
+            c6 = (f52l >= 30.0).fill_null(False)
+            c7 = (f52h >= -25.0).fill_null(False)
+            c8 = (c4 & c2).fill_null(False)
 
-        c = pl.col("close")
-        c63 = pl.col("close").shift(63).over("symbol")
-        c126 = pl.col("close").shift(126).over("symbol")
-        c189 = pl.col("close").shift(189).over("symbol")
-        c252 = pl.coalesce([pl.col("close").shift(252).over("symbol"), c189, c126, c63])
-        raw_rs = (
-            0.40 * ((c - c63) / pl.when(c63 > 0).then(c63).otherwise(1.0))
-            + 0.20 * ((c63 - c126) / pl.when(c126 > 0).then(c126).otherwise(1.0))
-            + 0.20 * ((c126 - c189) / pl.when(c189 > 0).then(c189).otherwise(1.0))
-            + 0.20 * ((c189 - c252) / pl.when(c252 > 0).then(c252).otherwise(1.0))
-        )
+            conds = (
+                c1.cast(pl.Int32)
+                + c2.cast(pl.Int32)
+                + c3.cast(pl.Int32)
+                + c4.cast(pl.Int32)
+                + c5.cast(pl.Int32)
+                + c6.cast(pl.Int32)
+                + c7.cast(pl.Int32)
+                + c8.cast(pl.Int32)
+            )
 
-        df_calc = df_calc.with_columns(
-            [
-                h52.alias("high_52w"),
-                l52.alias("low_52w"),
-                sl200.alias("slope_200"),
-                f52h.alias("from_52w_high"),
-                f52l.alias("from_52w_low"),
-                f52l.alias("above_52w_low"),
-                conds.alias("conditions_met"),
-                raw_rs.alias("raw_rs_score"),
-            ]
-        )
+            c = pl.col("close")
+            c63 = pl.col("close").shift(63).over("symbol")
+            c126 = pl.col("close").shift(126).over("symbol")
+            c189 = pl.col("close").shift(189).over("symbol")
+            c252 = pl.coalesce([pl.col("close").shift(252).over("symbol"), c189, c126, c63])
+            raw_rs = (
+                0.40 * ((c - c63) / pl.when(c63 > 0).then(c63).otherwise(1.0))
+                + 0.20 * ((c63 - c126) / pl.when(c126 > 0).then(c126).otherwise(1.0))
+                + 0.20 * ((c126 - c189) / pl.when(c189 > 0).then(c189).otherwise(1.0))
+                + 0.20 * ((c189 - c252) / pl.when(c252 > 0).then(c252).otherwise(1.0))
+            )
 
-        # Add 20-day sparkline closes
-        sparklines = df.group_by("symbol").agg(pl.col("close").tail(20).alias("sparkline"))
-        df_calc = df_calc.join(sparklines, on="symbol", how="left")
+            df_calc = df_calc.with_columns(
+                [
+                    h52.alias("high_52w"),
+                    l52.alias("low_52w"),
+                    sl200.alias("slope_200"),
+                    f52h.alias("from_52w_high"),
+                    f52l.alias("from_52w_low"),
+                    f52l.alias("above_52w_low"),
+                    conds.alias("conditions_met"),
+                    raw_rs.alias("raw_rs_score"),
+                ]
+            )
 
-        await generate_and_cache_all_scanners(df_calc, redis)
-        logger.info("cache.lazy_computation_complete")
-    except Exception as exc:
-        logger.error("cache.lazy_computation_failed", error=str(exc))
+            # Add 20-day sparkline closes
+            sparklines = df.group_by("symbol").agg(pl.col("close").tail(20).alias("sparkline"))
+            df_calc = df_calc.join(sparklines, on="symbol", how="left")
+
+            await generate_and_cache_all_scanners(df_calc, redis)
+            logger.info("cache.lazy_computation_complete")
+        except Exception as exc:
+            logger.error("cache.lazy_computation_failed", error=str(exc))
 
 
 @router.get("/scanners/{slug}", response_model=ScannerResponse)
 async def get_scanner_candidates(
     slug: str,
+    http_response: Response,
     limit: int = Query(default=50, ge=1, le=2500, description="Page limit"),
     offset: int = Query(default=0, ge=0, description="Page offset"),
     sort_by: str = Query(default="rs_rating", description="Sort by field"),
@@ -310,6 +268,7 @@ async def get_scanner_candidates(
     min_rs: int | None = Query(default=None, ge=1, le=99, description="Minimum RS rating"),
     min_rvol: float | None = Query(default=None, ge=0.0, description="Minimum relative volume"),
     authorization: str | None = Header(default=None),
+    x_user_id: str | None = Header(default=None, alias="x-user-id"),
     redis: Redis = Depends(get_redis_client),
 ) -> dict[str, Any]:
     """Retrieve pre-computed scanner candidates with freemium truncation gating."""
@@ -322,18 +281,25 @@ async def get_scanner_candidates(
             },
         )
 
-    # 1. Freemium Identity Check
-    is_pro, user_id = verify_supabase_jwt(authorization)
+    # 1. Freemium Identity Check (secure extraction via Supabase JWT or authorized internal header)
+    is_pro, user_id = extract_user_identity(
+        authorization=authorization,
+        x_user_id=x_user_id,
+    )
     logger.info("scanners.request", slug=slug, user_id=user_id, is_pro=is_pro, limit=limit, offset=offset)
 
     # 2. Fetch from Redis Cache
     cache_key = f"scanner:{slug}:latest"
+    stale_key = f"scanner:{slug}:stale"
     raw_payload = await redis.get(cache_key)
 
     if not raw_payload:
         logger.info("scanners.cache_miss", slug=slug)
         await ensure_scanner_cache(redis)
         raw_payload = await redis.get(cache_key)
+        if not raw_payload:
+            # Fallback to stale cache if fresh generation still pending
+            raw_payload = await redis.get(stale_key)
     else:
         try:
             parsed_test = json.loads(raw_payload)
@@ -343,6 +309,10 @@ async def get_scanner_candidates(
                 raw_payload = await redis.get(cache_key)
         except Exception:
             pass
+
+    # Tier-differentiated response: private cache with Vary to prevent CDN cross-tier contamination
+    http_response.headers["Cache-Control"] = "private, max-age=60, stale-while-revalidate=120"
+    http_response.headers["Vary"] = "Authorization, Accept-Encoding, X-User-Id"
 
     if not raw_payload:
         # Fallback empty payload
@@ -401,8 +371,12 @@ async def get_scanner_candidates(
 
 
 @router.get("/market-breadth", response_model=MarketBreadthResponse)
-async def get_market_breadth(redis: Redis = Depends(get_redis_client)) -> dict[str, Any]:
+async def get_market_breadth(
+    http_response: Response,
+    redis: Redis = Depends(get_redis_client),
+) -> dict[str, Any]:
     """Return latest pre-computed market breadth diagnostics."""
+    http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
     raw = await redis.get("market:breadth:latest")
     if not raw:
         await ensure_scanner_cache(redis)
@@ -428,8 +402,12 @@ async def get_market_breadth(redis: Redis = Depends(get_redis_client)) -> dict[s
 
 
 @router.get("/metadata", response_model=MarketMetadataResponse)
-async def get_market_metadata(redis: Redis = Depends(get_redis_client)) -> dict[str, Any]:
+async def get_market_metadata(
+    http_response: Response,
+    redis: Redis = Depends(get_redis_client),
+) -> dict[str, Any]:
     """Return market session metadata, last synced date, and candidate counts."""
+    http_response.headers["Cache-Control"] = "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
     raw = await redis.get("market:metadata:latest")
     if not raw:
         await ensure_scanner_cache(redis)

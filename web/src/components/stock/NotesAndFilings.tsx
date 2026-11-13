@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { getAuthHeaders } from "@/lib/auth";
 
 interface NotesAndFilingsProps {
   symbol: string;
@@ -25,7 +26,7 @@ export default function NotesAndFilings({ symbol, companyName }: NotesAndFilings
 
     async function loadNotes() {
       try {
-        const res = await fetch(`/api/stock/${symClean}/notes`);
+        const res = await fetch(`/api/stock/${symClean}/notes`, { headers: getAuthHeaders() });
         if (res.ok) {
           const data = await res.json();
           if (isMounted && data.content) {
@@ -82,7 +83,7 @@ export default function NotesAndFilings({ symbol, companyName }: NotesAndFilings
       try {
         const res = await fetch(`/api/stock/${symClean}/notes`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", ...getAuthHeaders() },
           body: JSON.stringify({ content }),
         });
 

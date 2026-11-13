@@ -10,6 +10,7 @@ import { WatchlistGrid } from "@/components/watchlist/watchlist-grid";
 import { QuickAddSymbol } from "@/components/watchlist/quick-add-symbol";
 import { NewWatchlistModal } from "@/components/watchlist/new-watchlist-modal";
 import { WatchlistDetail, WatchlistSummary } from "@/components/watchlist/types";
+import { getAuthHeaders } from "@/lib/auth";
 
 export default function WatchlistsDashboardPage() {
   const [watchlists, setWatchlists] = useState<WatchlistSummary[]>([]);
@@ -23,7 +24,7 @@ export default function WatchlistsDashboardPage() {
   const loadWatchlists = useCallback(async () => {
     try {
       setLoadingWatchlists(true);
-      const res = await fetch("/api/watchlists");
+      const res = await fetch("/api/watchlists", { headers: getAuthHeaders() });
       if (res.ok) {
         const data = await res.json();
         const lists: WatchlistSummary[] = data.watchlists || [];
@@ -47,6 +48,11 @@ export default function WatchlistsDashboardPage() {
 
   useEffect(() => {
     loadWatchlists();
+    const handleUserChange = () => {
+      loadWatchlists();
+    };
+    window.addEventListener("ts-user-changed", handleUserChange);
+    return () => window.removeEventListener("ts-user-changed", handleUserChange);
   }, [loadWatchlists]);
 
   // 2. Fetch Active Watchlist Details
@@ -54,7 +60,7 @@ export default function WatchlistsDashboardPage() {
     if (!id) return;
     try {
       setLoadingDetail(true);
-      const res = await fetch(`/api/watchlists/${id}`);
+      const res = await fetch(`/api/watchlists/${id}`, { headers: getAuthHeaders() });
       if (res.ok) {
         const data: WatchlistDetail = await res.json();
         setActiveDetail(data);

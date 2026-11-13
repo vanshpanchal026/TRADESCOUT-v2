@@ -21,7 +21,8 @@ import DynamicTradingViewChart from "@/components/chart/TradingViewChartWrapper"
 import DynamicRSLineChart from "@/components/chart/RSLineChartWrapper";
 import FundamentalsTable from "@/components/stock/FundamentalsTable";
 import ShareholdingChart from "@/components/stock/ShareholdingChart";
-import NotesAndFilings from "@/components/stock/NotesAndFilings";
+import NotesAndFilings from '@/components/stock/NotesAndFilings';
+import { cachedFetch } from '@/lib/cache';
 import {
   OHLCVBar,
   RSLinePoint,
@@ -79,32 +80,13 @@ export default function StockDetailPage() {
 
     async function loadStockData() {
       try {
-        // 1. Fetch Overview
-        const overviewRes = await fetch(`/api/stock/${symbol}`);
-        if (overviewRes.status === 404) {
-          if (isMounted) {
-            setNotFound(true);
-            setLoading(false);
-          }
-          return;
-        }
-
-        if (!overviewRes.ok) {
-          throw new Error(`Failed to load stock overview: ${overviewRes.statusText}`);
-        }
-
-        const overviewData: StockDetail = await overviewRes.json();
-
-        // 2. Fetch History, RS Line, Fundamentals concurrently
-        const [historyRes, rsRes, fundRes] = await Promise.all([
-          fetch(`/api/stock/${symbol}/history?days=500`),
-          fetch(`/api/stock/${symbol}/rs_line?period=1y`),
-          fetch(`/api/stock/${symbol}/fundamentals`),
+        // Fetch Overview, History, RS Line, Fundamentals concurrently in parallel via client cache
+        const [overviewData, historyData, rsData, fundData] = await Promise.all([
+          cachedFetch<StockDetail>(`/api/stock/${symbol}`),
+          cachedFetch<OHLCVBar[]>(`/api/stock/${symbol}/history?days=500`).catch(() => [] as OHLCVBar[]),
+          cachedFetch<RSLineResponse>(`/api/stock/${symbol}/rs_line?period=1y`).catch(() => null),
+          cachedFetch<StockFundamentals>(`/api/stock/${symbol}/fundamentals`).catch(() => null),
         ]);
-
-        const historyData: OHLCVBar[] = historyRes.ok ? await historyRes.json() : [];
-        const rsData: RSLineResponse | null = rsRes.ok ? await rsRes.json() : null;
-        const fundData: StockFundamentals | null = fundRes.ok ? await fundRes.json() : null;
 
         if (isMounted) {
           setStock(overviewData);
@@ -118,7 +100,6 @@ export default function StockDetailPage() {
         }
       } catch {
         if (isMounted) {
-          // If network failed but symbol might exist, show error or not found
           setNotFound(true);
           setLoading(false);
         }

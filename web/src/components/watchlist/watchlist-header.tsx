@@ -3,6 +3,7 @@
 import React from "react";
 import { Download, Edit2, Plus, Trash2 } from "lucide-react";
 import { WatchlistDetail, WatchlistSummary } from "./types";
+import { getAuthHeaders } from "@/lib/auth";
 
 interface WatchlistHeaderProps {
   watchlists: WatchlistSummary[];
@@ -34,7 +35,7 @@ export function WatchlistHeader({
     try {
       const res = await fetch(`/api/watchlists/${activeId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify({ name: newName.trim() }),
       });
       if (res.ok) {
@@ -63,6 +64,7 @@ export function WatchlistHeader({
     try {
       const res = await fetch(`/api/watchlists/${activeId}`, {
         method: "DELETE",
+        headers: getAuthHeaders(),
       });
       if (res.ok) {
         onWatchlistDeleted();

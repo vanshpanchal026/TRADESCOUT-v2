@@ -5,7 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { WarmupDashboard } from "@/components/warmup/WarmupDashboard";
 import { WarmupData } from "@/components/warmup/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 async function getWarmupData(): Promise<WarmupData | null> {
   const backendBase =
@@ -15,7 +15,7 @@ async function getWarmupData(): Promise<WarmupData | null> {
 
   try {
     const res = await fetch(`${backendBase}/api/market/warmup`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

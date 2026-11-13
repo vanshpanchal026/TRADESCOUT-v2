@@ -5,7 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { RRGDashboard } from "@/components/rrg/RRGDashboard";
 import { RRGData } from "@/components/rrg/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 async function getRRGData(): Promise<RRGData | null> {
   const backendBase =
@@ -15,7 +15,7 @@ async function getRRGData(): Promise<RRGData | null> {
 
   try {
     const res = await fetch(`${backendBase}/api/market/rrg?benchmark=NIFTY+50&group=sectors`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

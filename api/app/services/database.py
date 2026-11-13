@@ -13,6 +13,8 @@ from typing import Any
 import asyncpg
 import structlog
 
+from app.core.config import settings
+
 logger = structlog.get_logger(__name__)
 
 DEFAULT_USER_ID: str = "00000000-0000-0000-0000-000000000001"
@@ -57,9 +59,9 @@ class InMemoryStore:
             }
         }
         self.watchlist_items: list[dict[str, Any]] = []
-        self.favourites: set[str] = set()
-        self.chart_drawings: dict[str, dict[str, Any]] = {}
-        self.stock_notes: dict[str, dict[str, Any]] = {}
+        self.favourites: dict[str, set[str]] = {DEFAULT_USER_ID: set()}
+        self.chart_drawings: dict[tuple[str, str], dict[str, Any]] = {}
+        self.stock_notes: dict[tuple[str, str], dict[str, Any]] = {}
 
 
 # Global in-memory fallback singleton
@@ -76,10 +78,11 @@ async def init_db_pool(database_url: str) -> asyncpg.Pool | None:
     try:
         pool = await asyncpg.create_pool(
             database_url,
-            min_size=1,
-            max_size=10,
-            command_timeout=10.0,
-            timeout=5.0,
+            min_size=getattr(settings, "DATABASE_POOL_MIN", 5),
+            max_size=getattr(settings, "DATABASE_POOL_MAX", 50),
+            command_timeout=getattr(settings, "DATABASE_COMMAND_TIMEOUT", 15.0),
+            timeout=getattr(settings, "DATABASE_POOL_TIMEOUT", 10.0),
+            statement_cache_size=getattr(settings, "DATABASE_STATEMENT_CACHE_SIZE", 0),
         )
         if pool is None:
             return None
@@ -157,6 +160,21 @@ async def get_watchlists(
             logger.warning("database.get_watchlists_fallback", error=str(exc))
 
     # In-memory fallback
+    user_lists = [w for w in in_memory_store.watchlists.values() if w.get("user_id") == user_id]
+    if not user_lists:
+        # Auto-seed primary watchlist for new user
+        new_w_id = str(uuid.uuid4())
+        in_memory_store.watchlists[new_w_id] = {
+            "id": new_w_id,
+            "user_id": user_id,
+            "name": "Primary Watchlist",
+            "description": "Default swing trading watchlist",
+            "is_default": True,
+            "sort_order": 0,
+            "created_at": _now_iso(),
+            "updated_at": _now_iso(),
+        }
+
     results = []
     for w_id, w in in_memory_store.watchlists.items():
         if w.get("user_id") == user_id:
@@ -568,7 +586,9 @@ async def get_favourites(
         except Exception as exc:
             logger.warning("database.get_favourites_fallback", error=str(exc))
 
-    return sorted(list(in_memory_store.favourites))
+    # In-memory fallback
+    user_favs = in_memory_store.favourites.setdefault(user_id, set())
+    return sorted(list(user_favs))
 
 
 async def toggle_favourite(
@@ -615,11 +635,12 @@ async def toggle_favourite(
             logger.warning("database.toggle_favourite_fallback", error=str(exc))
 
     # In-memory fallback
-    if sym_clean in in_memory_store.favourites:
-        in_memory_store.favourites.remove(sym_clean)
+    user_favs = in_memory_store.favourites.setdefault(user_id, set())
+    if sym_clean in user_favs:
+        user_favs.remove(sym_clean)
         return False
     else:
-        in_memory_store.favourites.add(sym_clean)
+        user_favs.add(sym_clean)
         return True
 
 
@@ -664,7 +685,7 @@ async def get_chart_drawings(
             logger.warning("database.get_chart_drawings_fallback", error=str(exc))
 
     # In-memory fallback
-    entry = in_memory_store.chart_drawings.get(sym_clean)
+    entry = in_memory_store.chart_drawings.get((user_id, sym_clean))
     if entry:
         return entry
     return {"drawing_data": [], "updated_at": None}
@@ -719,10 +740,11 @@ async def save_chart_drawings(
             pass
 
     saved_entry = {
+        "symbol": sym_clean,
         "drawing_data": parsed,
         "updated_at": now,
     }
-    in_memory_store.chart_drawings[sym_clean] = saved_entry
+    in_memory_store.chart_drawings[(user_id, sym_clean)] = saved_entry
     return saved_entry
 
 
@@ -763,7 +785,7 @@ async def get_stock_notes(
             logger.warning("database.get_stock_notes_fallback", error=str(exc))
 
     # In-memory fallback
-    entry = in_memory_store.stock_notes.get(sym_clean)
+    entry = in_memory_store.stock_notes.get((user_id, sym_clean))
     if entry:
         return entry
     return {"content": "", "updated_at": None}
@@ -822,8 +844,9 @@ async def save_stock_notes(
 
     # In-memory fallback
     saved_entry = {
+        "symbol": sym_clean,
         "content": content,
         "updated_at": now,
     }
-    in_memory_store.stock_notes[sym_clean] = saved_entry
+    in_memory_store.stock_notes[(user_id, sym_clean)] = saved_entry
     return saved_entry

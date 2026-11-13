@@ -5,7 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { HeatmapDashboard } from "@/components/heatmap/HeatmapDashboard";
 import { HeatmapData } from "@/components/heatmap/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 async function getHeatmapData(): Promise<HeatmapData | null> {
   const backendBase =
@@ -15,7 +15,7 @@ async function getHeatmapData(): Promise<HeatmapData | null> {
 
   try {
     const res = await fetch(`${backendBase}/api/market/heatmap?index=NIFTY+50`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

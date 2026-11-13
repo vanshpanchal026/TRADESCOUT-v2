@@ -237,3 +237,49 @@ async def test_nonexistent_watchlist_returns_404(async_client: httpx.AsyncClient
     resp = await async_client.get("/api/watchlists/99999999-9999-9999-9999-999999999999")
     assert resp.status_code == 404
     assert resp.json()["detail"]["error"] == "not_found"
+
+
+@pytest.mark.asyncio
+async def test_multi_tenant_user_isolation(async_client: httpx.AsyncClient):
+    """Verify full multi-tenant data isolation between two distinct user identities."""
+    user_a_headers = {"x-user-id": "11111111-1111-1111-1111-111111111111"}
+    user_b_headers = {"x-user-id": "22222222-2222-2222-2222-222222222222"}
+
+    # 1. User A creates a private watchlist
+    create_resp = await async_client.post(
+        "/api/watchlists",
+        json={"name": "User A Alpha Picks", "description": "Strictly confidential"},
+        headers=user_a_headers,
+    )
+    assert create_resp.status_code == 201
+    w_a_id = create_resp.json()["watchlist"]["id"]
+
+    # 2. User B lists watchlists: must NOT see User A's watchlist
+    user_b_list = await async_client.get("/api/watchlists", headers=user_b_headers)
+    assert user_b_list.status_code == 200
+    b_names = [w["name"] for w in user_b_list.json()["watchlists"]]
+    assert "User A Alpha Picks" not in b_names
+
+    # 3. User B cannot read User A's watchlist directly
+    cross_access = await async_client.get(f"/api/watchlists/{w_a_id}", headers=user_b_headers)
+    assert cross_access.status_code == 404
+
+    # 4. User A toggles favourite for RELIANCE
+    fav_a = await async_client.post("/api/favourites/RELIANCE/toggle", headers=user_a_headers)
+    assert fav_a.status_code == 200
+    assert fav_a.json()["is_favourite"] is True
+
+    # User B favourites must be isolated (empty for User B)
+    fav_b_list = await async_client.get("/api/favourites", headers=user_b_headers)
+    assert fav_b_list.status_code == 200
+    assert "RELIANCE" not in fav_b_list.json()["favourites"]
+
+    # 5. User A writes notes; User B should not see them
+    await async_client.post(
+        "/api/stock/RELIANCE/notes",
+        json={"content": "Confidential User A strategy"},
+        headers=user_a_headers,
+    )
+    notes_b = await async_client.get("/api/stock/RELIANCE/notes", headers=user_b_headers)
+    assert notes_b.status_code == 200
+    assert notes_b.json()["content"] == ""

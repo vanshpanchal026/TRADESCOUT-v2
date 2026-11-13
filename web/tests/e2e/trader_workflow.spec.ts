@@ -280,4 +280,143 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
     await nifty50Btn.click();
     await expect(nifty50Btn).toHaveClass(/bg-card/);
   });
+
+  // Test 7: Command Palette Navigation (Cmd+K / Ctrl+K)
+  test("Test 7: Command Palette opens via shortcut or navbar button, filters tools/symbols, and navigates", async ({
+    page,
+  }) => {
+    page.on("console", (msg) => console.log("TEST7 BROWSER LOG:", msg.text()));
+    page.on("pageerror", (err) => console.log("TEST7 BROWSER ERROR:", err.message));
+    await page.goto("/warmup");
+    await page.waitForLoadState("domcontentloaded");
+
+    // 1. Open Command Palette via navbar trigger button
+    await page.waitForTimeout(1000);
+    const cmdKBtn = page.locator("button[title*='Command Palette']");
+    await expect(cmdKBtn).toBeVisible();
+    await cmdKBtn.click();
+
+    // Verify modal overlay appears
+    const searchInput = page.locator("input[placeholder*='Type a stock symbol']");
+    await expect(searchInput).toBeVisible();
+    await expect(page.getByText("TRADESCOUT Command Terminal")).toBeVisible();
+
+    // 2. Test closing with Escape
+    await page.keyboard.press("Escape");
+    await expect(searchInput).not.toBeVisible();
+
+    // 3. Test opening via keyboard shortcut (Control+k)
+    await page.keyboard.press("Control+k");
+    await expect(searchInput).toBeVisible();
+
+    // 4. Type search query: DIXON
+    await searchInput.fill("DIXON");
+    await page.waitForTimeout(300);
+
+    const dixonOption = page.locator("button", { hasText: "DIXON — Dixon Technologies" });
+    await expect(dixonOption).toBeVisible();
+    await expect(page.getByText("₹15,220.00")).toBeVisible();
+
+    // 5. Select item and navigate
+    await dixonOption.click();
+    await page.waitForURL("**/stock/DIXON", { timeout: 15000 });
+    await expect(page.locator("h1")).toContainText("DIXON", { timeout: 15000 });
+  });
+
+  // Test 8: Multi-Tenant Auth Headers & Watchlist Lifecycle (PUT / DELETE / User Switching)
+  test("Test 8: Multi-Tenant Auth, UserSwitcher, and Watchlist CRUD (PUT rename / DELETE item and list)", async ({
+    page,
+  }) => {
+    let promptAnswer = "Alpha Momentum 2026";
+    page.on("dialog", async (dialog) => {
+      if (dialog.type() === "prompt") {
+        await dialog.accept(promptAnswer);
+      } else {
+        await dialog.accept();
+      }
+    });
+
+    await page.goto("/watchlists");
+    await page.waitForLoadState("domcontentloaded");
+    await page.locator("text=/Loading/i").waitFor({ state: "detached", timeout: 30000 }).catch(() => {});
+
+    // 1. Verify Default Multi-Tenant User profile in Navbar
+    const userSwitcherBtn = page.locator("button[title*='Switch Multi-Tenant User Identity']");
+    await expect(userSwitcherBtn).toBeVisible();
+    await expect(userSwitcherBtn).toContainText("Alpha Trader");
+
+    // 2. Add INFY to current watchlist
+    const quickAddInput = page.locator("input[placeholder*='Add NSE Symbol']");
+    await expect(quickAddInput).toBeVisible();
+    await quickAddInput.fill("INFY");
+    const suggestionBtn = page.locator("button", { hasText: "INFY" }).first();
+    await expect(suggestionBtn).toBeVisible();
+    await page.getByRole("button", { name: /Add Stock/i }).click();
+    await page.waitForTimeout(600);
+
+    // Verify INFY is in the table
+    await expect(page.locator("table tbody").getByText("INFY").first()).toBeVisible();
+
+    // 3. Delete INFY (DELETE item endpoint via proxy)
+    const infyRow = page.locator("table tbody tr", { hasText: "INFY" });
+    const deleteItemBtn = infyRow.locator("button[title='Remove from Watchlist']");
+    await expect(deleteItemBtn).toBeVisible();
+    await deleteItemBtn.click();
+    await page.waitForTimeout(600);
+
+    // Verify INFY is removed
+    await expect(page.locator("table tbody").getByText("INFY")).toHaveCount(0);
+
+    // 4. Create a new custom watchlist (POST /api/watchlists)
+    const newWatchlistBtn = page.getByRole("button", { name: /New Watchlist/i });
+    await expect(newWatchlistBtn).toBeVisible();
+    await newWatchlistBtn.click();
+
+    // Fill modal form
+    const modalNameInput = page.locator("input[placeholder*='Minervini VCP']");
+    await expect(modalNameInput).toBeVisible();
+    const customListName = "E2E Custom List " + Date.now();
+    await modalNameInput.fill(customListName);
+    await page.getByRole("button", { name: /Create Watchlist/i }).click();
+    await page.waitForTimeout(600);
+
+    // Verify newly created watchlist is active
+    await expect(page.locator("h1")).toContainText(customListName);
+
+    // 5. Rename custom watchlist (PUT /api/watchlists/:id)
+    const renameBtn = page.locator("button[title='Rename active watchlist']");
+    await expect(renameBtn).toBeVisible();
+    promptAnswer = customListName + " (Renamed)";
+    await renameBtn.click();
+    await page.waitForTimeout(600);
+    await expect(page.locator("h1")).toContainText("(Renamed)");
+
+    // 6. Delete custom watchlist (DELETE /api/watchlists/:id)
+    const deleteListBtn = page.locator("button[title='Delete active watchlist']");
+    await expect(deleteListBtn).toBeVisible();
+    await deleteListBtn.click();
+    await page.waitForTimeout(800);
+
+    // Verify it falls back to Primary Watchlist
+    await expect(page.locator("h1")).toContainText("Primary Watchlist");
+
+    // 7. Multi-Tenant User Switching: Switch to Beta Hedge Fund
+    await userSwitcherBtn.click();
+    await expect(page.getByText("Multi-Tenant User Isolation")).toBeVisible();
+    const betaFundOption = page.locator("button", { hasText: "Beta Hedge Fund" });
+    await expect(betaFundOption).toBeVisible();
+    await betaFundOption.click();
+    await page.waitForTimeout(600);
+
+    // Verify user label in Navbar reflects Beta Hedge Fund
+    await expect(userSwitcherBtn).toContainText("Beta Hedge Fund");
+
+    // Switch back to Alpha Trader to restore state
+    await userSwitcherBtn.click();
+    const alphaOption = page.locator("button", { hasText: "Alpha Trader" });
+    await expect(alphaOption).toBeVisible();
+    await alphaOption.click();
+    await page.waitForTimeout(400);
+    await expect(userSwitcherBtn).toContainText("Alpha Trader");
+  });
 });
