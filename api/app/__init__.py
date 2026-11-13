@@ -1,0 +1,1 @@
+"""TRADESCOUT Backend API package."""

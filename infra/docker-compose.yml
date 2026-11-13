@@ -13,7 +13,7 @@ services:
       POSTGRES_PASSWORD: tradescout_dev
       POSTGRES_DB: tradescout
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - tradescout_pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
     command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
     volumes:
       - tradescout_redisdata:/data
     healthcheck:
@@ -55,7 +55,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@tradescout.dev
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - "5050:80"
+      - "127.0.0.1:5050:80"
     depends_on:
       postgres:
         condition: service_healthy

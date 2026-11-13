@@ -24,6 +24,9 @@
   <img src="https://img.shields.io/badge/Data-₹0%20Free-green" alt="Free Data" />
 </p>
 
+> [!IMPORTANT]
+> **Regulatory Disclaimer:** TRADESCOUT is an educational research and technical market screening platform. It is NOT a SEBI-registered investment advisor or research analyst. All stock screeners, metrics, and chart setups are strictly for educational and informational purposes. Trading and investing in securities are subject to market risks.
+
 ---
 
 ## Architecture
@@ -518,6 +521,12 @@ SOFTWARE.
 
 - GitHub: [@vanshpanchal](https://github.com/vanshpanchal)
 - Twitter/X: [@vanshpanchal](https://x.com/vanshpanchal)
+
+---
+
+## Regulatory Disclaimer
+
+TRADESCOUT is an educational research and technical market screening platform. It is NOT a SEBI-registered investment advisor or research analyst. All stock screeners, metrics, and chart setups are strictly for educational and informational purposes. Trading and investing in securities are subject to market risks.
 
 ---
 

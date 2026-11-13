@@ -1,0 +1,42 @@
+[project]
+name = "tradescout-api"
+version = "1.0.0"
+description = "TRADESCOUT High-Performance Stock Screener Backend"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.7.0",
+    "polars>=1.17.0",
+    "pyarrow>=18.1.0",
+    "redis>=5.2.0",
+    "httpx>=0.28.0",
+    "structlog>=24.4.0",
+    "python-jose[cryptography]>=3.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.8.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP"]
+ignore = []
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]

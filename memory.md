@@ -12,7 +12,7 @@
 - **Product Name:** TRADESCOUT
 - **Inspiration:** Reverse-engineered architecture of ScanTheCharts.com with adaptations from RepoTrace & FinRAG.AI (Imported from conversation `27c18536-f6cb-409a-bfed-4ac05e6bc0e8`)
 - **Mission:** High-performance, zero-scraper technical market screener, breadth diagnostic dashboard, and TradingView charting suite for Indian equity swing traders.
-- **Current Milestone:** Phase 0 Completed — Full Documentation, Reverse-Engineering Research Vault, Architecture Specifications & Engineering Plans Established. Ready for Phase 1 Scaffolding.
+- **Current Milestone:** Phase 1, 2 & 3 Completed — Monorepo scaffold, local Docker infra, zero-scraper data pipeline, Polars indicator engine, Redis caching, high-performance Scanner REST API, and TanStack Table v8 frontend grid with freemium blur paywall established. Ready for Phase 4 Stock Detail & TradingView Charts.
 
 ---
 
@@ -21,10 +21,10 @@
 | Phase | Description | Status | Target Date | Owner | Key Deliverables / Notes |
 | :---: | :--- | :---: | :---: | :---: | :--- |
 | **0** | **Documentation & Planning** | ✅ **COMPLETE** | 2026-11-13 | Vansh / Agents | All 22 specification files generated with zero stubs. |
-| **1** | **Monorepo Scaffold & Local Infra** | ⏳ **NEXT UP** | 2026-11-16 | Agent | `api/` FastAPI, `web/` Next.js 14, Docker Compose (PG16 + Redis7). |
-| **2** | **Zero-Scraper Data Pipeline** | ⬜ NOT STARTED | 2026-11-21 | Agent | Polars vectorized engine, TejHQ/Vishnu Parquet readers, Redis 24h cache. |
-| **3** | **Scanner API & High-Speed UI** | ⬜ NOT STARTED | 2026-11-26 | Agent | 7 core scanners, TanStack virtualized table, freemium blur paywall. |
-| **4** | **Stock Detail & TradingView Charts**| ⬜ NOT STARTED | 2026-12-04 | Agent | TradingView LC v4 canvas, RS line vs Nifty, fundamentals via bfinance. |
+| **1** | **Monorepo Scaffold & Local Infra** | ✅ **COMPLETE** | 2026-11-12 | Agent | `api/` FastAPI, `web/` Next.js 14, Docker Compose (PG16 + Redis7). |
+| **2** | **Zero-Scraper Data Pipeline** | ✅ **COMPLETE** | 2026-11-13 | Agent | Polars vectorized engine, TejHQ/Vishnu Parquet readers, Redis 24h cache (34 tests passing). |
+| **3** | **Scanner API & High-Speed UI** | ✅ **COMPLETE** | 2026-11-13 | Agent | 5 core scanners, TanStack Table v8 data grid, freemium gating, Edge proxy (44 tests passing). |
+| **4** | **Stock Detail & TradingView Charts**| ⏳ **NEXT UP** | 2026-12-04 | Agent | TradingView LC v4 canvas, RS line vs Nifty, fundamentals via bfinance. |
 | **5** | **Auth, Watchlists & Drawings** | ⬜ NOT STARTED | 2026-12-10 | Agent | Supabase Auth, PostgreSQL RLS, saved chart drawings, notes journal. |
 | **6** | **The Warmup, RRG & Heatmap** | ⬜ NOT STARTED | 2026-12-18 | Agent | Morning market breadth gauges, Relative Rotation Graph, treemap. |
 | **7** | **Performance Hardening & Launch**| ⬜ NOT STARTED | 2026-12-24 | Agent | Lighthouse 95+, Vercel Edge deployment, Sentry error monitoring. |
