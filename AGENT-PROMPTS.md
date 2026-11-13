@@ -441,7 +441,7 @@ VERDICT: PASS (or FAIL with specific error log)
 
 ---
 
-## PROMPT 7: Phase 7 — Production Hardening, Quality Gates & Launch
+## PROMPT 7: Phase 7 — Production Hardening, Quality Gates & Launch Readiness
 
 ```markdown
 You are the Principal SRE & Quality Assurance Lead executing Phase 7 of TRADESCOUT under the Gravitas reliability runtime.
@@ -449,45 +449,65 @@ You are the Principal SRE & Quality Assurance Lead executing Phase 7 of TRADESCO
 ### Context & Grounding
 - Working Directory: `C:\Users\pc\OneDrive\Desktop\TRADESCOUT`
 - Read these files before touching anything:
-  1. `Testing-Strategy.md`
-  2. `Security-and-Scale.md`
-  3. `environment-setup.md`
+  1. `docs/Testing-Strategy.md`
+  2. `docs/Security-and-Scale.md`
+  3. `docs/environment-setup.md`
   4. `.cursorrules`
+  5. `memory.md`
 
 ### Allowed Write Scope
 - `tests/e2e/**`
+- `web/playwright.config.ts`
 - `.github/workflows/**`
-- `web/next.config.js`
+- `web/next.config.mjs` or `web/next.config.js`
 - `api/app/core/logging.py`
+- `web/src/components/common/Footer.tsx` (SEBI disclaimer)
 - `CHANGELOG.md`
 - `memory.md`
 
 ### Task Specification
-1. **Playwright End-to-End Test Suite (`tests/e2e/`):**
-   - Full trader loop: Visit `/warmup` -> Click scanner -> Sort grid -> Select stock -> View TradingView chart -> Add to watchlist.
-   - Freemium paywall verification: Verify rows 11+ are blurred and paywall dialog triggers.
-2. **Lighthouse CI & Performance Hardening:**
-   - Optimize bundle size: Dynamic imports for TradingView canvas (`next/dynamic` with `ssr: false`).
-   - Configure cache control headers, CSP, HSTS, and frame-ancestors in `next.config.js`.
-   - Achieve Lighthouse score $\ge 95$ across Performance, Accessibility, Best Practices.
-3. **CI/CD Pipeline (.github/workflows/ci.yml):**
-   - Automated GitHub Actions workflow running:
-     - Python Ruff linter + Pytest with Golden Reference Dataset verification.
-     - TypeScript typecheck + Playwright E2E tests.
-4. **Production Deployment Setup:**
-   - Frontend: Vercel deployment with Mumbai Edge node routing.
-   - Backend: Dockerized production container for Hetzner Cloud or Railway.
-   - Sentry error monitoring configured on both frontend and backend.
-5. **Regulatory & Final Polish:**
-   - Verify mandatory SEBI educational disclaimer is rendered across all pages.
-   - Update `CHANGELOG.md` and mark Phase 7 `[x] COMPLETE` in `memory.md`.
+
+1. **Playwright End-to-End Test Suite (`tests/e2e/` or `web/tests/e2e/`):**
+   - Setup Playwright with headless Chromium.
+   - Implement the complete trader workflow E2E test suite:
+     - **Test 1: The Warmup (`/warmup`):** Verifies market participation radial dial, RME sentiment badge, and stage distribution bar render.
+     - **Test 2: Scanners (`/scanners/trend-template`):** Verifies virtualized TanStack table loads stocks, sorting by RS Rating works, and instant search filters results.
+     - **Test 3: Stock Detail & Charting (`/stock/RELIANCE`):** Verifies TradingView canvas mounts without errors, fundamentals table displays 5-year financials, and notes auto-save works.
+     - **Test 4: Watchlist Loop (`/watchlists`):** Verifies adding a symbol via autocomplete, viewing 20D sparklines, toggling star, and CSV export.
+     - **Test 5: Relative Rotation Graph (`/rrg`):** Verifies 2D scatter chart renders 4 quadrants (Leading, Weakening, Lagging, Improving) and tail length toggling works.
+     - **Test 6: Market Heatmap (`/heatmap`):** Verifies treemap tiles render with gainers (cyan) / decliners (red) and index selector toggles.
+
+2. **Performance & Bundle Optimization:**
+   - Optimize bundle size in Next.js: ensure heavy charting components use dynamic imports (`next/dynamic` with `ssr: false`).
+   - Configure security headers in `next.config.js`:
+     - Content Security Policy (CSP)
+     - Strict-Transport-Security (HSTS)
+     - X-Frame-Options: `DENY`
+     - X-Content-Type-Options: `nosniff`
+     - Referrer-Policy: `strict-origin-when-cross-origin`
+
+3. **CI/CD Quality Gate Pipeline (`.github/workflows/ci.yml`):**
+   - GitHub Actions workflow covering:
+     - **Backend Gate:** Python 3.12/3.13 setup, `ruff check .`, and `pytest tests/ -v` (all 68+ tests).
+     - **Frontend Gate:** Node 20 setup, `pnpm install`, `pnpm tsc --noEmit`, and `pnpm build`.
+     - **E2E Gate:** Playwright test execution in headless mode.
+
+4. **Regulatory SEBI Compliance & Footer:**
+   - Ensure mandatory SEBI disclaimer is rendered across all pages in the app footer:
+     > *"TRADESCOUT is an educational and analytical tool designed for market research. Not registered with SEBI as an Investment Adviser. Securities trading involves substantial risk of loss."*
+
+5. **Final Polish & Release Ledger:**
+   - Update `CHANGELOG.md` with full v1.0.0 release notes covering all 7 phases.
+   - Update `memory.md` status board marking Phase 7 `[x] COMPLETE`.
 
 ### Evidence & Verification Mandate
-Run and provide output for:
-1. `npx playwright test` (100% test pass rate).
-2. `cd api && pytest` (100% test pass rate with coverage report).
-3. Lighthouse test score screenshot or JSON report.
-4. Final `git status` clean check.
+Run the following commands and paste the exact terminal output:
+1. `cd web && npx playwright test` (or headless test execution output).
+2. `cd api && pytest tests/ -v` (Verify 100% backend pass rate).
+3. `cd api && ruff check .` (0 lint errors).
+4. `cd web && pnpm tsc --noEmit` (0 TypeScript errors).
+5. `cd web && pnpm build` (Clean production build of all 13 routes).
+6. Check `git status` clean state.
 
 Conclude your final response with:
 VERDICT: PASS (or FAIL with specific error log)
