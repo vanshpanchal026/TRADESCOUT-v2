@@ -69,16 +69,6 @@ export default async function WarmupPage() {
 
       {/* Main Interactive Dashboard matching Screenshot 11 */}
       <WarmupDashboard initialData={data} />
-
-      {/* Mandatory SEBI Regulatory Disclaimer */}
-      <footer className="pt-4 border-t border-border/40 text-center text-xs text-muted-foreground space-y-1">
-        <p>
-          TRADESCOUT is an educational research platform. Not registered with SEBI as an Investment Adviser. Market investments are subject to market risks.
-        </p>
-        <p className="text-[11px] font-mono text-muted-foreground/80">
-          Last EOD Sync: {new Date(data.last_synced).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST
-        </p>
-      </footer>
     </main>
   );
 }
