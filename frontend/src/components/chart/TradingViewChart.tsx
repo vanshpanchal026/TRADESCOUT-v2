@@ -48,7 +48,15 @@ export default function TradingViewChart({
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+  const s10SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+  const s20SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+  const s50SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+  const s200SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+  const volSeriesRef = useRef<ISeriesApi<"Histogram"> | null>(null);
+  const subSeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+  const pivotLineRef = useRef<IPriceLine | null>(null);
   const activePriceLinesRef = useRef<Map<string, IPriceLine>>(new Map());
+  const initialFittedRef = useRef<string | null>(null);
 
   // Indicators toggle state
   const [showSma10, setShowSma10] = useState(true);
@@ -180,7 +188,37 @@ export default function TradingViewChart({
       };
     }, [bars, rsLine, pivotPrice]);
 
-  // 1. Initial Load: Chart Drawings & Favourites
+  // Check favourite status with user auth headers
+  const checkFavourite = useCallback(async () => {
+    if (!symClean) return;
+    try {
+      const res = await fetch("/api/favourites", {
+        headers: getAuthHeaders(),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data.favourites)) {
+          setIsFavourite(data.favourites.includes(symClean));
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, [symClean]);
+
+  // Sync favourite status on mount, symbol change, and when active user switches
+  useEffect(() => {
+    checkFavourite();
+    const handleUserChanged = () => {
+      checkFavourite();
+    };
+    window.addEventListener("ts-user-changed", handleUserChanged);
+    return () => {
+      window.removeEventListener("ts-user-changed", handleUserChanged);
+    };
+  }, [checkFavourite]);
+
+  // 1. Initial Load: Chart Drawings
   useEffect(() => {
     if (!symClean) return;
 
@@ -212,34 +250,19 @@ export default function TradingViewChart({
       }
     }
 
-    // Check favourite status
-    async function checkFavourite() {
-      try {
-        const res = await fetch("/api/favourites");
-        if (res.ok) {
-          const data = await res.json();
-          if (isMounted && Array.isArray(data.favourites)) {
-            setIsFavourite(data.favourites.includes(symClean));
-          }
-        }
-      } catch {
-        // ignore
-      }
-    }
-
     loadSavedDrawings();
-    checkFavourite();
 
     return () => {
       isMounted = false;
     };
   }, [symClean]);
 
-  // 2. Main Lightweight Charts Initialization
+  // 2. Main Lightweight Charts Instance Initialization (Mount / Unmount only)
   useEffect(() => {
-    if (!containerRef.current || !bars || bars.length === 0) return;
+    if (!containerRef.current) return;
 
     const container = containerRef.current;
+    const priceLines = activePriceLinesRef.current;
     const chart = createChart(container, {
       width: container.clientWidth,
       height: container.clientHeight || 560,
@@ -272,7 +295,7 @@ export default function TradingViewChart({
         borderColor: "rgba(51, 65, 85, 0.4)",
         scaleMargins: {
           top: 0.1,
-          bottom: showVolume ? 0.22 : 0.05,
+          bottom: 0.22,
         },
       },
       timeScale: {
@@ -284,7 +307,7 @@ export default function TradingViewChart({
 
     chartRef.current = chart;
 
-    // Candlestick Series
+    // Candlestick Series (Pane 0)
     const candleSeries = chart.addSeries(
       CandlestickSeries,
       {
@@ -298,13 +321,189 @@ export default function TradingViewChart({
       },
       0
     );
-    candleSeries.setData(bars);
     candleSeriesRef.current = candleSeries;
 
-    // Breakout Pivot Dashed Line
-    let pivotLine: IPriceLine | null = null;
+    // Moving Average Overlays (Pane 0)
+    const s10Series = chart.addSeries(
+      LineSeries,
+      {
+        color: "#EAB308",
+        lineWidth: 1,
+        priceLineVisible: false,
+        lastValueVisible: false,
+        title: "SMA 10",
+      },
+      0
+    );
+    s10SeriesRef.current = s10Series;
+
+    const s20Series = chart.addSeries(
+      LineSeries,
+      {
+        color: "#22C55E",
+        lineWidth: 1,
+        priceLineVisible: false,
+        lastValueVisible: false,
+        title: "SMA 20",
+      },
+      0
+    );
+    s20SeriesRef.current = s20Series;
+
+    const s50Series = chart.addSeries(
+      LineSeries,
+      {
+        color: "#3B82F6",
+        lineWidth: 2,
+        priceLineVisible: false,
+        lastValueVisible: false,
+        title: "SMA 50",
+      },
+      0
+    );
+    s50SeriesRef.current = s50Series;
+
+    const s200Series = chart.addSeries(
+      LineSeries,
+      {
+        color: "#EF4444",
+        lineWidth: 2,
+        priceLineVisible: false,
+        lastValueVisible: false,
+        title: "SMA 200",
+      },
+      0
+    );
+    s200SeriesRef.current = s200Series;
+
+    // Volume Histogram (Pane 0)
+    const volSeries = chart.addSeries(
+      HistogramSeries,
+      {
+        priceFormat: { type: "volume" },
+        priceScaleId: "volume_scale",
+      },
+      0
+    );
+    volSeriesRef.current = volSeries;
+    chart.priceScale("volume_scale").applyOptions({
+      scaleMargins: {
+        top: 0.82,
+        bottom: 0,
+      },
+    });
+
+    // Sub-Pane: RSI / RS (Pane 1)
+    const subSeries = chart.addSeries(
+      LineSeries,
+      {
+        color: "#A855F7",
+        lineWidth: 2,
+        priceScaleId: "sub_scale",
+        title: "RSI(14)",
+      },
+      1
+    );
+    subSeriesRef.current = subSeries;
+    subSeries.createPriceLine({
+      price: 70,
+      color: "rgba(239, 68, 68, 0.7)",
+      lineWidth: 1,
+      lineStyle: LineStyle.Dotted,
+      axisLabelVisible: true,
+      title: "70",
+    });
+    subSeries.createPriceLine({
+      price: 30,
+      color: "rgba(16, 185, 129, 0.7)",
+      lineWidth: 1,
+      lineStyle: LineStyle.Dotted,
+      axisLabelVisible: true,
+      title: "30",
+    });
+
+    // Resize Observer for fluid responsiveness
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (!entries || entries.length === 0 || !entries[0].contentRect) return;
+      const { width, height } = entries[0].contentRect;
+      if (width > 0 && height > 0) {
+        chart.applyOptions({ width, height });
+      }
+    });
+    resizeObserver.observe(container);
+
+    return () => {
+      resizeObserver.disconnect();
+      chart.remove();
+      chartRef.current = null;
+      candleSeriesRef.current = null;
+      s10SeriesRef.current = null;
+      s20SeriesRef.current = null;
+      s50SeriesRef.current = null;
+      s200SeriesRef.current = null;
+      volSeriesRef.current = null;
+      subSeriesRef.current = null;
+      pivotLineRef.current = null;
+      priceLines.clear();
+      initialFittedRef.current = null;
+    };
+  }, []);
+
+  // 2a. Update Series Data smoothly without tearing down chart or resetting zoom
+  useEffect(() => {
+    if (!candleSeriesRef.current || !bars || bars.length === 0) return;
+
+    candleSeriesRef.current.setData(bars);
+    s10SeriesRef.current?.setData(sma10Data);
+    s20SeriesRef.current?.setData(sma20Data);
+    s50SeriesRef.current?.setData(sma50Data);
+    s200SeriesRef.current?.setData(sma200Data);
+    volSeriesRef.current?.setData(volumeData);
+
+    if (subPaneMode === "rsi") {
+      subSeriesRef.current?.applyOptions({ color: "#A855F7", title: "RSI(14)" });
+      subSeriesRef.current?.setData(rsiData);
+    } else {
+      subSeriesRef.current?.applyOptions({ color: "#00E5FF", title: "RS vs NIFTY" });
+      subSeriesRef.current?.setData(rsLineData);
+    }
+
+    if (initialFittedRef.current !== symClean && chartRef.current) {
+      chartRef.current.timeScale().fitContent();
+      initialFittedRef.current = symClean;
+    }
+  }, [bars, sma10Data, sma20Data, sma50Data, sma200Data, volumeData, rsiData, rsLineData, subPaneMode, symClean]);
+
+  // 2b. Hardware-accelerated indicator visibility toggles
+  useEffect(() => {
+    s10SeriesRef.current?.applyOptions({ visible: showSma10 });
+    s20SeriesRef.current?.applyOptions({ visible: showSma20 });
+    s50SeriesRef.current?.applyOptions({ visible: showSma50 });
+    s200SeriesRef.current?.applyOptions({ visible: showSma200 });
+    volSeriesRef.current?.applyOptions({ visible: showVolume });
+    subSeriesRef.current?.applyOptions({ visible: showSubPane });
+
+    chartRef.current?.priceScale("right").applyOptions({
+      scaleMargins: {
+        top: 0.1,
+        bottom: showVolume ? 0.22 : 0.05,
+      },
+    });
+  }, [showSma10, showSma20, showSma50, showSma200, showVolume, showSubPane]);
+
+  // 2c. Breakout Pivot Price Line
+  useEffect(() => {
+    if (!candleSeriesRef.current) return;
+    if (pivotLineRef.current) {
+      try {
+        candleSeriesRef.current.removePriceLine(pivotLineRef.current);
+      } catch {
+        // ignore
+      }
+      pivotLineRef.current = null;
+    }
     if (showPivot && calculatedPivot) {
-      pivotLine = candleSeries.createPriceLine({
+      pivotLineRef.current = candleSeriesRef.current.createPriceLine({
         price: calculatedPivot,
         color: "#F59E0B",
         lineWidth: 1,
@@ -313,211 +512,39 @@ export default function TradingViewChart({
         title: `Pivot ₹${calculatedPivot}`,
       });
     }
+  }, [showPivot, calculatedPivot]);
 
-    // Moving Average Overlays
-    let s10Series: ISeriesApi<"Line"> | null = null;
-    if (showSma10 && sma10Data.length > 0) {
-      s10Series = chart.addSeries(
-        LineSeries,
-        {
-          color: "#EAB308",
-          lineWidth: 1,
-          priceLineVisible: false,
-          lastValueVisible: false,
-          title: "SMA 10",
-        },
-        0
-      );
-      s10Series.setData(sma10Data);
-    }
+  // 2d. Saved Drawings Price Lines
+  useEffect(() => {
+    if (!candleSeriesRef.current) return;
+    const candleSeries = candleSeriesRef.current;
+    const currentLines = activePriceLinesRef.current;
 
-    let s20Series: ISeriesApi<"Line"> | null = null;
-    if (showSma20 && sma20Data.length > 0) {
-      s20Series = chart.addSeries(
-        LineSeries,
-        {
-          color: "#22C55E",
-          lineWidth: 1,
-          priceLineVisible: false,
-          lastValueVisible: false,
-          title: "SMA 20",
-        },
-        0
-      );
-      s20Series.setData(sma20Data);
-    }
-
-    let s50Series: ISeriesApi<"Line"> | null = null;
-    if (showSma50 && sma50Data.length > 0) {
-      s50Series = chart.addSeries(
-        LineSeries,
-        {
-          color: "#3B82F6",
-          lineWidth: 2,
-          priceLineVisible: false,
-          lastValueVisible: false,
-          title: "SMA 50",
-        },
-        0
-      );
-      s50Series.setData(sma50Data);
-    }
-
-    let s200Series: ISeriesApi<"Line"> | null = null;
-    if (showSma200 && sma200Data.length > 0) {
-      s200Series = chart.addSeries(
-        LineSeries,
-        {
-          color: "#EF4444",
-          lineWidth: 2,
-          priceLineVisible: false,
-          lastValueVisible: false,
-          title: "SMA 200",
-        },
-        0
-      );
-      s200Series.setData(sma200Data);
-    }
-
-    // Volume Histogram
-    let volSeries: ISeriesApi<"Histogram"> | null = null;
-    if (showVolume && volumeData.length > 0) {
-      volSeries = chart.addSeries(
-        HistogramSeries,
-        {
-          priceFormat: { type: "volume" },
-          priceScaleId: "volume_scale",
-        },
-        0
-      );
-      volSeries.setData(volumeData);
-      chart.priceScale("volume_scale").applyOptions({
-        scaleMargins: {
-          top: 0.82,
-          bottom: 0,
-        },
-      });
-    }
-
-    // Sub-Pane: RSI / RS
-    if (showSubPane) {
-      if (subPaneMode === "rsi" && rsiData.length > 0) {
-        const subSeries = chart.addSeries(
-          LineSeries,
-          {
-            color: "#A855F7",
-            lineWidth: 2,
-            priceScaleId: "sub_scale",
-            title: "RSI(14)",
-          },
-          1
-        );
-        subSeries.setData(rsiData);
-        subSeries.createPriceLine({
-          price: 70,
-          color: "rgba(239, 68, 68, 0.7)",
-          lineWidth: 1,
-          lineStyle: LineStyle.Dotted,
-          axisLabelVisible: true,
-          title: "70",
-        });
-        subSeries.createPriceLine({
-          price: 30,
-          color: "rgba(16, 185, 129, 0.7)",
-          lineWidth: 1,
-          lineStyle: LineStyle.Dotted,
-          axisLabelVisible: true,
-          title: "30",
-        });
-      } else if (subPaneMode === "rs" && rsLineData.length > 0) {
-        const subSeries = chart.addSeries(
-          LineSeries,
-          {
-            color: "#00E5FF",
-            lineWidth: 2,
-            priceScaleId: "sub_scale",
-            title: "RS vs NIFTY",
-          },
-          1
-        );
-        subSeries.setData(rsLineData);
-        subSeries.createPriceLine({
-          price: 100,
-          color: "rgba(148, 163, 184, 0.5)",
-          lineWidth: 1,
-          lineStyle: LineStyle.Dotted,
-          axisLabelVisible: true,
-          title: "100.0 Base",
-        });
+    currentLines.forEach((pl) => {
+      try {
+        candleSeries.removePriceLine(pl);
+      } catch {
+        // ignore
       }
-    }
+    });
+    currentLines.clear();
 
-    // Attach saved user drawings as price lines
-    activePriceLinesRef.current.clear();
     drawings.forEach((d) => {
-      const pl = candleSeries.createPriceLine({
-        price: d.price,
-        color: d.color || "#00E5FF",
-        lineWidth: 1,
-        lineStyle: d.lineStyle === "solid" ? LineStyle.Solid : LineStyle.Dashed,
-        axisLabelVisible: true,
-        title: d.title || `Level ₹${d.price}`,
-      });
-      activePriceLinesRef.current.set(d.id, pl);
-    });
-
-    chart.timeScale().fitContent();
-
-    // Resize Observer
-    const resizeObserver = new ResizeObserver((entries) => {
-      if (!entries || entries.length === 0 || !entries[0].contentRect) return;
-      const { width, height } = entries[0].contentRect;
-      if (width > 0 && height > 0) {
-        chart.applyOptions({ width, height });
+      try {
+        const pl = candleSeries.createPriceLine({
+          price: d.price,
+          color: d.color || "#00E5FF",
+          lineWidth: 1,
+          lineStyle: d.lineStyle === "solid" ? LineStyle.Solid : LineStyle.Dashed,
+          axisLabelVisible: true,
+          title: d.title || `Level ₹${d.price}`,
+        });
+        currentLines.set(d.id, pl);
+      } catch {
+        // ignore
       }
     });
-
-    resizeObserver.observe(container);
-
-    const priceLinesMap = activePriceLinesRef.current;
-
-    return () => {
-      resizeObserver.disconnect();
-      if (pivotLine && candleSeries) {
-        candleSeries.removePriceLine(pivotLine);
-      }
-      priceLinesMap.forEach((pl) => {
-        try {
-          candleSeries.removePriceLine(pl);
-        } catch {
-          // ignore
-        }
-      });
-      priceLinesMap.clear();
-      chart.remove();
-      chartRef.current = null;
-      candleSeriesRef.current = null;
-    };
-  }, [
-    bars,
-    sma10Data,
-    sma20Data,
-    sma50Data,
-    sma200Data,
-    volumeData,
-    rsiData,
-    rsLineData,
-    showSma10,
-    showSma20,
-    showSma50,
-    showSma200,
-    showVolume,
-    showSubPane,
-    subPaneMode,
-    showPivot,
-    calculatedPivot,
-    drawings,
-  ]);
+  }, [drawings]);
 
   // 3. Persist Drawing Changes helper
   const persistDrawings = async (updatedList: UserDrawing[]) => {
@@ -587,6 +614,7 @@ export default function TradingViewChart({
     try {
       const res = await fetch(`/api/favourites/${symClean}/toggle`, {
         method: "POST",
+        headers: getAuthHeaders(),
       });
       if (res.ok) {
         const data = await res.json();

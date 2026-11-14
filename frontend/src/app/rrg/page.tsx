@@ -16,6 +16,7 @@ async function getRRGData(): Promise<RRGData | null> {
   try {
     const res = await fetch(`${backendBase}/api/market/rrg?benchmark=NIFTY+50&group=sectors`, {
       next: { revalidate: 60 },
+      signal: AbortSignal.timeout(3000),
     });
 
     if (!res.ok) {

@@ -8,7 +8,12 @@ import { StageDistributionBar } from "./StageDistributionBar";
 import { BreadthSummaryCards } from "./BreadthSummaryCards";
 import { PreMarketCuesCard } from "./PreMarketCuesCard";
 import { EarningsHorizonTable } from "./EarningsHorizonTable";
-import { RefreshCw, Zap } from "lucide-react";
+import { IndicesMacroTicker } from "./IndicesMacroTicker";
+import { FiiDiiCashFlowWidget } from "./FiiDiiCashFlowWidget";
+import { MarketReadAndHighsLows } from "./MarketReadAndHighsLows";
+import { TodaysSetupsTable } from "./TodaysSetupsTable";
+import { ThemesAndEventsPanel } from "./ThemesAndEventsPanel";
+import { RefreshCw, Zap, Sparkles } from "lucide-react";
 
 interface WarmupDashboardProps {
   initialData: WarmupData;
@@ -35,10 +40,13 @@ export function WarmupDashboard({ initialData }: WarmupDashboardProps) {
 
   return (
     <div className="space-y-6">
+      {/* Indices & Macro Ticker Strip with 50E / 200S MA Overlays */}
+      <IndicesMacroTicker />
+
       {/* Action Sub-Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-card border border-border">
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-card border border-border shadow-xs">
         <div className="flex items-center gap-2 text-xs text-muted-foreground font-medium">
-          <Zap className="h-4 w-4 text-accent" />
+          <Zap className="h-4 w-4 text-primary" />
           <span>
             Universe: <strong className="text-foreground">{data.total_traded.toLocaleString()}</strong> active NSE equities analyzed in real-time.
           </span>
@@ -47,14 +55,20 @@ export function WarmupDashboard({ initialData }: WarmupDashboardProps) {
         <button
           onClick={handleRefresh}
           disabled={isRefreshing}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-accent/10 border border-accent/30 text-accent hover:bg-accent/20 transition-all disabled:opacity-50"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all disabled:opacity-50"
         >
           <RefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
           <span>Refresh Breadth Data</span>
         </button>
       </div>
 
-      {/* Top Diagnostic Gauges Row (3 Cards) */}
+      {/* Market Read Card & 20-Day Highs / Lows Net Ratio */}
+      <MarketReadAndHighsLows />
+
+      {/* FII / DII 22-Session Cash Flow Widget */}
+      <FiiDiiCashFlowWidget />
+
+      {/* Top Diagnostic Gauges Row (3 Core Cards: Participation, Sentiment, Stages) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <ParticipationGauge
           participation={data.market_participation}
@@ -66,6 +80,12 @@ export function WarmupDashboard({ initialData }: WarmupDashboardProps) {
           totalTraded={data.total_traded}
         />
       </div>
+
+      {/* Today's Setups Table (VCP & Pivot Consolidations) */}
+      <TodaysSetupsTable />
+
+      {/* Themes & Money Flow + Today's Events Panel */}
+      <ThemesAndEventsPanel />
 
       {/* Breadth Summary Cards Row */}
       <BreadthSummaryCards
@@ -82,3 +102,5 @@ export function WarmupDashboard({ initialData }: WarmupDashboardProps) {
     </div>
   );
 }
+
+export default WarmupDashboard;

@@ -14,6 +14,7 @@ from typing import Any
 import polars as pl
 import structlog
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, Response, status
+from pydantic.fields import FieldInfo
 from redis.asyncio import Redis
 
 from app.core.auth import extract_user_identity
@@ -27,6 +28,11 @@ from app.models.scanners import (
 )
 from app.services.cache_service import generate_and_cache_all_scanners
 from app.services.indicators import compute_indicators
+
+if "user_tier" not in ScannerMetadata.model_fields:
+    ScannerMetadata.model_fields["user_tier"] = FieldInfo(annotation=str, default="free")
+    ScannerMetadata.model_rebuild(force=True)
+    ScannerResponse.model_rebuild(force=True)
 from app.services.pipeline import load_eod_data
 
 logger = structlog.get_logger(__name__)
@@ -58,22 +64,59 @@ SUPPORTED_SLUGS: dict[str, dict[str, str]] = {
     "trend-template": {
         "title": "Minervini Trend Template",
         "description": "Stocks meeting Mark Minervini's 8-rule Trend Template criteria in Stage 2 markup.",
+        "icon": "TrendingUp",
     },
     "recent-breakout": {
         "title": "Recent Breakouts",
         "description": "Stocks breaking out with price gain >= 2.5% and relative volume >= 1.5x above 50 SMA.",
+        "icon": "Flame",
     },
     "4pct-breakout": {
         "title": "4%+ High-Volume Breakouts",
         "description": "Stocks up 4% or more with substantial trading volume expansion.",
+        "icon": "Zap",
     },
     "high-volume": {
         "title": "High Relative Volume",
         "description": "Stocks trading at 2.0x or higher relative volume with positive daily returns.",
+        "icon": "Volume2",
     },
     "1m-gainers": {
         "title": "1-Month Top Momentum Gainers",
         "description": "Highest 1-month percentage price gainers across the NSE universe.",
+        "icon": "Activity",
+    },
+    "stage-2-breakout": {
+        "title": "Stage 2 Breakout",
+        "description": "Emerging from Stage 1 consolidation bases into Stage 2 uptrends with volume expansion.",
+        "icon": "Flame",
+    },
+    "20-sma-pullback": {
+        "title": "20-SMA Pullback",
+        "description": "Orderly pullbacks to the rising 20-day Simple Moving Average in an established uptrend.",
+        "icon": "Activity",
+    },
+    "3m-gainers": {
+        "title": "3-Month Top Momentum Gainers",
+        "description": "Leading gainers over a rolling 90-day performance window across the NSE universe.",
+        "icon": "TrendingUp",
+    },
+    "outperformers": {
+        "title": "Market Outperformers",
+        "description": (
+            "Stocks demonstrating persistent relative strength (RS >= 80) and outperforming the broader market."
+        ),
+        "icon": "Zap",
+    },
+    "doublers": {
+        "title": "1-Year Doublers",
+        "description": "Equities that have appreciated by 100%+ from their 52-week lows.",
+        "icon": "Flame",
+    },
+    "new-listing-ipo": {
+        "title": "New Listings & IPOs",
+        "description": "Recent public listings with short historical data footprints (<2 years).",
+        "icon": "Sparkles",
     },
 }
 
@@ -135,6 +178,10 @@ def filter_and_sort_candidates(
                 val = item.get("day_change") if sort_by == "change_pct" else item.get("change_pct")
             elif sort_by in ("cmp", "close"):
                 val = item.get("close") if sort_by == "cmp" else item.get("cmp")
+            elif sort_by in ("ret_3m", "gain_3m"):
+                val = item.get("ret_3m") if sort_by == "gain_3m" else item.get("gain_3m")
+            elif sort_by in ("above_52w_low", "from_52w_low"):
+                val = item.get("above_52w_low") if sort_by == "from_52w_low" else item.get("from_52w_low")
 
         if val is None:
             return -float("inf") if descending else float("inf")
@@ -179,6 +226,11 @@ async def ensure_scanner_cache(redis: Redis) -> None:
 
         try:
             parquet_path = os.path.join(".cache", "parquet", "nse_2026.parquet")
+            if not os.path.exists(parquet_path):
+                alt_path = os.path.join("backend", ".cache", "parquet", "nse_2026.parquet")
+                if os.path.exists(alt_path):
+                    parquet_path = alt_path
+
             if os.path.exists(parquet_path):
                 df = pl.read_parquet(parquet_path)
             else:
@@ -227,12 +279,14 @@ async def ensure_scanner_cache(redis: Redis) -> None:
             c126 = pl.col("close").shift(126).over("symbol")
             c189 = pl.col("close").shift(189).over("symbol")
             c252 = pl.coalesce([pl.col("close").shift(252).over("symbol"), c189, c126, c63])
-            raw_rs = (
-                0.40 * ((c - c63) / pl.when(c63 > 0).then(c63).otherwise(1.0))
-                + 0.20 * ((c63 - c126) / pl.when(c126 > 0).then(c126).otherwise(1.0))
-                + 0.20 * ((c126 - c189) / pl.when(c189 > 0).then(c189).otherwise(1.0))
-                + 0.20 * ((c189 - c252) / pl.when(c252 > 0).then(c252).otherwise(1.0))
-            )
+            q1 = (0.40 * ((c - c63) / pl.when(c63 > 0).then(c63).otherwise(1.0))).fill_null(0.0)
+            q2 = (0.20 * ((c63 - c126) / pl.when(c126 > 0).then(c126).otherwise(1.0))).fill_null(0.0)
+            q3 = (0.20 * ((c126 - c189) / pl.when(c189 > 0).then(c189).otherwise(1.0))).fill_null(0.0)
+            q4 = (0.20 * ((c189 - c252) / pl.when(c252 > 0).then(c252).otherwise(1.0))).fill_null(0.0)
+            raw_rs = q1 + q2 + q3 + q4
+
+            ret_3m = (((pl.col("close") - c63) / pl.when(c63 > 0).then(c63).otherwise(1.0)) * 100.0)
+            bars_cnt = pl.col("close").cum_count().over("symbol")
 
             df_calc = df_calc.with_columns(
                 [
@@ -244,6 +298,8 @@ async def ensure_scanner_cache(redis: Redis) -> None:
                     f52l.alias("above_52w_low"),
                     conds.alias("conditions_met"),
                     raw_rs.alias("raw_rs_score"),
+                    ret_3m.alias("ret_3m"),
+                    bars_cnt.alias("bars_count"),
                 ]
             )
 
@@ -359,10 +415,14 @@ async def get_scanner_candidates(
         sort_by=sort_by,
         direction=direction,
         is_truncated=is_truncated,
+        user_tier="pro" if is_pro else "free",
     )
 
+    metadata_dict = metadata.model_dump()
+    metadata_dict["user_tier"] = "pro" if is_pro else "free"
+
     return {
-        "metadata": metadata.model_dump(),
+        "metadata": metadata_dict,
         "data": sliced,
         "results": sliced,
         "total_results": total_matches,

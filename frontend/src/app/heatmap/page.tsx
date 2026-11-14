@@ -16,6 +16,7 @@ async function getHeatmapData(): Promise<HeatmapData | null> {
   try {
     const res = await fetch(`${backendBase}/api/market/heatmap?index=NIFTY+50`, {
       next: { revalidate: 60 },
+      signal: AbortSignal.timeout(3000),
     });
 
     if (!res.ok) {

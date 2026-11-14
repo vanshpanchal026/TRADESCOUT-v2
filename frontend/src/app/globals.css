@@ -4,11 +4,13 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
+    --background: #f8fafc;
+    --canvas: #f8fafc;
     --foreground: #0f172a;
     --card: #ffffff;
     --card-foreground: #0f172a;
-    --primary: #6366f1;
+    --surface: #ffffff;
+    --primary: #4f46e5;
     --primary-foreground: #ffffff;
     --muted: #f1f5f9;
     --muted-foreground: #64748b;
@@ -16,21 +18,49 @@
   }
 
   .dark {
-    --background: #0a0a0f;
-    --foreground: #e4e4e7;
-    --card: #141420;
-    --card-foreground: #e4e4e7;
-    --primary: #818cf8;
-    --primary-foreground: #0a0a0f;
-    --muted: #1c1c2e;
-    --muted-foreground: #a1a1aa;
-    --border: #27272a;
+    --background: #090d16;
+    --canvas: #090d16;
+    --foreground: #f1f5f9;
+    --card: #111827;
+    --card-foreground: #f1f5f9;
+    --surface: #111827;
+    --primary: #6366f1;
+    --primary-foreground: #ffffff;
+    --muted: #1a2234;
+    --muted-foreground: #94a3b8;
+    --border: #1e293b;
   }
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-hanken), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   min-height: 100vh;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+  -moz-font-feature-settings: "tnum";
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
+}
+
+/* Custom scrollbars for data-dense tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
 }

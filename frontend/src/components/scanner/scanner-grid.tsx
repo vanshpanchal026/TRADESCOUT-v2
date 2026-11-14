@@ -17,6 +17,7 @@ import { ArrowUpDown, ArrowUp, ArrowDown, Search } from "lucide-react";
 import { ScannerStock, ScannerMetadata } from "@/lib/types";
 import { Sparkline } from "./sparkline";
 import { PaywallBlurBanner, BlurredPlaceholderRows } from "./paywall-blur";
+import { getAuthHeaders } from "@/lib/auth";
 
 interface ScannerGridProps {
   initialStocks: ScannerStock[];
@@ -25,12 +26,75 @@ interface ScannerGridProps {
 
 export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
   const router = useRouter();
-  const [data] = useState<ScannerStock[]>(initialStocks);
+  const [data, setData] = useState<ScannerStock[]>(initialStocks);
+  const [currentMetadata, setCurrentMetadata] = useState<ScannerMetadata>(metadata);
   const [sorting, setSorting] = useState<SortingState>([
     { id: "rs_rating", desc: true },
   ]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+  // Synchronize state if SSR props update
+  useEffect(() => {
+    setData(initialStocks);
+    setCurrentMetadata(metadata);
+  }, [initialStocks, metadata]);
+
+  // Re-fetch on mount and whenever active user identity changes (Pro unlocking)
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchFreshCandidates() {
+      try {
+        const slug =
+          metadata.slug ||
+          (typeof window !== "undefined"
+            ? window.location.pathname.split("/").filter(Boolean).pop()
+            : "");
+        if (!slug) return;
+
+        const res = await fetch(`/api/scanners/${slug}`, {
+          headers: getAuthHeaders(),
+        });
+
+        if (!res.ok) return;
+        const json = await res.json();
+        if (!isMounted) return;
+
+        const candidateList: ScannerStock[] = json.data || json.results || [];
+        const resMeta = json.metadata || {};
+        const isTruncated =
+          resMeta.is_truncated !== undefined
+            ? resMeta.is_truncated
+            : json.is_truncated !== undefined
+            ? json.is_truncated
+            : false;
+
+        setData(candidateList);
+        setCurrentMetadata((prev) => ({
+          ...prev,
+          ...resMeta,
+          is_truncated: isTruncated,
+          total_matches: resMeta.total_matches ?? json.total_results ?? candidateList.length,
+          returned: candidateList.length,
+        }));
+      } catch (err) {
+        console.error("Failed to re-fetch scanner candidates:", err);
+      }
+    }
+
+    fetchFreshCandidates();
+
+    const handleUserChange = () => {
+      fetchFreshCandidates();
+    };
+
+    window.addEventListener("ts-user-changed", handleUserChange);
+    return () => {
+      isMounted = false;
+      window.removeEventListener("ts-user-changed", handleUserChange);
+    };
+  }, [metadata.slug]);
 
   const columns = useMemo<ColumnDef<ScannerStock>[]>(
     () => [
@@ -352,10 +416,10 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
           <span>
             Showing <strong className="text-foreground">{rows.length}</strong> of{" "}
-            <strong className="text-foreground">{metadata.total_matches}</strong> candidates
+            <strong className="text-foreground">{currentMetadata.total_matches}</strong> candidates
           </span>
           <span className="h-3 w-px bg-border" />
-          <span>EOD: {metadata.last_updated}</span>
+          <span>EOD: {currentMetadata.last_updated}</span>
         </div>
       </div>
 
@@ -437,13 +501,13 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
             )}
 
             {/* Freemium Paywall: Render rows 11+ blurred for guests */}
-            {metadata.is_truncated && <BlurredPlaceholderRows />}
+            {currentMetadata.is_truncated && <BlurredPlaceholderRows />}
           </tbody>
         </table>
       </div>
 
       {/* Freemium Lock Banner if truncated */}
-      {metadata.is_truncated && <PaywallBlurBanner totalMatches={metadata.total_matches} />}
+      {currentMetadata.is_truncated && <PaywallBlurBanner totalMatches={currentMetadata.total_matches} />}
     </div>
   );
 }

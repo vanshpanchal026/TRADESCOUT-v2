@@ -86,56 +86,56 @@ export function RRGHeaderControls({
         </div>
       </div>
 
-      {/* Quadrant Count Metric Badges */}
+      {/* Quadrant Count Metric Badges with Design Tokens */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {/* Leading */}
-        <div className="p-3 rounded-xl border border-[#00E5FF]/30 bg-[#00E5FF]/5 flex items-center justify-between">
+        {/* Leading (Blue) */}
+        <div className="p-3 rounded-xl border border-[#2563EB]/30 bg-[#2563EB]/5 flex items-center justify-between">
           <div>
-            <div className="text-[11px] font-bold text-[#00E5FF] uppercase tracking-wider">
+            <div className="text-[11px] font-bold text-[#2563EB] uppercase tracking-wider">
               Leading
             </div>
             <div className="text-[10px] text-muted-foreground">RS ≥ 100 • MOM ≥ 100</div>
           </div>
-          <div className="text-2xl font-extrabold font-mono text-[#00E5FF]">
+          <div className="text-2xl font-extrabold font-mono text-[#2563EB]">
             {quadrantCounts.Leading}
           </div>
         </div>
 
-        {/* Weakening */}
-        <div className="p-3 rounded-xl border border-[#F59E0B]/30 bg-[#F59E0B]/5 flex items-center justify-between">
+        {/* Weakening (Yellow/Amber) */}
+        <div className="p-3 rounded-xl border border-[#D97706]/30 bg-[#D97706]/5 flex items-center justify-between">
           <div>
-            <div className="text-[11px] font-bold text-[#F59E0B] uppercase tracking-wider">
+            <div className="text-[11px] font-bold text-[#D97706] uppercase tracking-wider">
               Weakening
             </div>
             <div className="text-[10px] text-muted-foreground">RS ≥ 100 • MOM &lt; 100</div>
           </div>
-          <div className="text-2xl font-extrabold font-mono text-[#F59E0B]">
+          <div className="text-2xl font-extrabold font-mono text-[#D97706]">
             {quadrantCounts.Weakening}
           </div>
         </div>
 
-        {/* Lagging */}
-        <div className="p-3 rounded-xl border border-[#EF4444]/30 bg-[#EF4444]/5 flex items-center justify-between">
+        {/* Lagging (Pink) */}
+        <div className="p-3 rounded-xl border border-[#DB2777]/30 bg-[#DB2777]/5 flex items-center justify-between">
           <div>
-            <div className="text-[11px] font-bold text-[#EF4444] uppercase tracking-wider">
+            <div className="text-[11px] font-bold text-[#DB2777] uppercase tracking-wider">
               Lagging
             </div>
             <div className="text-[10px] text-muted-foreground">RS &lt; 100 • MOM &lt; 100</div>
           </div>
-          <div className="text-2xl font-extrabold font-mono text-[#EF4444]">
+          <div className="text-2xl font-extrabold font-mono text-[#DB2777]">
             {quadrantCounts.Lagging}
           </div>
         </div>
 
-        {/* Improving */}
-        <div className="p-3 rounded-xl border border-[#3B82F6]/30 bg-[#3B82F6]/5 flex items-center justify-between">
+        {/* Improving (Light Blue) */}
+        <div className="p-3 rounded-xl border border-[#0284C7]/30 bg-[#0284C7]/5 flex items-center justify-between">
           <div>
-            <div className="text-[11px] font-bold text-[#3B82F6] uppercase tracking-wider">
+            <div className="text-[11px] font-bold text-[#0284C7] uppercase tracking-wider">
               Improving
             </div>
             <div className="text-[10px] text-muted-foreground">RS &lt; 100 • MOM ≥ 100</div>
           </div>
-          <div className="text-2xl font-extrabold font-mono text-[#3B82F6]">
+          <div className="text-2xl font-extrabold font-mono text-[#0284C7]">
             {quadrantCounts.Improving}
           </div>
         </div>

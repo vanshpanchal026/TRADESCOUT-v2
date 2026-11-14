@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Footer from "@/components/common/Footer";
-import Navbar from "@/components/common/Navbar";
+import { GlobalShell } from "@/components/shell/GlobalShell";
 
-const hankenGrotesk = Hanken_Grotesk({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-hanken",
+  variable: "--font-inter",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "TRADESCOUT — High-Performance Market Screener",
-  description: "Zero-scraper technical market screener and breadth engine for Indian equity swing traders.",
+  title: "Scan The Charts (TRADESCOUT) — Indian Equity Market Analytics & Screener",
+  description:
+    "Institutional-grade breadth metrics, customized stock screening, multi-timeframe stage analysis, and streamlined market regime identification for Indian National Stock Exchange (NSE).",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -23,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${hankenGrotesk.variable} dark`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} dark`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -36,17 +39,22 @@ export default function RootLayout({
                   document.documentElement.classList.add('dark');
                 }
               } catch (e) {}
+              window.__feedbackDrawerPending = false;
+              window.addEventListener('open-feedback-drawer', function() {
+                window.__feedbackDrawerPending = true;
+              });
             })();`,
           }}
         />
       </head>
-      <body className="font-sans antialiased bg-background text-foreground min-h-screen flex flex-col justify-between">
+      <body className="font-sans antialiased bg-background text-foreground min-h-screen flex flex-col">
         <ThemeProvider>
-          <Navbar />
-          <div className="flex-1">
-            {children}
-          </div>
-          <Footer />
+          <GlobalShell>
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </GlobalShell>
         </ThemeProvider>
       </body>
     </html>

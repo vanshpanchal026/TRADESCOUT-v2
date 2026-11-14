@@ -16,6 +16,7 @@ async function getWarmupData(): Promise<WarmupData | null> {
   try {
     const res = await fetch(`${backendBase}/api/market/warmup`, {
       next: { revalidate: 60 },
+      signal: AbortSignal.timeout(3000),
     });
 
     if (!res.ok) {

@@ -44,7 +44,23 @@ class InMemoryStore:
                 "plan": "pro",
                 "created_at": _now_iso(),
                 "updated_at": _now_iso(),
-            }
+            },
+            "22222222-2222-2222-2222-222222222222": {
+                "id": "22222222-2222-2222-2222-222222222222",
+                "username": "beta_fund",
+                "display_name": "Beta Hedge Fund",
+                "plan": "institutional",
+                "created_at": _now_iso(),
+                "updated_at": _now_iso(),
+            },
+            "33333333-3333-3333-3333-333333333333": {
+                "id": "33333333-3333-3333-3333-333333333333",
+                "username": "quant_desk",
+                "display_name": "Quant Desk",
+                "plan": "pro",
+                "created_at": _now_iso(),
+                "updated_at": _now_iso(),
+            },
         }
         self.watchlists: dict[str, dict[str, Any]] = {
             DEFAULT_WATCHLIST_ID: {
@@ -56,10 +72,34 @@ class InMemoryStore:
                 "sort_order": 0,
                 "created_at": _now_iso(),
                 "updated_at": _now_iso(),
-            }
+            },
+            "22222222-2222-2222-2222-222222220002": {
+                "id": "22222222-2222-2222-2222-222222220002",
+                "user_id": "22222222-2222-2222-2222-222222222222",
+                "name": "Primary Watchlist",
+                "description": "Default swing trading watchlist",
+                "is_default": True,
+                "sort_order": 0,
+                "created_at": _now_iso(),
+                "updated_at": _now_iso(),
+            },
+            "33333333-3333-3333-3333-333333330002": {
+                "id": "33333333-3333-3333-3333-333333330002",
+                "user_id": "33333333-3333-3333-3333-333333333333",
+                "name": "Primary Watchlist",
+                "description": "Default swing trading watchlist",
+                "is_default": True,
+                "sort_order": 0,
+                "created_at": _now_iso(),
+                "updated_at": _now_iso(),
+            },
         }
         self.watchlist_items: list[dict[str, Any]] = []
-        self.favourites: dict[str, set[str]] = {DEFAULT_USER_ID: set()}
+        self.favourites: dict[str, set[str]] = {
+            DEFAULT_USER_ID: set(),
+            "22222222-2222-2222-2222-222222222222": set(),
+            "33333333-3333-3333-3333-333333333333": set(),
+        }
         self.chart_drawings: dict[tuple[str, str], dict[str, Any]] = {}
         self.stock_notes: dict[tuple[str, str], dict[str, Any]] = {}
 
@@ -88,16 +128,24 @@ async def init_db_pool(database_url: str) -> asyncpg.Pool | None:
             return None
 
         async with pool.acquire() as conn:
-            # Seed default user and watchlist if not already present
+            # Seed preset users and primary watchlists if not already present
             await conn.execute(
                 """
                 INSERT INTO profiles (id, username, display_name, plan)
-                VALUES ('00000000-0000-0000-0000-000000000001'::uuid, 'trader', 'TRADESCOUT Pro', 'pro')
+                VALUES
+                    ('00000000-0000-0000-0000-000000000001'::uuid, 'trader', 'TRADESCOUT Pro', 'pro'),
+                    ('22222222-2222-2222-2222-222222222222'::uuid, 'beta_fund', 'Beta Hedge Fund', 'institutional'),
+                    ('33333333-3333-3333-3333-333333333333'::uuid, 'quant_desk', 'Quant Desk', 'pro')
                 ON CONFLICT (id) DO NOTHING;
 
                 INSERT INTO watchlists (id, user_id, name, description, is_default, sort_order)
-                VALUES ('00000000-0000-0000-0000-000000000002'::uuid, '00000000-0000-0000-0000-000000000001'::uuid,
-                        'Primary Watchlist', 'Default swing trading watchlist', true, 0)
+                VALUES
+                    ('00000000-0000-0000-0000-000000000002'::uuid, '00000000-0000-0000-0000-000000000001'::uuid,
+                     'Primary Watchlist', 'Default swing trading watchlist', true, 0),
+                    ('22222222-2222-2222-2222-222222220002'::uuid, '22222222-2222-2222-2222-222222222222'::uuid,
+                     'Primary Watchlist', 'Default swing trading watchlist', true, 0),
+                    ('33333333-3333-3333-3333-333333330002'::uuid, '33333333-3333-3333-3333-333333333333'::uuid,
+                     'Primary Watchlist', 'Default swing trading watchlist', true, 0)
                 ON CONFLICT (id) DO NOTHING;
                 """
             )

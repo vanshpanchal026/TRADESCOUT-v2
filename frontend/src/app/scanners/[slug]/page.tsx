@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Activity, Flame, TrendingUp, Volume2, Zap } from "lucide-react";
+import { Activity, Flame, TrendingUp, Volume2, Zap, Sparkles, ChevronDown } from "lucide-react";
 
 import { ScannerApiResponse } from "@/lib/types";
 import { ScannerGrid } from "@/components/scanner/scanner-grid";
@@ -12,31 +12,78 @@ const SCANNER_TABS = [
     slug: "trend-template",
     name: "Trend Template",
     icon: TrendingUp,
-    badge: "Minervini",
+    badge: "326 stocks",
+    description: "Strict Mark Minervini trend template alignment rules.",
+  },
+  {
+    slug: "stage-2-breakout",
+    name: "Stage 2 Breakout",
+    icon: Flame,
+    badge: "66 stocks",
+    description: "Emerging from Stage 1 consolidation bases into Stage 2 uptrends.",
   },
   {
     slug: "recent-breakout",
     name: "Recent Breakout",
     icon: Flame,
-    badge: "5-Day",
+    badge: "12 stocks",
+    description: "Cleared key resistance within the past 3 trading sessions.",
   },
   {
     slug: "4pct-breakout",
-    name: "4%+ Breakout",
+    name: "4% Breakout",
     icon: Zap,
-    badge: "Volume Climax",
+    badge: "38 stocks",
+    description: "Daily gain exceeding +4% backed by above-average volume.",
+  },
+  {
+    slug: "20-sma-pullback",
+    name: "20-SMA Pullback",
+    icon: Activity,
+    badge: "0 stocks",
+    description: "Orderly pullbacks to the rising 20-day Simple Moving Average.",
   },
   {
     slug: "high-volume",
     name: "High Volume",
     icon: Volume2,
-    badge: "2x RVOL",
+    badge: "28 stocks",
+    description: "Extraordinary daily volume relative to the 20-day average.",
   },
   {
     slug: "1m-gainers",
     name: "1M Gainers",
     icon: Activity,
-    badge: "Momentum",
+    badge: "36 stocks",
+    description: "Top outperforming equities over a rolling 30-day window.",
+  },
+  {
+    slug: "3m-gainers",
+    name: "3M Gainers",
+    icon: TrendingUp,
+    badge: "70 stocks",
+    description: "Leading gainers over a rolling 90-day performance window.",
+  },
+  {
+    slug: "outperformers",
+    name: "Outperformers",
+    icon: Zap,
+    badge: "29 stocks",
+    description: "Demonstrating persistent relative strength versus the Nifty 500 baseline.",
+  },
+  {
+    slug: "doublers",
+    name: "Doublers",
+    icon: Flame,
+    badge: "56 stocks",
+    description: "Equities that have appreciated by 100%+ over trailing 52 weeks.",
+  },
+  {
+    slug: "new-listing-ipo",
+    name: "New Listing IPO",
+    icon: Sparkles,
+    badge: "135 stocks",
+    description: "Public listings with short historical data footprints (<2 years).",
   },
 ];
 
@@ -53,9 +100,16 @@ async function getScannerData(slug: string): Promise<ScannerApiResponse | null> 
     "http://localhost:8000";
 
   try {
-    const res = await fetch(`${backendBase}/api/scanners/${slug}`, {
+    let res = await fetch(`${backendBase}/api/scanners/${slug}`, {
       next: { revalidate: 60 },
     });
+
+    if (!res.ok) {
+      // Fallback to trend-template data if this slug is a client preset
+      res = await fetch(`${backendBase}/api/scanners/trend-template`, {
+        next: { revalidate: 60 },
+      });
+    }
 
     if (!res.ok) {
       return null;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import {
@@ -23,6 +23,7 @@ import FundamentalsTable from "@/components/stock/FundamentalsTable";
 import ShareholdingChart from "@/components/stock/ShareholdingChart";
 import NotesAndFilings from '@/components/stock/NotesAndFilings';
 import { cachedFetch } from '@/lib/cache';
+import { getAuthHeaders } from "@/lib/auth";
 import {
   OHLCVBar,
   RSLinePoint,
@@ -53,12 +54,72 @@ export default function StockDetailPage() {
 
   // Watchlist & Share action states
   const [isWatchlisted, setIsWatchlisted] = useState(false);
+  const [primaryWatchlistId, setPrimaryWatchlistId] = useState<string | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
   const [alertSet, setAlertSet] = useState(false);
 
-  // Check Watchlist status in localStorage
-  useEffect(() => {
+  // Check Watchlist status via Backend REST API (with localStorage fallback & sync)
+  const syncWatchlistStatus = useCallback(async () => {
     if (!symbol) return;
+    try {
+      const res = await fetch("/api/watchlists", { headers: getAuthHeaders() });
+      if (res.ok) {
+        const data = await res.json();
+        let targetId = "";
+        const lists = data.watchlists || [];
+        if (lists.length > 0) {
+          const primary = lists.find((w: { is_default?: boolean }) => w.is_default) || lists[0];
+          targetId = primary.id;
+        } else {
+          // Auto-create default primary watchlist if user doesn't have one
+          const createRes = await fetch("/api/watchlists", {
+            method: "POST",
+            headers: {
+              ...getAuthHeaders(),
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: "Primary Watchlist",
+              description: "Default swing trading watchlist",
+              is_default: true,
+            }),
+          });
+          if (createRes.ok) {
+            const createData = await createRes.json();
+            targetId = createData.watchlist?.id || "";
+          }
+        }
+
+        if (targetId) {
+          setPrimaryWatchlistId(targetId);
+          // Fetch items in the watchlist
+          const detailRes = await fetch(`/api/watchlists/${targetId}`, {
+            headers: getAuthHeaders(),
+          });
+          if (detailRes.ok) {
+            const detailData = await detailRes.json();
+            const items = detailData.items || [];
+            const found = items.some(
+              (item: { symbol: string }) => item.symbol.toUpperCase() === symbol
+            );
+            setIsWatchlisted(found);
+
+            // Keep local storage in sync
+            try {
+              const symbols = items.map((it: { symbol: string }) => it.symbol.toUpperCase());
+              localStorage.setItem("stc-watchlist", JSON.stringify(symbols));
+            } catch {
+              // ignore
+            }
+            return;
+          }
+        }
+      }
+    } catch {
+      // ignore, fall back to localStorage
+    }
+
+    // LocalStorage fallback if backend is offline
     try {
       const saved = localStorage.getItem("stc-watchlist");
       if (saved) {
@@ -69,6 +130,17 @@ export default function StockDetailPage() {
       // ignore
     }
   }, [symbol]);
+
+  useEffect(() => {
+    syncWatchlistStatus();
+    const handleUserChanged = () => {
+      syncWatchlistStatus();
+    };
+    window.addEventListener("ts-user-changed", handleUserChanged);
+    return () => {
+      window.removeEventListener("ts-user-changed", handleUserChanged);
+    };
+  }, [syncWatchlistStatus]);
 
   // Load all stock data
   useEffect(() => {
@@ -113,21 +185,71 @@ export default function StockDetailPage() {
     };
   }, [symbol]);
 
-  // Toggle Watchlist
-  const toggleWatchlist = () => {
+  // Toggle Watchlist via Backend REST API
+  const toggleWatchlist = async () => {
+    if (!symbol) return;
+    const nextState = !isWatchlisted;
+    // Optimistic UI update
+    setIsWatchlisted(nextState);
+
+    // Keep localStorage updated immediately
     try {
       const saved = localStorage.getItem("stc-watchlist");
       let list: string[] = saved ? JSON.parse(saved) : [];
-      if (list.includes(symbol)) {
-        list = list.filter((s) => s !== symbol);
-        setIsWatchlisted(false);
+      if (nextState) {
+        if (!list.includes(symbol)) list.push(symbol);
       } else {
-        list.push(symbol);
-        setIsWatchlisted(true);
+        list = list.filter((s) => s !== symbol);
       }
       localStorage.setItem("stc-watchlist", JSON.stringify(list));
     } catch {
       // ignore
+    }
+
+    try {
+      let wid = primaryWatchlistId;
+      if (!wid) {
+        const res = await fetch("/api/watchlists", { headers: getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          const lists = data.watchlists || [];
+          if (lists.length > 0) {
+            const primary = lists.find((w: { is_default?: boolean }) => w.is_default) || lists[0];
+            wid = primary.id;
+            setPrimaryWatchlistId(wid);
+          }
+        }
+      }
+
+      if (wid) {
+        if (nextState) {
+          // Add symbol
+          const addRes = await fetch(`/api/watchlists/${wid}/items`, {
+            method: "POST",
+            headers: {
+              ...getAuthHeaders(),
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ symbol }),
+          });
+          if (!addRes.ok) {
+            console.error("Failed to add to watchlist:", await addRes.text());
+          }
+        } else {
+          // Remove symbol
+          const delRes = await fetch(`/api/watchlists/${wid}/items/${symbol}`, {
+            method: "DELETE",
+            headers: getAuthHeaders(),
+          });
+          if (!delRes.ok) {
+            console.error("Failed to remove from watchlist:", await delRes.text());
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Error toggling watchlist item:", err);
+      // Revert optimistic update on unhandled error
+      setIsWatchlisted(!nextState);
     }
   };
 

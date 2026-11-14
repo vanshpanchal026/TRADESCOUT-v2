@@ -90,22 +90,22 @@ export function RRGChart({
         }}
       >
         <defs>
-          {/* Subtle Quadrant Background Gradients */}
+          {/* Subtle Quadrant Background Gradients with Design Tokens */}
           <radialGradient id="grad-leading" cx="100%" cy="0%" r="90%">
-            <stop offset="0%" stopColor="#00E5FF" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="#00E5FF" stopOpacity="0.0" />
+            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#2563EB" stopOpacity="0.0" />
           </radialGradient>
           <radialGradient id="grad-weakening" cx="100%" cy="100%" r="90%">
-            <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.0" />
+            <stop offset="0%" stopColor="#D97706" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#D97706" stopOpacity="0.0" />
           </radialGradient>
           <radialGradient id="grad-lagging" cx="0%" cy="100%" r="90%">
-            <stop offset="0%" stopColor="#EF4444" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="#EF4444" stopOpacity="0.0" />
+            <stop offset="0%" stopColor="#DB2777" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#DB2777" stopOpacity="0.0" />
           </radialGradient>
           <radialGradient id="grad-improving" cx="0%" cy="0%" r="90%">
-            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.0" />
+            <stop offset="0%" stopColor="#0284C7" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#0284C7" stopOpacity="0.0" />
           </radialGradient>
         </defs>
 
@@ -148,7 +148,7 @@ export function RRGChart({
           x={width - padding - 15}
           y={padding + 25}
           textAnchor="end"
-          className="text-xs font-bold uppercase tracking-widest font-mono fill-[#00E5FF] opacity-60"
+          className="text-xs font-bold uppercase tracking-widest font-mono fill-[#2563EB] opacity-80"
         >
           Leading (RS+, MOM+)
         </text>
@@ -156,7 +156,7 @@ export function RRGChart({
           x={width - padding - 15}
           y={height - padding - 20}
           textAnchor="end"
-          className="text-xs font-bold uppercase tracking-widest font-mono fill-[#F59E0B] opacity-60"
+          className="text-xs font-bold uppercase tracking-widest font-mono fill-[#D97706] opacity-80"
         >
           Weakening (RS+, MOM-)
         </text>
@@ -164,7 +164,7 @@ export function RRGChart({
           x={padding + 15}
           y={height - padding - 20}
           textAnchor="start"
-          className="text-xs font-bold uppercase tracking-widest font-mono fill-[#EF4444] opacity-60"
+          className="text-xs font-bold uppercase tracking-widest font-mono fill-[#DB2777] opacity-80"
         >
           Lagging (RS-, MOM-)
         </text>
@@ -172,7 +172,7 @@ export function RRGChart({
           x={padding + 15}
           y={padding + 25}
           textAnchor="start"
-          className="text-xs font-bold uppercase tracking-widest font-mono fill-[#3B82F6] opacity-60"
+          className="text-xs font-bold uppercase tracking-widest font-mono fill-[#0284C7] opacity-80"
         >
           Improving (RS-, MOM+)
         </text>

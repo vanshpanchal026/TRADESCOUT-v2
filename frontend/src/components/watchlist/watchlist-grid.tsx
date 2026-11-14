@@ -25,6 +25,7 @@ import {
 import { Sparkline } from "@/components/scanner/sparkline";
 import { WatchlistItem } from "./types";
 import { getAuthHeaders } from "@/lib/auth";
+import { cachedFetch, invalidateClientCache } from "@/lib/cache";
 
 interface WatchlistGridProps {
   items: WatchlistItem[];
@@ -47,17 +48,16 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
     setData(items);
   }, [items]);
 
-  // Load user favourites
+  // Load user favourites with in-flight deduplication and caching
   useEffect(() => {
     let isMounted = true;
     async function loadFavs() {
       try {
-        const res = await fetch("/api/favourites", { headers: getAuthHeaders() });
-        if (res.ok) {
-          const json = await res.json();
-          if (isMounted && Array.isArray(json.favourites)) {
-            setFavouriteSymbols(new Set(json.favourites));
-          }
+        const json = await cachedFetch<{ favourites: string[] }>("/api/favourites", {
+          headers: getAuthHeaders(),
+        });
+        if (isMounted && json && Array.isArray(json.favourites)) {
+          setFavouriteSymbols(new Set(json.favourites));
         }
       } catch {
         // ignore
@@ -66,6 +66,7 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
     loadFavs();
 
     const handleUserChange = () => {
+      invalidateClientCache("/api/favourites");
       loadFavs();
     };
     window.addEventListener("ts-user-changed", handleUserChange);
@@ -86,6 +87,7 @@ export function WatchlistGrid({ items, watchlistId, onItemRemoved }: WatchlistGr
       });
       if (res.ok) {
         const json = await res.json();
+        invalidateClientCache("/api/favourites");
         setFavouriteSymbols((prev) => {
           const next = new Set(prev);
           if (json.is_favourite) next.add(symbol);

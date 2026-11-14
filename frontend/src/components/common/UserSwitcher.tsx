@@ -2,32 +2,38 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown, Shield, User, UserCheck } from "lucide-react";
-import { PRESET_USERS, getActiveUserId, setActiveUserId, UserProfile } from "@/lib/auth";
+import { PRESET_USERS, getActiveUserId, getActiveUserProfile, setActiveUserId, UserProfile } from "@/lib/auth";
+
+const DEFAULT_SSR_PROFILE: UserProfile = {
+  id: "guest",
+  name: "Guest Trader",
+  role: "guest",
+  plan: "Free",
+  avatarText: "GT",
+};
 
 export function UserSwitcher() {
-  const [activeUser, setActiveUser] = useState<UserProfile>(PRESET_USERS[0]);
+  const [activeUser, setActiveUser] = useState<UserProfile>(DEFAULT_SSR_PROFILE);
   const [isOpen, setIsOpen] = useState(false);
   const [customId, setCustomId] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const currentId = getActiveUserId();
-    const found = PRESET_USERS.find((u) => u.id === currentId);
-    if (found) {
-      setActiveUser(found);
-    } else {
-      setActiveUser({
-        id: currentId,
-        name: `User ${currentId.slice(0, 6)}...`,
-        role: "pro",
-        plan: "Pro",
-        avatarText: "CU",
-      });
-    }
+    setActiveUser(getActiveUserProfile());
 
     const handler = (e: Event) => {
-      const customEvent = e as CustomEvent<{ userId: string }>;
-      const id = customEvent.detail?.userId || getActiveUserId();
+      const customEvent = e as CustomEvent<{ userId: string | null }>;
+      const id = customEvent.detail?.userId !== undefined ? customEvent.detail.userId : getActiveUserId();
+      if (!id) {
+        setActiveUser({
+          id: "guest",
+          name: "Guest Trader",
+          role: "guest",
+          plan: "Free",
+          avatarText: "GT",
+        });
+        return;
+      }
       const match = PRESET_USERS.find((u) => u.id === id);
       if (match) {
         setActiveUser(match);

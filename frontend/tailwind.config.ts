@@ -10,14 +10,22 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-hanken)", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        canvas: "var(--canvas)",
+        surface: "var(--surface)",
         primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
+          DEFAULT: "#4F46E5",
+          foreground: "#ffffff",
+          hover: "#4338CA",
+        },
+        highlight: {
+          DEFAULT: "#3B82F6",
+          hover: "#2563EB",
         },
         card: {
           DEFAULT: "var(--card)",
@@ -29,16 +37,24 @@ const config: Config = {
         },
         border: "var(--border)",
         accent: {
-          DEFAULT: "#6366f1",
-          hover: "#4f46e5",
+          DEFAULT: "#4F46E5",
+          hover: "#4338CA",
         },
         bull: {
-          DEFAULT: "#22c55e",
-          dark: "#16a34a",
+          DEFAULT: "#16A34A",
+          light: "#22c55e",
+          dark: "#15803d",
         },
         bear: {
-          DEFAULT: "#ef4444",
-          dark: "#dc2626",
+          DEFAULT: "#DC2626",
+          light: "#ef4444",
+          dark: "#b91c1c",
+        },
+        rrg: {
+          leading: "#2563EB",
+          improving: "#0284C7",
+          weakening: "#D97706",
+          lagging: "#DB2777",
         },
       },
     },

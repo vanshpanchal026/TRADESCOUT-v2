@@ -44,7 +44,7 @@ export function PaywallBlurBanner({ totalMatches }: PaywallBlurBannerProps) {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <Link
-            href="/signup?plan=pro"
+            href="/account?sec=billing"
             className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-6 text-sm font-semibold text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Unlock Full Scanner (Pro)
