@@ -439,23 +439,23 @@ export function RRGChart({
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 font-mono text-[11px]">
+          <div className="grid grid-cols-2 gap-2 font-mono text-[11px] tabular-nums">
             <div>
               <span className="text-muted-foreground text-[10px] block">RS-Ratio</span>
-              <strong className="text-foreground">{hoveredItem.rs_ratio.toFixed(2)}</strong>
+              <strong className="text-foreground tabular-nums">{hoveredItem.rs_ratio.toFixed(2)}</strong>
             </div>
             <div>
               <span className="text-muted-foreground text-[10px] block">RS-Momentum</span>
-              <strong className="text-foreground">{hoveredItem.rs_momentum.toFixed(2)}</strong>
+              <strong className="text-foreground tabular-nums">{hoveredItem.rs_momentum.toFixed(2)}</strong>
             </div>
             <div>
               <span className="text-muted-foreground text-[10px] block">CMP</span>
-              <strong className="text-foreground">₹{hoveredItem.cmp.toLocaleString()}</strong>
+              <strong className="text-foreground tabular-nums">₹{hoveredItem.cmp.toLocaleString()}</strong>
             </div>
             <div>
               <span className="text-muted-foreground text-[10px] block">1D Change</span>
               <strong
-                className={hoveredItem.change_1d >= 0 ? "text-bull" : "text-bear"}
+                className={`tabular-nums ${hoveredItem.change_1d >= 0 ? "text-bull" : "text-bear"}`}
               >
                 {hoveredItem.change_1d >= 0 ? "+" : ""}
                 {hoveredItem.change_1d}%

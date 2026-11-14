@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.0-rc1] - 2026-11-14 — TRADESCOUT-v2 UI/UX Polish & Bento Layout Contract
+
+### UI/UX & Design System Contract
+- **Visual & Design System Contract (`AGENTS.md`):** Established immutable design token system at repo root:
+  - Primary font: `Hanken Grotesk` (`--font-hanken`) with strict `tabular-nums` formatting across all prices, percentage changes, RS ratings, momentum scores, and financial rows.
+  - Dark-mode default color palette: Primary canvas `#0a0a0f`, Sidebar/Secondary `#141420`, Card surfaces `#1c1c2e`, subtle borders `1px solid #27272a`, Primary Accent `#6366f1` (Indigo), Market semantics (Bull `#22c55e`, Bear `#ef4444`, Caution/Pivot `#f59e0b`), Text (`#e4e4e7` Primary, `#a1a1aa` Secondary).
+  - High-density institutional layout (`p-3`/`p-4` cards, `py-2 px-3` compact table rows), Framer Motion animated shimmer skeletons replacing all spinners/blank states.
+
+### Navigation & App Shell Upgrades
+- **Desktop Sidebar & Mobile Nav:** Crisp `240px` fixed left sidebar with branding icon and typography labels on desktop (`lg+`); fixed `56px` bottom navigation bar on mobile (`< lg`) with active route pills and icons.
+- **TopTabBar:** Replaced obsolete `"+ Add page"` with `"Explore Scanners"` and `SlidersHorizontal` icon navigating to `/scanners/trend-template`.
+- **Theme & Brand Identity:** Instant dark/light theme switching with `stc-theme` persistence, zero hydration flicker; resolved duplicate favicon conflict to eliminate 404/500 errors.
+
+### Dashboard & Component Upgrades
+- **Market Warmup Cockpit (`/warmup`):** High-density 3-column Bento grid featuring `RMEMeter` (Washed Out → Neutral → Stretched gauge), `BreadthGauge` (circular radial SMA 20/50/200 participation indicators), and `StageDistribution` (Weinstein Stage 1-4 bar and Breakout Health ratio card), plus `DailyCues` ticker & Nifty 50 mini-chart.
+- **Scanner Grid & Freemium Paywall:** Sticky table header and sticky Symbol column on mobile, row hover highlights, emerald green pills for `RS >= 80`, ArrowUp/ArrowDown/Enter keyboard navigation, dynamic row unlock via `ts-user-changed`, and `blur-sm` paywall banner linking to `/account?sec=billing`.
+- **TradingView Canvas & Detail Views:** Blended `#1c1c2e`/`#0a0a0f` canvas background with 30% softened gridlines, SMA/EMA pill toggles (SMA 10, 20, 50, 150, 200, EMA 21), dashed amber pivot lines, favourites star toggle via `cachedFetch` deduplication, Screener-style `FinancialsTab` (Quarterly Results & P&L), `ConcallsTab`, `FundamentalsTab`, and `NotesTab`.
+- **Intraday & Dashboards:** Dynamic setup filtering via `useMemo` (`filteredGainers` & `filteredLosers` across quick screen triggers), `tabular-nums` tooltips on RRG chart and Heatmap treemap with 2-column mobile fallback.
+
+### Verification & Quality Gates
+- `tsc --noEmit`: 0 errors.
+- `next build`: 32/32 routes static/SSG generated with 0 errors.
+- `adversarial_verification.mjs`: 10/10 passed (VERDICT: APPROVE).
+- `trader_workflow.spec.ts`: 8/8 Playwright E2E journeys passed (100%).
+
+---
+
 ## [1.0.0] - 2026-11-13 — Production Milestone Release
 
 ### Phase 7: Reliability, Quality Assurance & Security Hardening

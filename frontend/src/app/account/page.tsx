@@ -22,6 +22,31 @@ function AccountContent() {
 
   const [cacheCleared, setCacheCleared] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
+  const [displayName, setDisplayName] = useState("VP");
+  const [email, setEmail] = useState("vp@tradescout.in");
+  const [profileSaved, setProfileSaved] = useState(false);
+
+  useEffect(() => {
+    try {
+      const savedProfile = localStorage.getItem("ts-profile-settings") || localStorage.getItem("ts-user-profile");
+      if (savedProfile) {
+        const parsed = JSON.parse(savedProfile);
+        if (parsed.name) setDisplayName(parsed.name);
+        if (parsed.email) setEmail(parsed.email);
+      }
+    } catch {}
+  }, []);
+
+  const handleSaveProfile = (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const payload = JSON.stringify({ name: displayName, email });
+      localStorage.setItem("ts-profile-settings", payload);
+      localStorage.setItem("ts-user-profile", payload);
+      setProfileSaved(true);
+      setTimeout(() => setProfileSaved(false), 2000);
+    } catch {}
+  };
 
   const handleDownload = () => {
     const data = {
@@ -178,27 +203,42 @@ function AccountContent() {
           )}
 
           {activeTab === "profile" && (
-            <div className="rounded-2xl bg-card border border-border/80 shadow-xs p-5 space-y-4">
-              <h2 className="text-base font-bold text-foreground">Profile</h2>
+            <form onSubmit={handleSaveProfile} className="rounded-2xl bg-card border border-border/80 shadow-xs p-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-base font-bold text-foreground">Profile Settings</h2>
+                {profileSaved && (
+                  <span className="text-xs font-semibold text-emerald-400 font-mono">
+                    ✓ Saved
+                  </span>
+                )}
+              </div>
               <div className="space-y-3 text-xs">
                 <div>
                   <label className="font-semibold text-muted-foreground block mb-1">Display Name</label>
                   <input
                     type="text"
-                    defaultValue="VP"
-                    className="px-3 py-1.5 rounded-xl border border-border bg-background text-foreground text-xs w-full max-w-sm"
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    className="px-3 py-1.5 rounded-xl border border-border bg-background text-foreground text-xs w-full max-w-sm focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                 </div>
                 <div>
                   <label className="font-semibold text-muted-foreground block mb-1">Email</label>
                   <input
                     type="email"
-                    defaultValue="vp@tradescout.in"
-                    className="px-3 py-1.5 rounded-xl border border-border bg-background text-foreground text-xs w-full max-w-sm"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="px-3 py-1.5 rounded-xl border border-border bg-background text-foreground text-xs w-full max-w-sm focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                 </div>
+                <button
+                  type="submit"
+                  className="px-4 py-1.5 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-colors shadow-xs"
+                >
+                  Save Profile
+                </button>
               </div>
-            </div>
+            </form>
           )}
 
           {activeTab === "billing" && (

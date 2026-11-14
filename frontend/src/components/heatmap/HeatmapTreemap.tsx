@@ -154,9 +154,33 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
 
   return (
     <div className="relative w-full rounded-2xl border border-border bg-card p-3 sm:p-4 shadow-sm overflow-hidden select-none">
+      {/* Mobile 2-Column Grid Fallback (< 640px) */}
+      <div className="sm:hidden grid grid-cols-2 gap-2 p-1">
+        {sectors.flatMap((sec) => sec.stocks.map((stock) => ({ ...stock, sectorName: sec.name }))).map((stock) => (
+          <div
+            key={stock.symbol}
+            onClick={() => router.push(`/stock/${stock.symbol}`)}
+            className="p-2.5 rounded-xl border border-border cursor-pointer flex flex-col justify-between"
+            style={{ backgroundColor: getChangeBg(stock.change_1d) }}
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-xs text-white font-mono">{stock.symbol}</span>
+              <span className="text-[11px] font-mono font-bold text-white tabular-nums">
+                {stock.change_1d >= 0 ? "+" : ""}{stock.change_1d}%
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-[10px] text-zinc-200 mt-1">
+              <span className="truncate max-w-[70px]">{stock.sectorName}</span>
+              <span className="tabular-nums font-mono font-semibold">₹{stock.cmp.toLocaleString()}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* SVG Treemap Canvas (Desktop & Tablets >= 640px) */}
       <svg
         viewBox={`0 0 ${viewWidth} ${viewHeight}`}
-        className="w-full h-auto max-h-[660px] font-sans rounded-xl overflow-hidden bg-background"
+        className="hidden sm:block w-full h-auto max-h-[660px] font-sans rounded-xl overflow-hidden bg-background"
         onMouseLeave={() => setHoveredStock(null)}
       >
         {placedSectors.map(({ sector, rect, placedStocks }) => {
@@ -347,19 +371,19 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
             </div>
             <div>
               <span className="text-muted-foreground text-[10px] block font-sans">CMP</span>
-              <strong className="text-foreground">
+              <strong className="text-foreground tabular-nums">
                 ₹{hoveredStock.stock.cmp.toLocaleString()}
               </strong>
             </div>
             <div>
               <span className="text-muted-foreground text-[10px] block font-sans">Market Cap</span>
-              <strong className="text-foreground">
+              <strong className="text-foreground tabular-nums">
                 ₹{hoveredStock.stock.market_cap.toLocaleString()} Cr
               </strong>
             </div>
             <div>
               <span className="text-muted-foreground text-[10px] block font-sans">Index Weight</span>
-              <strong className="text-foreground">{hoveredStock.stock.weight_pct}%</strong>
+              <strong className="text-foreground tabular-nums">{hoveredStock.stock.weight_pct}%</strong>
             </div>
           </div>
 

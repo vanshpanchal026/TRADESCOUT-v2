@@ -55,25 +55,15 @@ export function TopTabBar() {
             );
           })}
 
-          {/* Add Page button matching screenshot */}
-          <button
-            type="button"
-            onClick={() => router.push("/")}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-muted-foreground hover:text-foreground hover:bg-white/40 transition-colors whitespace-nowrap"
-            title="Add Page / Explore Workspaces"
-          >
-            <span>+ Add page</span>
-          </button>
-
           {/* Explore Scanners button */}
           <button
             type="button"
             onClick={() => router.push("/scanners/trend-template")}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-700 dark:text-muted-foreground hover:text-primary hover:bg-white/60 dark:hover:bg-primary/5 transition-colors whitespace-nowrap border border-blue-200/50 dark:border-border bg-white/30 dark:bg-card/40"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-700 dark:text-muted-foreground hover:text-primary hover:bg-white/60 dark:hover:bg-primary/10 transition-colors whitespace-nowrap border border-blue-200/50 dark:border-border bg-white/40 dark:bg-card/40 cursor-pointer"
             title="Explore Scanners"
           >
-            <SlidersHorizontal className="h-3 w-3" />
-            <span>Scanners</span>
+            <SlidersHorizontal className="h-3.5 w-3.5 text-primary" />
+            <span>Explore Scanners</span>
           </button>
         </div>
 

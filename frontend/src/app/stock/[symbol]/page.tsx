@@ -20,6 +20,8 @@ import {
 import DynamicTradingViewChart from "@/components/chart/TradingViewChartWrapper";
 import DynamicRSLineChart from "@/components/chart/RSLineChartWrapper";
 import FundamentalsTable from "@/components/stock/FundamentalsTable";
+import FinancialsTab from "@/components/stock/FinancialsTab";
+import ConcallsTab from "@/components/stock/ConcallsTab";
 import ShareholdingChart from "@/components/stock/ShareholdingChart";
 import NotesAndFilings from '@/components/stock/NotesAndFilings';
 import { cachedFetch } from '@/lib/cache';
@@ -32,7 +34,7 @@ import {
   StockFundamentals,
 } from "@/lib/types";
 
-type TabId = "chart" | "rs" | "fundamentals" | "shareholding" | "notes";
+type TabId = "chart" | "rs" | "fundamentals" | "financials" | "shareholding" | "concalls" | "notes";
 
 export default function StockDetailPage() {
   const params = useParams();
@@ -522,6 +524,30 @@ export default function StockDetailPage() {
         </button>
 
         <button
+          onClick={() => setActiveTab("financials")}
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all whitespace-nowrap ${
+            activeTab === "financials"
+              ? "border-primary text-primary bg-primary/5 font-bold"
+              : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+          }`}
+        >
+          <TableProperties className="w-4 h-4" />
+          <span>Financials (P&L Statements)</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab("concalls")}
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all whitespace-nowrap ${
+            activeTab === "concalls"
+              ? "border-primary text-primary bg-primary/5 font-bold"
+              : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+          }`}
+        >
+          <ExternalLink className="w-4 h-4" />
+          <span>Concalls & Transcripts</span>
+        </button>
+
+        <button
           onClick={() => setActiveTab("shareholding")}
           className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all whitespace-nowrap ${
             activeTab === "shareholding"
@@ -573,6 +599,14 @@ export default function StockDetailPage() {
 
         {activeTab === "fundamentals" && fundamentals && (
           <FundamentalsTable fundamentals={fundamentals} />
+        )}
+
+        {activeTab === "financials" && (
+          <FinancialsTab fundamentals={fundamentals} symbol={stock.symbol} />
+        )}
+
+        {activeTab === "concalls" && (
+          <ConcallsTab symbol={stock.symbol} />
         )}
 
         {activeTab === "shareholding" && fundamentals && (

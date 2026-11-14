@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { TopTabBar } from "@/components/shell/TopTabBar";
+import { MobileNav } from "@/components/shell/MobileNav";
 import { FeedbackDrawer } from "@/components/shell/FeedbackDrawer";
 import { WelcomeModal } from "@/components/shell/WelcomeModal";
 
@@ -39,7 +40,7 @@ export function GlobalShell({ children }: GlobalShellProps) {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-background text-foreground antialiased">
+    <div className="flex min-h-screen bg-background text-foreground antialiased pb-14 lg:pb-0">
       {/* Left Vertical Icon Sidebar */}
       <Sidebar
         onOpenFeedback={() => setFeedbackOpen(true)}
@@ -56,6 +57,9 @@ export function GlobalShell({ children }: GlobalShellProps) {
           {children}
         </div>
       </div>
+
+      {/* Mobile Fixed Bottom Nav */}
+      <MobileNav />
 
       {/* Right Slide-Over Feedback Drawer */}
       <FeedbackDrawer

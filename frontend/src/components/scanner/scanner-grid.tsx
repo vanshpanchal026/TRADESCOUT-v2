@@ -264,10 +264,10 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
           return (
             <div className="flex justify-end">
               <span
-                className={`inline-flex items-center rounded-md px-2 py-0.5 font-mono text-xs font-semibold ${
+                className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-xs font-semibold tabular-nums border ${
                   isTopTier
-                    ? "bg-primary/15 text-primary ring-1 ring-primary/30"
-                    : "text-muted-foreground"
+                    ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+                    : "bg-zinc-800/60 text-zinc-400 border-zinc-700/40"
                 }`}
               >
                 {val || "—"}
@@ -281,15 +281,15 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         header: () => <div className="text-center">Stage</div>,
         cell: ({ getValue }) => {
           const st = Number(getValue());
-          let color = "bg-muted text-muted-foreground";
-          if (st === 2) color = "bg-emerald-500/15 text-emerald-500 ring-1 ring-emerald-500/30";
-          else if (st === 4) color = "bg-rose-500/15 text-rose-500";
-          else if (st === 1) color = "bg-blue-500/15 text-blue-500";
-          else if (st === 3) color = "bg-amber-500/15 text-amber-500";
+          let color = "bg-zinc-800 text-zinc-400 border-zinc-700/40";
+          if (st === 2) color = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+          else if (st === 4) color = "bg-rose-500/15 text-rose-400 border-rose-500/30";
+          else if (st === 1) color = "bg-amber-500/15 text-amber-400 border-amber-500/30";
+          else if (st === 3) color = "bg-yellow-500/15 text-yellow-400 border-yellow-500/30";
 
           return (
             <div className="flex justify-center">
-              <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${color}`}>
+              <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold border ${color}`}>
                 Stage {st || "—"}
               </span>
             </div>
@@ -428,7 +428,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         <table className="w-full text-left text-sm border-collapse">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="border-b border-border bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
+              <tr key={headerGroup.id} className="sticky top-0 z-30 border-b border-border bg-muted/95 backdrop-blur-md text-xs uppercase tracking-wider text-muted-foreground">
                 {headerGroup.headers.map((header) => {
                   const isSymbol = header.column.id === "symbol";
                   const isCmp = header.column.id === "cmp";
@@ -438,9 +438,9 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
                       key={header.id}
                       className={`py-3 px-4 select-none whitespace-nowrap ${
                         isSymbol
-                          ? "sticky left-0 z-30 bg-muted backdrop-blur shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
+                          ? "sticky left-0 z-40 bg-muted/95 backdrop-blur-md shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
                           : isCmp
-                          ? "sticky left-[110px] z-30 bg-muted backdrop-blur shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
+                          ? "sticky left-[110px] z-30 bg-muted/95 backdrop-blur-md shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
                           : ""
                       }`}
                     >
@@ -472,8 +472,8 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
                     }}
                     className={`cursor-pointer transition-colors ${
                       isSelected
-                        ? "bg-primary/10 ring-1 ring-inset ring-primary/40"
-                        : "hover:bg-muted/40"
+                        ? "bg-primary/15 ring-1 ring-inset ring-primary/40"
+                        : "hover:bg-white/[0.03]"
                     }`}
                   >
                     {row.getVisibleCells().map((cell) => {

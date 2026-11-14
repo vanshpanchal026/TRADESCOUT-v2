@@ -28,6 +28,7 @@
 | **5** | **Auth, Watchlists & Drawings** | ✅ **COMPLETE** | 2026-11-13 | Agent | Single-User direct persistence, asyncpg PG16 connection pool with resilient in-memory fallback, watchlists REST API & virtualized TanStack Table v8 UI, favourites toggle, chart drawings auto-save, notes journal debounced auto-sync (60 tests passing). |
 | **6** | **The Warmup, RRG & Heatmap** | ✅ **COMPLETE** | 2026-11-13 | Agent | Vectorized Polars JdK RRG service, morning breadth warmup cockpit (/api/market/warmup & /warmup), interactive 4-quadrant RRG chart (/api/market/rrg & /rrg), and market cap treemap (/api/market/heatmap & /heatmap). 68 backend tests passing. |
 | **7** | **Performance Hardening & Launch**| ✅ **COMPLETE** | 2026-11-13 | Agent | Playwright 6-journey E2E test suite (100% pass), CSP security headers, mandatory SEBI footer, GitHub Actions CI/CD quality gate pipeline. |
+| **v2**| **UI/UX Polish & Bento Layout Contract** | ✅ **COMPLETE** | 2026-11-14 | Agent | AGENTS.md visual design contract, Hanken Grotesk typography with tabular-nums, ScanTheCharts 3-column Bento grid warmup, 240px fixed desktop sidebar & 56px mobile nav, Lightweight Charts v4 color-blended canvas with EMA 21/SMA 150 pills and pivot lines, Screener-style Financials & Concalls tabs, 10/10 adversarial checks passed, 8/8 Playwright E2E tests passing. |
 
 ---
 

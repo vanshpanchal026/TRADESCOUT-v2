@@ -75,8 +75,7 @@ export function BlurredPlaceholderRows() {
       {dummyRows.map((row, idx) => (
         <tr
           key={idx}
-          className="border-b border-border/40 select-none pointer-events-none opacity-40 transition-none"
-          style={{ filter: "blur(5px)" }}
+          className="border-b border-border/40 blur-sm select-none pointer-events-none opacity-40 transition-none"
           aria-hidden="true"
         >
           <td className="sticky left-0 bg-background/90 px-4 py-3 font-semibold">{row.symbol}</td>

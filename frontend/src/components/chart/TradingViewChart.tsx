@@ -15,26 +15,29 @@ import {
 } from "lightweight-charts";
 import { OHLCVBar, RSLinePoint } from "@/lib/types";
 import { getAuthHeaders } from "@/lib/auth";
+import { cachedFetch } from "@/lib/cache";
 import { useTheme } from "@/components/theme-provider";
 
 function getChartThemeColors(isDark: boolean) {
   return {
-    textColor: isDark ? "#94A3B8" : "#334155",
-    gridColor: isDark ? "rgba(51, 65, 85, 0.25)" : "rgba(226, 232, 240, 0.8)",
-    crosshairColor: isDark ? "#00E5FF" : "#4F46E5",
-    crosshairLabelBg: isDark ? "#0F172A" : "#1E293B",
-    borderColor: isDark ? "rgba(51, 65, 85, 0.4)" : "#E2E8F0",
-    upColor: isDark ? "#00E5FF" : "#16A34A",
-    downColor: isDark ? "#64748B" : "#DC2626",
-    wickUpColor: isDark ? "#00E5FF" : "#16A34A",
-    wickDownColor: isDark ? "#64748B" : "#DC2626",
-    s10Color: isDark ? "#EAB308" : "#D97706",
-    s20Color: isDark ? "#22C55E" : "#16A34A",
-    s50Color: isDark ? "#3B82F6" : "#2563EB",
-    s200Color: isDark ? "#EF4444" : "#DC2626",
-    rsiColor: isDark ? "#C084FC" : "#7C3AED",
-    rsLineColor: isDark ? "#00E5FF" : "#2563EB",
-    pivotColor: isDark ? "#F59E0B" : "#D97706",
+    textColor: isDark ? "#a1a1aa" : "#334155",
+    gridColor: isDark ? "rgba(39, 39, 42, 0.3)" : "rgba(226, 232, 240, 0.5)",
+    crosshairColor: isDark ? "#6366f1" : "#4f46e5",
+    crosshairLabelBg: isDark ? "#141420" : "#1e293b",
+    borderColor: isDark ? "#27272a" : "#e2e8f0",
+    upColor: isDark ? "#22c55e" : "#16A34A",
+    downColor: isDark ? "#ef4444" : "#DC2626",
+    wickUpColor: isDark ? "#22c55e" : "#16A34A",
+    wickDownColor: isDark ? "#ef4444" : "#DC2626",
+    s10Color: isDark ? "#eab308" : "#d97706",
+    s20Color: isDark ? "#22c55e" : "#16a34a",
+    e21Color: isDark ? "#06b6d4" : "#0284c7",
+    s50Color: isDark ? "#3b82f6" : "#2563eb",
+    s150Color: isDark ? "#a855f7" : "#9333ea",
+    s200Color: isDark ? "#ef4444" : "#dc2626",
+    rsiColor: isDark ? "#c084fc" : "#7c3aed",
+    rsLineColor: isDark ? "#6366f1" : "#4f46e5",
+    pivotColor: "#f59e0b",
   };
 }
 
@@ -76,7 +79,9 @@ export default function TradingViewChart({
   const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
   const s10SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
   const s20SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+  const e21SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
   const s50SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+  const s150SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
   const s200SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
   const volSeriesRef = useRef<ISeriesApi<"Histogram"> | null>(null);
   const subSeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
@@ -87,7 +92,9 @@ export default function TradingViewChart({
   // Indicators toggle state
   const [showSma10, setShowSma10] = useState(true);
   const [showSma20, setShowSma20] = useState(true);
+  const [showEma21, setShowEma21] = useState(false);
   const [showSma50, setShowSma50] = useState(true);
+  const [showSma150, setShowSma150] = useState(false);
   const [showSma200, setShowSma200] = useState(true);
   const [showVolume, setShowVolume] = useState(true);
   const [showSubPane, setShowSubPane] = useState(true);
@@ -106,13 +113,15 @@ export default function TradingViewChart({
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Pre-calculate technical indicator series
-  const { sma10Data, sma20Data, sma50Data, sma200Data, volumeData, rsiData, rsLineData, calculatedPivot } =
+  const { sma10Data, sma20Data, ema21Data, sma50Data, sma150Data, sma200Data, volumeData, rsiData, rsLineData, calculatedPivot } =
     useMemo(() => {
       if (!bars || bars.length === 0) {
         return {
           sma10Data: [],
           sma20Data: [],
+          ema21Data: [],
           sma50Data: [],
+          sma150Data: [],
           sma200Data: [],
           volumeData: [],
           rsiData: [],
@@ -123,13 +132,16 @@ export default function TradingViewChart({
 
       const s10: { time: string; value: number }[] = [];
       const s20: { time: string; value: number }[] = [];
+      const e21: { time: string; value: number }[] = [];
       const s50: { time: string; value: number }[] = [];
+      const s150: { time: string; value: number }[] = [];
       const s200: { time: string; value: number }[] = [];
       const vols: { time: string; value: number; color: string }[] = [];
       const rsi: { time: string; value: number }[] = [];
 
       const volWindow: number[] = [];
       let pivotHigh = 0;
+      let currentEma21 = 0;
 
       for (let i = 0; i < bars.length; i++) {
         const bar = bars[i];
@@ -154,11 +166,30 @@ export default function TradingViewChart({
           s20.push({ time: bar.time, value: +(sum / 20).toFixed(2) });
         }
 
+        // EMA 21
+        if (i === 20) {
+          let sum = 0;
+          for (let k = 0; k <= 20; k++) sum += bars[k].close;
+          currentEma21 = sum / 21;
+          e21.push({ time: bar.time, value: +(currentEma21).toFixed(2) });
+        } else if (i > 20) {
+          const k = 2 / 22;
+          currentEma21 = bar.close * k + currentEma21 * (1 - k);
+          e21.push({ time: bar.time, value: +(currentEma21).toFixed(2) });
+        }
+
         // SMA 50
         if (i >= 49) {
           let sum = 0;
           for (let k = i - 49; k <= i; k++) sum += bars[k].close;
           s50.push({ time: bar.time, value: +(sum / 50).toFixed(2) });
+        }
+
+        // SMA 150
+        if (i >= 149) {
+          let sum = 0;
+          for (let k = i - 149; k <= i; k++) sum += bars[k].close;
+          s150.push({ time: bar.time, value: +(sum / 150).toFixed(2) });
         }
 
         // SMA 200
@@ -218,7 +249,9 @@ export default function TradingViewChart({
       return {
         sma10Data: s10,
         sma20Data: s20,
+        ema21Data: e21,
         sma50Data: s50,
+        sma150Data: s150,
         sma200Data: s200,
         volumeData: vols,
         rsiData: rsi,
@@ -231,14 +264,13 @@ export default function TradingViewChart({
   const checkFavourite = useCallback(async () => {
     if (!symClean) return;
     try {
-      const res = await fetch("/api/favourites", {
-        headers: getAuthHeaders(),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data.favourites)) {
-          setIsFavourite(data.favourites.includes(symClean));
-        }
+      const data = await cachedFetch<{ favourites: string[] }>(
+        "/api/favourites",
+        { headers: getAuthHeaders() },
+        15_000
+      );
+      if (data && Array.isArray(data.favourites)) {
+        setIsFavourite(data.favourites.includes(symClean));
       }
     } catch {
       // ignore
@@ -390,6 +422,20 @@ export default function TradingViewChart({
     );
     s20SeriesRef.current = s20Series;
 
+    const e21Series = chart.addSeries(
+      LineSeries,
+      {
+        color: tc.e21Color,
+        lineWidth: 1,
+        lineStyle: LineStyle.Dotted,
+        priceLineVisible: false,
+        lastValueVisible: false,
+        title: "EMA 21",
+      },
+      0
+    );
+    e21SeriesRef.current = e21Series;
+
     const s50Series = chart.addSeries(
       LineSeries,
       {
@@ -402,6 +448,19 @@ export default function TradingViewChart({
       0
     );
     s50SeriesRef.current = s50Series;
+
+    const s150Series = chart.addSeries(
+      LineSeries,
+      {
+        color: tc.s150Color,
+        lineWidth: 1,
+        priceLineVisible: false,
+        lastValueVisible: false,
+        title: "SMA 150",
+      },
+      0
+    );
+    s150SeriesRef.current = s150Series;
 
     const s200Series = chart.addSeries(
       LineSeries,
@@ -479,7 +538,9 @@ export default function TradingViewChart({
       candleSeriesRef.current = null;
       s10SeriesRef.current = null;
       s20SeriesRef.current = null;
+      e21SeriesRef.current = null;
       s50SeriesRef.current = null;
+      s150SeriesRef.current = null;
       s200SeriesRef.current = null;
       volSeriesRef.current = null;
       subSeriesRef.current = null;
@@ -529,7 +590,9 @@ export default function TradingViewChart({
 
     s10SeriesRef.current?.applyOptions({ color: tc.s10Color });
     s20SeriesRef.current?.applyOptions({ color: tc.s20Color });
+    e21SeriesRef.current?.applyOptions({ color: tc.e21Color });
     s50SeriesRef.current?.applyOptions({ color: tc.s50Color });
+    s150SeriesRef.current?.applyOptions({ color: tc.s150Color });
     s200SeriesRef.current?.applyOptions({ color: tc.s200Color });
 
     if (subSeriesRef.current) {
@@ -550,7 +613,9 @@ export default function TradingViewChart({
     candleSeriesRef.current.setData(bars);
     s10SeriesRef.current?.setData(sma10Data);
     s20SeriesRef.current?.setData(sma20Data);
+    e21SeriesRef.current?.setData(ema21Data);
     s50SeriesRef.current?.setData(sma50Data);
+    s150SeriesRef.current?.setData(sma150Data);
     s200SeriesRef.current?.setData(sma200Data);
     volSeriesRef.current?.setData(volumeData);
 
@@ -566,13 +631,15 @@ export default function TradingViewChart({
       chartRef.current.timeScale().fitContent();
       initialFittedRef.current = symClean;
     }
-  }, [bars, sma10Data, sma20Data, sma50Data, sma200Data, volumeData, rsiData, rsLineData, subPaneMode, symClean]);
+  }, [bars, sma10Data, sma20Data, ema21Data, sma50Data, sma150Data, sma200Data, volumeData, rsiData, rsLineData, subPaneMode, symClean]);
 
   // 2b. Hardware-accelerated indicator visibility toggles
   useEffect(() => {
     s10SeriesRef.current?.applyOptions({ visible: showSma10 });
     s20SeriesRef.current?.applyOptions({ visible: showSma20 });
+    e21SeriesRef.current?.applyOptions({ visible: showEma21 });
     s50SeriesRef.current?.applyOptions({ visible: showSma50 });
+    s150SeriesRef.current?.applyOptions({ visible: showSma150 });
     s200SeriesRef.current?.applyOptions({ visible: showSma200 });
     volSeriesRef.current?.applyOptions({ visible: showVolume });
     subSeriesRef.current?.applyOptions({ visible: showSubPane });
@@ -583,7 +650,7 @@ export default function TradingViewChart({
         bottom: showVolume ? 0.22 : 0.05,
       },
     });
-  }, [showSma10, showSma20, showSma50, showSma200, showVolume, showSubPane]);
+  }, [showSma10, showSma20, showEma21, showSma50, showSma150, showSma200, showVolume, showSubPane]);
 
   // 2c. Breakout Pivot Price Line
   useEffect(() => {
@@ -794,43 +861,69 @@ export default function TradingViewChart({
           <span className="text-muted-foreground mr-1 select-none">Overlays:</span>
           <button
             onClick={() => setShowSma10(!showSma10)}
-            className={`px-2.5 py-1 rounded-md transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
               showSma10
-                ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 font-semibold shadow-xs"
+                ? "bg-amber-500/15 border-amber-500/40 text-amber-400 font-semibold shadow-xs"
                 : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
-            SMA 10
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            <span>SMA 10</span>
           </button>
           <button
             onClick={() => setShowSma20(!showSma20)}
-            className={`px-2.5 py-1 rounded-md transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
               showSma20
-                ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-600 dark:text-emerald-400 font-semibold shadow-xs"
+                ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-400 font-semibold shadow-xs"
                 : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
-            SMA 20
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span>SMA 20</span>
+          </button>
+          <button
+            onClick={() => setShowEma21(!showEma21)}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
+              showEma21
+                ? "bg-cyan-500/15 border-cyan-500/40 text-cyan-400 font-semibold shadow-xs"
+                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+            }`}
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+            <span>EMA 21</span>
           </button>
           <button
             onClick={() => setShowSma50(!showSma50)}
-            className={`px-2.5 py-1 rounded-md transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
               showSma50
-                ? "bg-blue-500/15 border-blue-500/40 text-blue-600 dark:text-blue-400 font-semibold shadow-xs"
+                ? "bg-blue-500/15 border-blue-500/40 text-blue-400 font-semibold shadow-xs"
                 : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
-            SMA 50
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+            <span>SMA 50</span>
+          </button>
+          <button
+            onClick={() => setShowSma150(!showSma150)}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
+              showSma150
+                ? "bg-purple-500/15 border-purple-500/40 text-purple-400 font-semibold shadow-xs"
+                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+            }`}
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+            <span>SMA 150</span>
           </button>
           <button
             onClick={() => setShowSma200(!showSma200)}
-            className={`px-2.5 py-1 rounded-md transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
               showSma200
-                ? "bg-rose-500/15 border-rose-500/40 text-rose-600 dark:text-rose-400 font-semibold shadow-xs"
+                ? "bg-rose-500/15 border-rose-500/40 text-rose-400 font-semibold shadow-xs"
                 : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
-            SMA 200
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+            <span>SMA 200</span>
           </button>
           <button
             onClick={() => setShowVolume(!showVolume)}
