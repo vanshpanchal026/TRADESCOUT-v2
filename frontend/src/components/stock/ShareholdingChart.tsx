@@ -23,13 +23,13 @@ export default function ShareholdingChart({ fundamentals }: ShareholdingChartPro
   return (
     <div className="flex flex-col gap-6 w-full">
       {/* Current Shareholding Overview Card */}
-      <div className="bg-slate-900/60 p-6 rounded-xl border border-slate-800/80 backdrop-blur-md">
+      <div className="bg-card p-6 rounded-xl border border-border backdrop-blur-md">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
           <div>
-            <h3 className="text-base font-semibold text-slate-100">
+            <h3 className="text-base font-semibold text-foreground">
               Shareholding Pattern & Institutional Footprint
             </h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-muted-foreground mt-0.5">
               Latest reported quarter ({latest?.quarter || "Current"}) · Demat ownership distribution
             </p>
           </div>
@@ -42,7 +42,7 @@ export default function ShareholdingChart({ fundamentals }: ShareholdingChartPro
         </div>
 
         {/* Stacked Proportional Bar (CSS-only, Zero SVG) */}
-        <div className="w-full h-8 rounded-lg overflow-hidden flex bg-slate-950 border border-slate-800 p-1 gap-1">
+        <div className="w-full h-8 rounded-lg overflow-hidden flex bg-slate-950 border border-border p-1 gap-1">
           <div
             style={{ width: `${promoter}%` }}
             className="h-full bg-cyan-500 rounded flex items-center justify-center text-[11px] font-bold text-slate-950 transition-all duration-500"
@@ -66,7 +66,7 @@ export default function ShareholdingChart({ fundamentals }: ShareholdingChartPro
           </div>
           <div
             style={{ width: `${publicHolding}%` }}
-            className="h-full bg-slate-600 rounded flex items-center justify-center text-[11px] font-bold text-slate-200 transition-all duration-500"
+            className="h-full bg-slate-600 rounded flex items-center justify-center text-[11px] font-bold text-foreground transition-all duration-500"
             title={`Public: ${publicHolding.toFixed(2)}%`}
           >
             {publicHolding > 10 && `${publicHolding.toFixed(1)}%`}
@@ -75,51 +75,51 @@ export default function ShareholdingChart({ fundamentals }: ShareholdingChartPro
 
         {/* Legend */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
-          <div className="p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
+          <div className="p-3 rounded-lg bg-muted/40 border border-border/60">
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
-              <span className="text-xs text-slate-400 font-medium">Promoter</span>
+              <span className="text-xs text-muted-foreground font-medium">Promoter</span>
             </div>
-            <span className="text-lg font-bold font-mono text-slate-100">{promoter.toFixed(2)}%</span>
+            <span className="text-lg font-bold font-mono text-foreground">{promoter.toFixed(2)}%</span>
           </div>
 
-          <div className="p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
+          <div className="p-3 rounded-lg bg-muted/40 border border-border/60">
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-              <span className="text-xs text-slate-400 font-medium">FII (Foreign)</span>
+              <span className="text-xs text-muted-foreground font-medium">FII (Foreign)</span>
             </div>
             <span className="text-lg font-bold font-mono text-emerald-400">{fii.toFixed(2)}%</span>
           </div>
 
-          <div className="p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
+          <div className="p-3 rounded-lg bg-muted/40 border border-border/60">
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
-              <span className="text-xs text-slate-400 font-medium">DII (Domestic/MF)</span>
+              <span className="text-xs text-muted-foreground font-medium">DII (Domestic/MF)</span>
             </div>
             <span className="text-lg font-bold font-mono text-purple-400">{dii.toFixed(2)}%</span>
           </div>
 
-          <div className="p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
+          <div className="p-3 rounded-lg bg-muted/40 border border-border/60">
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2.5 h-2.5 rounded-full bg-slate-500" />
-              <span className="text-xs text-slate-400 font-medium">Public / Retail</span>
+              <span className="text-xs text-muted-foreground font-medium">Public / Retail</span>
             </div>
-            <span className="text-lg font-bold font-mono text-slate-300">{publicHolding.toFixed(2)}%</span>
+            <span className="text-lg font-bold font-mono text-foreground">{publicHolding.toFixed(2)}%</span>
           </div>
         </div>
       </div>
 
       {/* Quarterly Trend History Table */}
-      <div className="bg-slate-900/60 rounded-xl border border-slate-800/80 overflow-hidden backdrop-blur-md">
-        <div className="px-6 py-4 border-b border-slate-800 bg-slate-950/40">
-          <h4 className="text-sm font-semibold text-slate-200">
+      <div className="bg-card rounded-xl border border-border overflow-hidden backdrop-blur-md">
+        <div className="px-6 py-4 border-b border-border bg-muted/40">
+          <h4 className="text-sm font-semibold text-foreground">
             Quarter-over-Quarter Shareholding Progression
           </h4>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
-            <thead className="bg-slate-950/60 text-slate-400 border-b border-slate-800 font-sans font-semibold">
+            <thead className="bg-slate-950/60 text-muted-foreground border-b border-border font-sans font-semibold">
               <tr>
                 <th className="py-3 px-4">Period</th>
                 <th className="py-3 px-4 text-right">Promoter %</th>
@@ -129,7 +129,7 @@ export default function ShareholdingChart({ fundamentals }: ShareholdingChartPro
                 <th className="py-3 px-4 text-right">Institutions (FII+DII)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-800/60 text-foreground">
               {recentQuarters.map((q, idx) => {
                 const p = q.promoter_pct ?? promoter;
                 const f = q.fii_pct ?? fii;
@@ -139,12 +139,12 @@ export default function ShareholdingChart({ fundamentals }: ShareholdingChartPro
 
                 return (
                   <tr key={idx} className="hover:bg-slate-800/30 transition-colors">
-                    <td className="py-3 px-4 font-sans font-semibold text-slate-200">{q.quarter}</td>
+                    <td className="py-3 px-4 font-sans font-semibold text-foreground">{q.quarter}</td>
                     <td className="py-3 px-4 text-right text-cyan-400 font-bold">{p.toFixed(2)}%</td>
                     <td className="py-3 px-4 text-right text-emerald-400 font-bold">{f.toFixed(2)}%</td>
                     <td className="py-3 px-4 text-right text-purple-400 font-bold">{d.toFixed(2)}%</td>
-                    <td className="py-3 px-4 text-right text-slate-400">{pub.toFixed(2)}%</td>
-                    <td className="py-3 px-4 text-right font-bold text-slate-100">{inst.toFixed(2)}%</td>
+                    <td className="py-3 px-4 text-right text-muted-foreground">{pub.toFixed(2)}%</td>
+                    <td className="py-3 px-4 text-right font-bold text-foreground">{inst.toFixed(2)}%</td>
                   </tr>
                 );
               })}

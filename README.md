@@ -143,43 +143,30 @@ cd tradescout
 ### 2. Start Infrastructure (PostgreSQL + Redis)
 
 ```bash
-docker compose up -d
+docker compose -f infra/docker-compose.yml up -d
 ```
 
 This starts:
-- PostgreSQL 15 on port `5432`
-- Redis 7 on port `6379`
+- PostgreSQL 16 on port `127.0.0.1:5432`
+- Redis 7 on port `127.0.0.1:6379`
+- pgAdmin 4 (optional debug profile) on port `127.0.0.1:5050`
 
 ### 3. Configure Environment Variables
 
 ```bash
-# Backend
-cp api/.env.example api/.env
+# Copy root environment file
+cp .env.example .env
 ```
 
-Edit `api/.env`:
+Edit `.env` (or use existing verified development defaults):
 
 ```env
+ENVIRONMENT=development
 DATABASE_URL=postgresql://tradescout:tradescout_dev@localhost:5432/tradescout
-REDIS_URL=redis://localhost:6379
+REDIS_URL=redis://localhost:6379/0
 SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_KEY=your-service-role-key
-SENTRY_DSN=your-sentry-dsn
-ENV=development
-```
-
-```bash
-# Frontend
-cp web/.env.example web/.env.local
-```
-
-Edit `web/.env.local`:
-
-```env
+SUPABASE_JWT_SECRET=your-supabase-jwt-secret-string
 NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-NEXT_PUBLIC_SENTRY_DSN=your-sentry-dsn
 ```
 
 ### 4. Install Dependencies & Run
@@ -187,33 +174,25 @@ NEXT_PUBLIC_SENTRY_DSN=your-sentry-dsn
 **Backend (FastAPI):**
 
 ```bash
-cd api
+cd backend
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+source .venv/bin/activate  # Windows PowerShell: .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
+uvicorn app.main:app --reload --port 8000
 ```
 
-API docs available at: http://localhost:8000/docs
+API docs & Swagger UI available at: http://localhost:8000/docs  
+Health check endpoint: http://localhost:8000/healthz
 
-**Frontend (Next.js):**
+**Frontend (Next.js 14):**
 
 ```bash
-cd web
+cd frontend
 pnpm install
 pnpm dev
 ```
 
 App available at: http://localhost:3000
-
-### 5. Seed Data (First Run)
-
-```bash
-cd api
-python scripts/seed_data.py
-```
-
-This downloads the latest Parquet files from Hugging Face, computes scanner results, and populates Redis.
 
 ---
 
@@ -221,58 +200,31 @@ This downloads the latest Parquet files from Hugging Face, computes scanner resu
 
 ```
 TRADESCOUT/
-├── api/                          # Python FastAPI backend
-│   ├── main.py                   # FastAPI app entry point
-│   ├── routers/                  # API route modules
-│   │   ├── scanners.py           # /api/scanners/* endpoints
-│   │   ├── stocks.py             # /api/stock/* endpoints
-│   │   ├── warmup.py             # /api/warmup endpoint
-│   │   ├── watchlists.py         # /api/watchlists/* endpoints
-│   │   ├── heatmap.py            # /api/heatmap endpoint
-│   │   ├── rrg.py                # /api/rrg endpoint
-│   │   ├── groups.py             # /api/groups endpoint
-│   │   ├── leaders.py            # /api/leaders endpoint
-│   │   ├── results.py            # /api/results endpoint
-│   │   └── news.py               # /api/news endpoint
-│   ├── core/                     # Business logic
-│   │   ├── indicators.py         # SMA, EMA, RSI, MACD computations (Polars)
-│   │   ├── scanner_engine.py     # Scanner filter + rank logic
-│   │   ├── rs_rating.py          # RS Rating calculation
-│   │   ├── stage_analysis.py     # Weinstein Stage classification
-│   │   ├── vcp_detector.py       # VCP pattern detection
-│   │   └── market_breadth.py     # Breadth indicators, RME
-│   ├── data/                     # Data pipeline
-│   │   ├── hf_downloader.py      # Hugging Face Parquet downloader
-│   │   ├── bfinance_client.py    # bfinance SDK wrapper
-│   │   └── cache_manager.py      # Redis cache operations
-│   ├── models/                   # Pydantic v2 schemas
-│   │   ├── scanner.py            # ScannerResult, ScannerMeta
-│   │   ├── stock.py              # StockMetrics, ChartData, Fundamentals
-│   │   ├── watchlist.py          # Watchlist, WatchlistItem
-│   │   └── common.py             # ErrorResponse, PaginatedResponse
-│   ├── middleware/                # FastAPI middleware
-│   │   ├── auth.py               # Supabase JWT verification
-│   │   ├── rate_limit.py         # Rate limiting (free vs. premium)
-│   │   └── premium_gate.py       # Premium-only route protection
-│   ├── scripts/                  # CLI scripts
-│   │   ├── seed_data.py          # Initial data download + cache seed
-│   │   └── refresh_cache.py      # Daily cache refresh (called by cron)
-│   ├── requirements.txt          # Production dependencies
-│   ├── requirements-dev.txt      # Dev dependencies (pytest, mypy, etc.)
-│   ├── ruff.toml                 # Ruff linter config
-│   ├── mypy.ini                  # Type checking config
-│   ├── Dockerfile                # Production Docker image
-│   └── .env.example              # Environment variable template
+├── backend/                      # Python FastAPI backend
+│   ├── app/                      # Application core & routes
+│   │   ├── main.py               # FastAPI entry point & lifespan events
+│   │   ├── core/                 # Config & Redis client pools
+│   │   ├── middleware/           # Rate limiting & request tracing
+│   │   ├── models/               # Pydantic v2 schemas
+│   │   ├── routers/              # scanners, stocks, market, watchlists, health
+│   │   └── services/             # Polars indicator pipeline, cache service, DB
+│   ├── tests/                    # 300+ pytest test suite (unit, integration, adversarial)
+│   ├── pyproject.toml            # Dependencies & tool configurations
+│   └── requirements.txt          # Production Python requirements
 │
-├── web/                          # Next.js 14 frontend
-│   ├── app/                      # App Router pages
-│   │   ├── layout.tsx            # Root layout (Hanken Grotesk, dark mode)
-│   │   ├── page.tsx              # Landing page
-│   │   ├── warmup/page.tsx       # Market Warmup
-│   │   ├── scanners/
-│   │   │   ├── page.tsx          # Scanner index
-│   │   │   ├── [slug]/page.tsx   # Scanner results
-│   │   │   └── custom/page.tsx   # Custom scanner builder
+├── frontend/                     # Next.js 14 App Router frontend
+│   ├── src/                      # Source code
+│   │   ├── app/                  # Pages: scanners, stock detail, rrg, warmup, watchlists
+│   │   ├── components/           # TradingView LC charts, TanStack tables, paywall blur
+│   │   └── lib/                  # Utilities, API client, types
+│   ├── tests/                    # Playwright E2E production readiness suite (85 tests)
+│   ├── package.json              # Next.js, React 18, TanStack Table v8, Tailwind
+│   └── tailwind.config.ts        # FinTech design system & typography tokens
+│
+├── infra/                        # Infrastructure & orchestration
+│   └── docker-compose.yml        # PostgreSQL 16 & Redis 7 containers
+└── docs/                         # Specifications, architecture teardowns, research
+```
 │   │   ├── stock/
 │   │   │   └── [symbol]/page.tsx # Stock detail
 │   │   ├── watchlists/page.tsx   # Watchlists

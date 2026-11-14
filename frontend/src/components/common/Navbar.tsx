@@ -1,11 +1,12 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserSwitcher } from "@/components/common/UserSwitcher";
 import { CommandPalette } from "@/components/common/CommandPalette";
+import { StockSearchBar } from "@/components/common/StockSearchBar";
 import {
   Activity,
   Zap,
@@ -13,7 +14,6 @@ import {
   Star,
   Compass,
   LayoutGrid,
-  Search,
   Menu,
   X,
   TrendingUp,
@@ -21,19 +21,7 @@ import {
 
 export function Navbar() {
   const pathname = usePathname();
-  const router = useRouter();
-  const [searchSymbol, setSearchSymbol] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const sym = searchSymbol.trim().toUpperCase();
-    if (sym) {
-      router.push(`/stock/${sym}`);
-      setSearchSymbol("");
-      setMobileMenuOpen(false);
-    }
-  };
 
   const navItems = [
     {
@@ -76,7 +64,7 @@ export function Navbar() {
     },
   ];
 
-  const isItemActive = (item: typeof navItems[0]) => {
+  const isItemActive = (item: (typeof navItems)[0]) => {
     if (item.matchPrefix) {
       return pathname.startsWith(item.matchPrefix);
     }
@@ -125,7 +113,9 @@ export function Navbar() {
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/70"
                   }`}
                 >
-                  <Icon className={`h-3.5 w-3.5 ${active ? "text-accent" : "text-muted-foreground"}`} />
+                  <Icon
+                    className={`h-3.5 w-3.5 ${active ? "text-accent" : "text-muted-foreground"}`}
+                  />
                   <span>{item.name}</span>
                 </Link>
               );
@@ -134,27 +124,10 @@ export function Navbar() {
 
           {/* Search Bar & Right Controls */}
           <div className="flex items-center gap-2.5">
-            {/* Quick Symbol Jump Input with Cmd+K hint */}
-            <form onSubmit={handleSearch} className="relative hidden sm:block">
-              <input
-                type="text"
-                value={searchSymbol}
-                onChange={(e) => setSearchSymbol(e.target.value)}
-                placeholder="Jump to symbol..."
-                className="w-40 md:w-52 pl-8 pr-12 py-1.5 text-xs rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent text-foreground font-mono placeholder:font-sans placeholder:text-muted-foreground/70"
-              />
-              <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
-              <button
-                type="button"
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent("open-command-palette"));
-                }}
-                className="absolute right-1.5 top-1.5 px-1.5 py-0.5 rounded text-[10px] font-mono bg-muted text-muted-foreground border border-border hover:text-foreground"
-                title="Open Command Palette (Cmd+K)"
-              >
-                ⌘K
-              </button>
-            </form>
+            {/* Quick Symbol Jump Input with Cmd+K hint & live prediction dropdown */}
+            <div className="hidden sm:block">
+              <StockSearchBar variant="compact" placeholder="Jump to symbol..." />
+            </div>
 
             {/* High Performance L1 Cache Badge */}
             <div className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium border border-bull/30 bg-bull/10 text-bull">
@@ -165,7 +138,7 @@ export function Navbar() {
               <span>⚡ 4ms Redis L1</span>
             </div>
 
-            {/* Multi-Tenant Identity Switcher */}
+            {/* User Account */}
             <UserSwitcher />
 
             {/* Theme Toggle */}
@@ -187,16 +160,12 @@ export function Navbar() {
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-border py-3 px-2 space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
             {/* Mobile Symbol Search */}
-            <form onSubmit={handleSearch} className="relative pb-2">
-              <input
-                type="text"
-                value={searchSymbol}
-                onChange={(e) => setSearchSymbol(e.target.value)}
+            <div className="pb-2">
+              <StockSearchBar
+                className="w-full"
                 placeholder="Search symbol (e.g. TRENT)..."
-                className="w-full pl-8 pr-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground font-mono"
               />
-              <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
-            </form>
+            </div>
 
             <div className="grid grid-cols-2 gap-1.5">
               {navItems.map((item) => {

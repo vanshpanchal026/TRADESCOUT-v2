@@ -10,6 +10,7 @@ import {
   type IChartApi,
 } from "lightweight-charts";
 import { RSLinePoint } from "@/lib/types";
+import { useTheme } from "@/components/theme-provider";
 
 interface RSLineChartProps {
   symbol: string;
@@ -21,6 +22,7 @@ interface RSLineChartProps {
 }
 
 export default function RSLineChart({
+
   symbol,
   benchmark = "NIFTY 50",
   rsLine,
@@ -28,6 +30,8 @@ export default function RSLineChart({
   rsNewHigh = false,
   rsTrend = "up",
 }: RSLineChartProps) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
 
@@ -40,36 +44,36 @@ export default function RSLineChart({
       height: container.clientHeight || 500,
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
-        textColor: "#94A3B8",
+        textColor: isDark ? "#94A3B8" : "#334155",
         fontSize: 12,
         fontFamily: "'Hanken Grotesk', system-ui, sans-serif",
       },
       grid: {
-        vertLines: { color: "rgba(51, 65, 85, 0.25)", style: LineStyle.Dotted },
-        horzLines: { color: "rgba(51, 65, 85, 0.25)", style: LineStyle.Dotted },
+        vertLines: { color: isDark ? "rgba(51, 65, 85, 0.25)" : "rgba(226, 232, 240, 0.8)", style: LineStyle.Dotted },
+        horzLines: { color: isDark ? "rgba(51, 65, 85, 0.25)" : "rgba(226, 232, 240, 0.8)", style: LineStyle.Dotted },
       },
       crosshair: {
         mode: CrosshairMode.Normal,
         vertLine: {
-          color: "#00E5FF",
+          color: isDark ? "#00E5FF" : "#4F46E5",
           width: 1,
           style: LineStyle.Dashed,
         },
         horzLine: {
-          color: "#00E5FF",
+          color: isDark ? "#00E5FF" : "#4F46E5",
           width: 1,
           style: LineStyle.Dashed,
         },
       },
       rightPriceScale: {
-        borderColor: "rgba(51, 65, 85, 0.4)",
+        borderColor: isDark ? "rgba(51, 65, 85, 0.4)" : "#E2E8F0",
         scaleMargins: {
           top: 0.1,
           bottom: 0.1,
         },
       },
       timeScale: {
-        borderColor: "rgba(51, 65, 85, 0.4)",
+        borderColor: isDark ? "rgba(51, 65, 85, 0.4)" : "#E2E8F0",
         timeVisible: true,
       },
     });
@@ -80,7 +84,7 @@ export default function RSLineChart({
     const lineSeries = chart.addSeries(
       LineSeries,
       {
-        color: "#00E5FF",
+        color: isDark ? "#00E5FF" : "#2563EB",
         lineWidth: 2,
         priceLineVisible: true,
         lastValueVisible: true,
@@ -136,18 +140,18 @@ export default function RSLineChart({
       chart.remove();
       chartRef.current = null;
     };
-  }, [symbol, benchmark, rsLine, rsNewHigh]);
+  }, [symbol, benchmark, rsLine, rsNewHigh, isDark]);
 
   const latestValue = rsLine.length > 0 ? rsLine[rsLine.length - 1].value : 100.0;
   const isOutperforming = latestValue >= 100.0;
 
   return (
-    <div className="flex flex-col w-full h-full bg-slate-900/60 rounded-xl border border-slate-800/80 overflow-hidden backdrop-blur-md">
+    <div className="flex flex-col w-full h-full bg-card rounded-2xl border border-border overflow-hidden shadow-sm backdrop-blur-md">
       {/* RS Header Banner */}
-      <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-b border-slate-800 bg-slate-950/40">
+      <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-b border-border bg-muted/40">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-base font-semibold text-slate-100">
+            <h3 className="text-base font-semibold text-foreground">
               Relative Strength (RS) Line vs {benchmark}
             </h3>
             {rsNewHigh && (
@@ -156,9 +160,9 @@ export default function RSLineChart({
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             Normalized 252-session comparative ratio:{" "}
-            <code className="text-cyan-400 font-mono">
+            <code className="text-primary font-mono">
               RS_t = (Stock_t / Stock_0) / (Nifty_t / Nifty_0) × 100
             </code>
           </p>
@@ -166,7 +170,7 @@ export default function RSLineChart({
 
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <span className="text-[11px] text-slate-500 block uppercase font-medium">Current Ratio</span>
+            <span className="text-[11px] text-muted-foreground block uppercase font-medium">Current Ratio</span>
             <span
               className={`text-lg font-bold font-mono ${
                 isOutperforming ? "text-emerald-400" : "text-rose-400"
@@ -176,24 +180,24 @@ export default function RSLineChart({
             </span>
           </div>
 
-          <div className="h-8 w-[1px] bg-slate-800" />
+          <div className="h-8 w-[1px] bg-border" />
 
           <div className="text-right">
-            <span className="text-[11px] text-slate-500 block uppercase font-medium">Trend (20D)</span>
+            <span className="text-[11px] text-muted-foreground block uppercase font-medium">Trend (20D)</span>
             <span
               className={`text-sm font-semibold capitalize ${
                 rsTrend === "up"
                   ? "text-emerald-400"
                   : rsTrend === "down"
                   ? "text-rose-400"
-                  : "text-slate-400"
+                  : "text-muted-foreground"
               }`}
             >
               {rsTrend === "up" ? "▲ Upward" : rsTrend === "down" ? "▼ Downward" : "— Flat"}
             </span>
           </div>
 
-          <div className="px-3 py-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-bold">
+          <div className="px-3 py-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-primary text-xs font-bold">
             RS Rating {rsRating}
           </div>
         </div>
@@ -203,11 +207,11 @@ export default function RSLineChart({
       <div ref={containerRef} className="w-full min-h-[500px] flex-1" />
 
       {/* Analytical Footer Note */}
-      <div className="px-6 py-3 border-t border-slate-800/80 bg-slate-950/40 flex items-center justify-between text-xs text-slate-400">
+      <div className="px-6 py-3 border-t border-slate-800/80 bg-slate-950/40 flex items-center justify-between text-xs text-muted-foreground">
         <div>
-          <span className="font-semibold text-slate-300">Minervini Rule:</span> Upward sloping RS line during index consolidation or correction is the #1 institutional accumulation footprint.
+          <span className="font-semibold text-foreground">Minervini Rule:</span> Upward sloping RS line during index consolidation or correction is the #1 institutional accumulation footprint.
         </div>
-        <div className="text-slate-500 font-mono text-[11px]">
+        <div className="text-muted-foreground font-mono text-[11px]">
           {rsLine.length} points plotted
         </div>
       </div>

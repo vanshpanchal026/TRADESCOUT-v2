@@ -15,6 +15,29 @@ import {
 } from "lightweight-charts";
 import { OHLCVBar, RSLinePoint } from "@/lib/types";
 import { getAuthHeaders } from "@/lib/auth";
+import { useTheme } from "@/components/theme-provider";
+
+function getChartThemeColors(isDark: boolean) {
+  return {
+    textColor: isDark ? "#94A3B8" : "#334155",
+    gridColor: isDark ? "rgba(51, 65, 85, 0.25)" : "rgba(226, 232, 240, 0.8)",
+    crosshairColor: isDark ? "#00E5FF" : "#4F46E5",
+    crosshairLabelBg: isDark ? "#0F172A" : "#1E293B",
+    borderColor: isDark ? "rgba(51, 65, 85, 0.4)" : "#E2E8F0",
+    upColor: isDark ? "#00E5FF" : "#16A34A",
+    downColor: isDark ? "#64748B" : "#DC2626",
+    wickUpColor: isDark ? "#00E5FF" : "#16A34A",
+    wickDownColor: isDark ? "#64748B" : "#DC2626",
+    s10Color: isDark ? "#EAB308" : "#D97706",
+    s20Color: isDark ? "#22C55E" : "#16A34A",
+    s50Color: isDark ? "#3B82F6" : "#2563EB",
+    s200Color: isDark ? "#EF4444" : "#DC2626",
+    rsiColor: isDark ? "#C084FC" : "#7C3AED",
+    rsLineColor: isDark ? "#00E5FF" : "#2563EB",
+    pivotColor: isDark ? "#F59E0B" : "#D97706",
+  };
+}
+
 
 export interface UserDrawing {
   id: string;
@@ -44,6 +67,9 @@ export default function TradingViewChart({
   rsRating = 88,
   pivotPrice = null,
 }: TradingViewChartProps) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const symClean = (symbol || "").toUpperCase().trim();
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
@@ -148,9 +174,22 @@ export default function TradingViewChart({
         const avgVol = volWindow.reduce((a, b) => a + b, 0) / volWindow.length;
         const isSpike = avgVol > 0 && bar.volume >= 2.0 * avgVol;
 
-        let volColor = close >= bar.open ? "rgba(0, 229, 255, 0.45)" : "rgba(100, 116, 139, 0.45)";
+        let volColor = isDark
+          ? close >= bar.open
+            ? "rgba(0, 229, 255, 0.45)"
+            : "rgba(100, 116, 139, 0.45)"
+          : close >= bar.open
+          ? "rgba(22, 163, 74, 0.45)"
+          : "rgba(220, 38, 38, 0.35)";
+
         if (isSpike) {
-          volColor = close >= bar.open ? "#D946EF" : "#F43F5E";
+          volColor = isDark
+            ? close >= bar.open
+              ? "#D946EF"
+              : "#F43F5E"
+            : close >= bar.open
+            ? "#9333EA"
+            : "#DC2626";
         }
         vols.push({ time: bar.time, value: bar.volume, color: volColor });
 
@@ -186,7 +225,7 @@ export default function TradingViewChart({
         rsLineData: rsFormatted,
         calculatedPivot: pivotPrice || (pivotHigh > 0 ? +pivotHigh.toFixed(2) : null),
       };
-    }, [bars, rsLine, pivotPrice]);
+    }, [bars, rsLine, pivotPrice, isDark]);
 
   // Check favourite status with user auth headers
   const checkFavourite = useCallback(async () => {
@@ -263,43 +302,44 @@ export default function TradingViewChart({
 
     const container = containerRef.current;
     const priceLines = activePriceLinesRef.current;
+    const tc = getChartThemeColors(isDark);
     const chart = createChart(container, {
       width: container.clientWidth,
       height: container.clientHeight || 560,
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
-        textColor: "#94A3B8",
+        textColor: tc.textColor,
         fontSize: 12,
         fontFamily: "'Hanken Grotesk', system-ui, sans-serif",
       },
       grid: {
-        vertLines: { color: "rgba(51, 65, 85, 0.25)", style: LineStyle.Dotted },
-        horzLines: { color: "rgba(51, 65, 85, 0.25)", style: LineStyle.Dotted },
+        vertLines: { color: tc.gridColor, style: LineStyle.Dotted },
+        horzLines: { color: tc.gridColor, style: LineStyle.Dotted },
       },
       crosshair: {
         mode: CrosshairMode.Normal,
         vertLine: {
-          color: "#00E5FF",
+          color: tc.crosshairColor,
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#0F172A",
+          labelBackgroundColor: tc.crosshairLabelBg,
         },
         horzLine: {
-          color: "#00E5FF",
+          color: tc.crosshairColor,
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#0F172A",
+          labelBackgroundColor: tc.crosshairLabelBg,
         },
       },
       rightPriceScale: {
-        borderColor: "rgba(51, 65, 85, 0.4)",
+        borderColor: tc.borderColor,
         scaleMargins: {
           top: 0.1,
           bottom: 0.22,
         },
       },
       timeScale: {
-        borderColor: "rgba(51, 65, 85, 0.4)",
+        borderColor: tc.borderColor,
         timeVisible: true,
         secondsVisible: false,
       },
@@ -311,11 +351,11 @@ export default function TradingViewChart({
     const candleSeries = chart.addSeries(
       CandlestickSeries,
       {
-        upColor: "#00E5FF",
-        downColor: "#64748B",
+        upColor: tc.upColor,
+        downColor: tc.downColor,
         borderVisible: false,
-        wickUpColor: "#00E5FF",
-        wickDownColor: "#64748B",
+        wickUpColor: tc.wickUpColor,
+        wickDownColor: tc.wickDownColor,
         priceLineVisible: true,
         lastValueVisible: true,
       },
@@ -327,7 +367,7 @@ export default function TradingViewChart({
     const s10Series = chart.addSeries(
       LineSeries,
       {
-        color: "#EAB308",
+        color: tc.s10Color,
         lineWidth: 1,
         priceLineVisible: false,
         lastValueVisible: false,
@@ -340,7 +380,7 @@ export default function TradingViewChart({
     const s20Series = chart.addSeries(
       LineSeries,
       {
-        color: "#22C55E",
+        color: tc.s20Color,
         lineWidth: 1,
         priceLineVisible: false,
         lastValueVisible: false,
@@ -353,7 +393,7 @@ export default function TradingViewChart({
     const s50Series = chart.addSeries(
       LineSeries,
       {
-        color: "#3B82F6",
+        color: tc.s50Color,
         lineWidth: 2,
         priceLineVisible: false,
         lastValueVisible: false,
@@ -366,7 +406,7 @@ export default function TradingViewChart({
     const s200Series = chart.addSeries(
       LineSeries,
       {
-        color: "#EF4444",
+        color: tc.s200Color,
         lineWidth: 2,
         priceLineVisible: false,
         lastValueVisible: false,
@@ -449,7 +489,61 @@ export default function TradingViewChart({
     };
   }, []);
 
-  // 2a. Update Series Data smoothly without tearing down chart or resetting zoom
+  // 2a. Reactively update Chart theme when theme toggles (Dark <-> Light)
+  useEffect(() => {
+    if (!chartRef.current) return;
+    const tc = getChartThemeColors(isDark);
+
+    chartRef.current.applyOptions({
+      layout: {
+        textColor: tc.textColor,
+      },
+      grid: {
+        vertLines: { color: tc.gridColor, style: LineStyle.Dotted },
+        horzLines: { color: tc.gridColor, style: LineStyle.Dotted },
+      },
+      crosshair: {
+        vertLine: {
+          color: tc.crosshairColor,
+          labelBackgroundColor: tc.crosshairLabelBg,
+        },
+        horzLine: {
+          color: tc.crosshairColor,
+          labelBackgroundColor: tc.crosshairLabelBg,
+        },
+      },
+      rightPriceScale: {
+        borderColor: tc.borderColor,
+      },
+      timeScale: {
+        borderColor: tc.borderColor,
+      },
+    });
+
+    candleSeriesRef.current?.applyOptions({
+      upColor: tc.upColor,
+      downColor: tc.downColor,
+      wickUpColor: tc.wickUpColor,
+      wickDownColor: tc.wickDownColor,
+    });
+
+    s10SeriesRef.current?.applyOptions({ color: tc.s10Color });
+    s20SeriesRef.current?.applyOptions({ color: tc.s20Color });
+    s50SeriesRef.current?.applyOptions({ color: tc.s50Color });
+    s200SeriesRef.current?.applyOptions({ color: tc.s200Color });
+
+    if (subSeriesRef.current) {
+      subSeriesRef.current.applyOptions({
+        color: subPaneMode === "rsi" ? tc.rsiColor : tc.rsLineColor,
+      });
+    }
+
+    if (volSeriesRef.current && volumeData.length > 0) {
+      volSeriesRef.current.setData(volumeData);
+    }
+  }, [isDark, volumeData, subPaneMode]);
+
+  // 2b. Update Series Data smoothly without tearing down chart or resetting zoom
   useEffect(() => {
     if (!candleSeriesRef.current || !bars || bars.length === 0) return;
 
@@ -685,25 +779,25 @@ export default function TradingViewChart({
   };
 
   return (
-    <div className="relative flex flex-col w-full h-full bg-slate-900/60 rounded-xl border border-slate-800/80 overflow-hidden backdrop-blur-md">
+    <div className="relative flex flex-col w-full h-full bg-card rounded-2xl border border-border overflow-hidden shadow-sm backdrop-blur-md">
       {/* Toast notification pill */}
       {toastMessage && (
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-50 px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/30 animate-bounce">
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-50 px-4 py-1.5 rounded-full bg-primary text-primary-foreground font-bold text-xs shadow-lg shadow-primary/20 animate-bounce">
           {toastMessage}
         </div>
       )}
 
       {/* Top Controls Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-slate-800 bg-slate-950/40">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-border bg-muted/40">
         {/* Left: Indicator Toggles */}
         <div className="flex flex-wrap items-center gap-1.5 text-xs font-medium">
-          <span className="text-slate-500 mr-1 select-none">Overlays:</span>
+          <span className="text-muted-foreground mr-1 select-none">Overlays:</span>
           <button
             onClick={() => setShowSma10(!showSma10)}
             className={`px-2.5 py-1 rounded-md transition-all border ${
               showSma10
-                ? "bg-yellow-500/15 border-yellow-500/50 text-yellow-400 font-semibold shadow-sm shadow-yellow-500/20"
-                : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-400"
+                ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 font-semibold shadow-xs"
+                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
             SMA 10
@@ -712,8 +806,8 @@ export default function TradingViewChart({
             onClick={() => setShowSma20(!showSma20)}
             className={`px-2.5 py-1 rounded-md transition-all border ${
               showSma20
-                ? "bg-green-500/15 border-green-500/50 text-green-400 font-semibold shadow-sm shadow-green-500/20"
-                : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-400"
+                ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-600 dark:text-emerald-400 font-semibold shadow-xs"
+                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
             SMA 20
@@ -722,8 +816,8 @@ export default function TradingViewChart({
             onClick={() => setShowSma50(!showSma50)}
             className={`px-2.5 py-1 rounded-md transition-all border ${
               showSma50
-                ? "bg-blue-500/15 border-blue-500/50 text-blue-400 font-semibold shadow-sm shadow-blue-500/20"
-                : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-400"
+                ? "bg-blue-500/15 border-blue-500/40 text-blue-600 dark:text-blue-400 font-semibold shadow-xs"
+                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
             SMA 50
@@ -732,8 +826,8 @@ export default function TradingViewChart({
             onClick={() => setShowSma200(!showSma200)}
             className={`px-2.5 py-1 rounded-md transition-all border ${
               showSma200
-                ? "bg-rose-500/15 border-rose-500/50 text-rose-400 font-semibold shadow-sm shadow-rose-500/20"
-                : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-400"
+                ? "bg-rose-500/15 border-rose-500/40 text-rose-600 dark:text-rose-400 font-semibold shadow-xs"
+                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
             SMA 200
@@ -742,8 +836,8 @@ export default function TradingViewChart({
             onClick={() => setShowVolume(!showVolume)}
             className={`px-2.5 py-1 rounded-md transition-all border ${
               showVolume
-                ? "bg-cyan-500/15 border-cyan-500/50 text-cyan-400 font-semibold"
-                : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-400"
+                ? "bg-primary/15 border-primary/40 text-primary font-semibold shadow-xs"
+                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
             Volume
@@ -753,15 +847,15 @@ export default function TradingViewChart({
               onClick={() => setShowPivot(!showPivot)}
               className={`px-2.5 py-1 rounded-md transition-all border ${
                 showPivot
-                  ? "bg-amber-500/15 border-amber-500/50 text-amber-400 font-semibold"
-                  : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-400"
+                  ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 font-semibold shadow-xs"
+                  : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
               }`}
             >
               Pivot (₹{calculatedPivot})
             </button>
           )}
 
-          <div className="h-4 w-[1px] bg-slate-800 mx-1" />
+          <div className="h-4 w-[1px] bg-border mx-1" />
 
           {/* Sub-Pane Indicator Switch */}
           <button
@@ -771,19 +865,19 @@ export default function TradingViewChart({
             }}
             className={`px-2.5 py-1 rounded-md transition-all border ${
               showSubPane
-                ? "bg-purple-500/15 border-purple-500/50 text-purple-300 font-semibold"
-                : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-400"
+                ? "bg-purple-500/15 border-purple-500/40 text-purple-600 dark:text-purple-300 font-semibold shadow-xs"
+                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
             Sub-Pane: {subPaneMode.toUpperCase()}
           </button>
 
-          <div className="h-4 w-[1px] bg-slate-800 mx-1" />
+          <div className="h-4 w-[1px] bg-border mx-1" />
 
           {/* Drawing Tools */}
           <button
             onClick={handleAddDrawing}
-            className="px-2.5 py-1 rounded-md transition-all border border-cyan-500/40 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 font-medium"
+            className="px-2.5 py-1 rounded-lg transition-all border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 font-medium"
             title="Add auto-saved horizontal line"
           >
             + Draw Line
@@ -791,13 +885,13 @@ export default function TradingViewChart({
           {drawings.length > 0 && (
             <button
               onClick={handleClearDrawings}
-              className="px-2 py-1 rounded-md text-[11px] border border-slate-800 bg-slate-900 text-slate-400 hover:text-rose-400"
+              className="px-2 py-1 rounded-lg text-[11px] border border-border bg-card text-muted-foreground hover:text-rose-500 hover:border-rose-500/40 transition-colors"
             >
               Clear ({drawings.length})
             </button>
           )}
           {drawingStatus && (
-            <span className="text-[11px] text-slate-400 font-mono italic animate-pulse">
+            <span className="text-[11px] text-muted-foreground font-mono italic animate-pulse">
               {drawingStatus}
             </span>
           )}
@@ -810,28 +904,28 @@ export default function TradingViewChart({
             onClick={handleToggleFavourite}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all border ${
               isFavourite
-                ? "bg-amber-500/20 border-amber-500/50 text-amber-400 shadow-sm shadow-amber-500/20"
-                : "bg-slate-900 border-slate-800 text-slate-400 hover:text-amber-400"
+                ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 shadow-xs"
+                : "bg-card border-border text-muted-foreground hover:text-amber-500"
             }`}
             title="Press 'W' to toggle favourite"
           >
             <span>{isFavourite ? "★" : "☆"}</span>
             <span>{isFavourite ? "Starred" : "Favourite"}</span>
-            <kbd className="hidden sm:inline-block px-1 py-0.2 rounded bg-slate-800 text-[10px] text-slate-400">
+            <kbd className="hidden sm:inline-block px-1 py-0.2 rounded bg-muted text-[10px] text-muted-foreground border border-border">
               W
             </kbd>
           </button>
 
           {/* Time Range Buttons */}
-          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+          <div className="flex items-center gap-1 bg-muted/60 p-1 rounded-xl border border-border text-xs">
             {(["1M", "3M", "6M", "1Y", "ALL"] as const).map((rng) => (
               <button
                 key={rng}
                 onClick={() => handleRangeChange(rng)}
                 className={`px-2.5 py-1 rounded font-medium transition-all ${
                   selectedRange === rng
-                    ? "bg-cyan-500 text-slate-950 font-bold shadow"
-                    : "text-slate-400 hover:text-slate-200"
+                    ? "bg-primary text-primary-foreground font-bold shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {rng}
@@ -854,7 +948,7 @@ export default function TradingViewChart({
           RS {rsRating}
         </div>
         {bars.length > 0 && (
-          <div className="px-2.5 py-1 rounded-full text-xs font-medium border border-slate-700/60 bg-slate-950/70 text-slate-300 backdrop-blur-md">
+          <div className="px-2.5 py-1 rounded-full text-xs font-medium border border-border bg-card/90 text-foreground backdrop-blur-md shadow-xs">
             LTP: ₹{bars[bars.length - 1].close.toFixed(2)}
           </div>
         )}
@@ -864,24 +958,24 @@ export default function TradingViewChart({
       <div ref={containerRef} className="flex-1 w-full min-h-[520px]" />
 
       {/* High Volume Spikes Legend */}
-      <div className="flex items-center justify-between px-4 py-2 border-t border-slate-800/80 bg-slate-950/40 text-[11px] text-slate-500">
+      <div className="flex items-center justify-between px-4 py-2 border-t border-border bg-muted/30 text-[11px] text-muted-foreground">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded-sm bg-cyan-400 inline-block" /> Bullish Candle
+            <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block" /> Bullish Candle
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded-sm bg-slate-500 inline-block" /> Bearish Candle
+            <span className="w-2.5 h-2.5 rounded-sm bg-rose-500 inline-block" /> Bearish Candle
           </span>
           <span className="flex items-center gap-1">
             <span className="w-2.5 h-2.5 rounded-sm bg-fuchsia-500 inline-block" /> High-Vol Spike (&gt;2.0× 50D)
           </span>
           {drawings.length > 0 && (
-            <span className="flex items-center gap-1 text-cyan-400">
-              <span className="w-2.5 h-0.5 bg-cyan-400 inline-block" /> {drawings.length} Saved Drawing(s)
+            <span className="flex items-center gap-1 text-primary font-medium">
+              <span className="w-2.5 h-0.5 bg-emerald-500 inline-block" /> {drawings.length} Saved Drawing(s)
             </span>
           )}
         </div>
-        <div className="text-slate-500">
+        <div className="text-muted-foreground">
           Hardware-accelerated HTML5 Canvas (60 FPS) · Cloud Drawings Auto-Saved
         </div>
       </div>

@@ -270,7 +270,7 @@ export default function StockDetailPage() {
   if (notFound) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
-        <div className="w-16 h-16 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center mb-4 text-slate-500 text-2xl font-bold font-mono">
+        <div className="w-16 h-16 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center mb-4 text-muted-foreground text-2xl font-bold font-mono">
           ?
         </div>
         <h1 className="text-2xl font-bold text-slate-100 mb-2">
@@ -308,7 +308,7 @@ export default function StockDetailPage() {
         {/* Canvas Skeleton */}
         <div className="h-[560px] bg-slate-900/40 rounded-xl border border-slate-800/80 animate-pulse flex flex-col items-center justify-center gap-3">
           <div className="w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs text-slate-500 font-medium">
+          <span className="text-xs text-muted-foreground font-medium">
             Streaming OHLCV Parquet for {symbol}...
           </span>
         </div>
@@ -324,7 +324,7 @@ export default function StockDetailPage() {
       <div className="flex items-center justify-between gap-4">
         <Link
           href="/scanners/trend-template"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-cyan-400 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-primary transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Scanners</span>
@@ -337,7 +337,7 @@ export default function StockDetailPage() {
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
               isWatchlisted
                 ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-400 shadow-sm shadow-emerald-500/20"
-                : "bg-slate-900/80 border-slate-800 text-slate-300 hover:text-slate-100 hover:border-slate-700"
+                : "bg-card border-border text-foreground hover:bg-muted"
             }`}
           >
             {isWatchlisted ? (
@@ -358,7 +358,7 @@ export default function StockDetailPage() {
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
               alertSet
                 ? "bg-amber-500/15 border-amber-500/50 text-amber-400"
-                : "bg-slate-900/80 border-slate-800 text-slate-300 hover:text-slate-100 hover:border-slate-700"
+                : "bg-card border-border text-foreground hover:bg-muted"
             }`}
           >
             <Bell className="w-3.5 h-3.5" />
@@ -367,7 +367,7 @@ export default function StockDetailPage() {
 
           <button
             onClick={handleShare}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-slate-100 hover:border-slate-700 transition-all"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-card border border-border text-foreground hover:bg-muted transition-all"
           >
             {copiedLink ? (
               <>
@@ -385,14 +385,14 @@ export default function StockDetailPage() {
       </div>
 
       {/* Main Stock Header Card */}
-      <div className="bg-slate-900/70 rounded-2xl border border-slate-800/80 p-6 backdrop-blur-md shadow-lg shadow-black/20 flex flex-wrap items-center justify-between gap-6">
+      <div className="bg-card rounded-2xl border border-border p-6 shadow-sm flex flex-wrap items-center justify-between gap-6">
         {/* Left: Identity & Badges */}
         <div className="flex flex-col gap-2">
           <div className="flex flex-wrap items-center gap-2.5">
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-100 font-sans">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground font-sans">
               {stock.symbol}
             </h1>
-            <span className="text-xs px-2 py-0.5 rounded font-mono font-bold bg-slate-800 text-slate-400">
+            <span className="text-xs px-2 py-0.5 rounded font-mono font-bold bg-muted text-muted-foreground">
               NSE:{stock.series || "EQ"}
             </span>
 
@@ -425,12 +425,12 @@ export default function StockDetailPage() {
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
-            <span className="font-medium text-slate-300">{stock.name || stock.company_name}</span>
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <span className="font-semibold text-foreground">{stock.name || stock.company_name}</span>
             <span>•</span>
             <span>{stock.industry || "Diversified"}</span>
             <span>•</span>
-            <span className="font-mono text-slate-500">{stock.isin}</span>
+            <span className="font-mono text-muted-foreground">{stock.isin}</span>
           </div>
         </div>
 
@@ -443,7 +443,7 @@ export default function StockDetailPage() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500" />
               </span>
-              <span className="text-2xl sm:text-3xl font-extrabold font-mono text-slate-100 tracking-tight">
+              <span className="text-2xl sm:text-3xl font-extrabold font-mono text-foreground tracking-tight">
                 ₹{stock.cmp.toFixed(2)}
               </span>
             </div>
@@ -458,7 +458,7 @@ export default function StockDetailPage() {
                 {stock.change ? stock.change.toFixed(2) : "0.00"} ({isPositive ? "+" : ""}
                 {stock.day_change.toFixed(2)}%)
               </span>
-              <span className="text-[11px] text-slate-500">1D</span>
+              <span className="text-[11px] text-muted-foreground">1D</span>
             </div>
           </div>
 
@@ -466,7 +466,7 @@ export default function StockDetailPage() {
 
           {/* 52-Week Range */}
           <div className="flex flex-col text-xs font-mono">
-            <span className="text-[11px] text-slate-500 uppercase tracking-wider font-sans font-semibold mb-1">
+            <span className="text-[11px] text-muted-foreground uppercase tracking-wider font-sans font-semibold mb-1">
               52W Range
             </span>
             <div className="flex items-center gap-2 text-slate-300">
@@ -484,13 +484,13 @@ export default function StockDetailPage() {
       </div>
 
       {/* Tabs Navigation */}
-      <div className="flex items-center gap-1 border-b border-slate-800 pb-px overflow-x-auto">
+      <div className="flex items-center gap-1 border-b border-border pb-px overflow-x-auto">
         <button
           onClick={() => setActiveTab("chart")}
           className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all whitespace-nowrap ${
             activeTab === "chart"
-              ? "border-cyan-400 text-cyan-400 bg-cyan-500/5"
-              : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-700"
+              ? "border-primary text-primary bg-primary/5 font-bold"
+              : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
           }`}
         >
           <LineChartIcon className="w-4 h-4" />
@@ -501,8 +501,8 @@ export default function StockDetailPage() {
           onClick={() => setActiveTab("rs")}
           className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all whitespace-nowrap ${
             activeTab === "rs"
-              ? "border-cyan-400 text-cyan-400 bg-cyan-500/5"
-              : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-700"
+              ? "border-primary text-primary bg-primary/5 font-bold"
+              : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
           }`}
         >
           <TrendingUp className="w-4 h-4" />
@@ -513,8 +513,8 @@ export default function StockDetailPage() {
           onClick={() => setActiveTab("fundamentals")}
           className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all whitespace-nowrap ${
             activeTab === "fundamentals"
-              ? "border-cyan-400 text-cyan-400 bg-cyan-500/5"
-              : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-700"
+              ? "border-primary text-primary bg-primary/5 font-bold"
+              : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
           }`}
         >
           <TableProperties className="w-4 h-4" />
@@ -525,8 +525,8 @@ export default function StockDetailPage() {
           onClick={() => setActiveTab("shareholding")}
           className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all whitespace-nowrap ${
             activeTab === "shareholding"
-              ? "border-cyan-400 text-cyan-400 bg-cyan-500/5"
-              : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-700"
+              ? "border-primary text-primary bg-primary/5 font-bold"
+              : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
           }`}
         >
           <PieChart className="w-4 h-4" />
@@ -537,8 +537,8 @@ export default function StockDetailPage() {
           onClick={() => setActiveTab("notes")}
           className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-xs font-bold transition-all whitespace-nowrap ${
             activeTab === "notes"
-              ? "border-cyan-400 text-cyan-400 bg-cyan-500/5"
-              : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-700"
+              ? "border-primary text-primary bg-primary/5 font-bold"
+              : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
           }`}
         >
           <ExternalLink className="w-4 h-4" />

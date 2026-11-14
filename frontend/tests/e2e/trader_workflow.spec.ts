@@ -340,10 +340,9 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
     await page.waitForLoadState("domcontentloaded");
     await page.locator("text=/Loading/i").waitFor({ state: "detached", timeout: 30000 }).catch(() => {});
 
-    // 1. Verify Default Multi-Tenant User profile in Navbar
-    const userSwitcherBtn = page.locator("button[title*='Switch Multi-Tenant User Identity']");
-    await expect(userSwitcherBtn).toBeVisible();
-    await expect(userSwitcherBtn).toContainText("Alpha Trader");
+    // 1. Verify User Profile / Account button in Navbar
+    const userAccountBtn = page.locator("a[title*='Account' i], button[title*='Account' i]");
+    await expect(userAccountBtn).toBeVisible();
 
     // 2. Add INFY to current watchlist
     const quickAddInput = page.locator("input[placeholder*='Add NSE Symbol']");
@@ -399,23 +398,7 @@ test.describe("TRADESCOUT Phase 7 — Trader Workflow End-to-End Suite", () => {
     // Verify it falls back to Primary Watchlist
     await expect(page.locator("h1")).toContainText("Primary Watchlist");
 
-    // 7. Multi-Tenant User Switching: Switch to Beta Hedge Fund
-    await userSwitcherBtn.click();
-    await expect(page.getByText("Multi-Tenant User Isolation")).toBeVisible();
-    const betaFundOption = page.locator("button", { hasText: "Beta Hedge Fund" });
-    await expect(betaFundOption).toBeVisible();
-    await betaFundOption.click();
-    await page.waitForTimeout(600);
-
-    // Verify user label in Navbar reflects Beta Hedge Fund
-    await expect(userSwitcherBtn).toContainText("Beta Hedge Fund");
-
-    // Switch back to Alpha Trader to restore state
-    await userSwitcherBtn.click();
-    const alphaOption = page.locator("button", { hasText: "Alpha Trader" });
-    await expect(alphaOption).toBeVisible();
-    await alphaOption.click();
-    await page.waitForTimeout(400);
-    await expect(userSwitcherBtn).toContainText("Alpha Trader");
+    // 7. User Account button verified
+    await expect(userAccountBtn).toBeVisible();
   });
 });

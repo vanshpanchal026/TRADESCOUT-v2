@@ -32,26 +32,26 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
     <div className="flex flex-col gap-6 w-full">
       {/* Top Valuation & Quality Stat Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 backdrop-blur-md">
-          <span className="text-[11px] text-slate-500 uppercase font-semibold tracking-wider block">
+        <div className="bg-card p-3.5 rounded-xl border border-border backdrop-blur-md">
+          <span className="text-[11px] text-muted-foreground uppercase font-semibold tracking-wider block">
             Market Cap
           </span>
-          <span className="text-base font-bold text-slate-100 font-mono mt-1 block">
+          <span className="text-base font-bold text-foreground font-mono mt-1 block">
             {formatCr(fundamentals.market_cap)}
           </span>
         </div>
 
-        <div className="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 backdrop-blur-md">
-          <span className="text-[11px] text-slate-500 uppercase font-semibold tracking-wider block">
+        <div className="bg-card p-3.5 rounded-xl border border-border backdrop-blur-md">
+          <span className="text-[11px] text-muted-foreground uppercase font-semibold tracking-wider block">
             P/E Ratio
           </span>
-          <span className="text-base font-bold text-slate-100 font-mono mt-1 block">
+          <span className="text-base font-bold text-foreground font-mono mt-1 block">
             {formatNum(fundamentals.pe)}
           </span>
         </div>
 
-        <div className="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 backdrop-blur-md">
-          <span className="text-[11px] text-slate-500 uppercase font-semibold tracking-wider block">
+        <div className="bg-card p-3.5 rounded-xl border border-border backdrop-blur-md">
+          <span className="text-[11px] text-muted-foreground uppercase font-semibold tracking-wider block">
             ROCE
           </span>
           <span className="text-base font-bold text-emerald-400 font-mono mt-1 block">
@@ -59,8 +59,8 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
           </span>
         </div>
 
-        <div className="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 backdrop-blur-md">
-          <span className="text-[11px] text-slate-500 uppercase font-semibold tracking-wider block">
+        <div className="bg-card p-3.5 rounded-xl border border-border backdrop-blur-md">
+          <span className="text-[11px] text-muted-foreground uppercase font-semibold tracking-wider block">
             ROE
           </span>
           <span className="text-base font-bold text-emerald-400 font-mono mt-1 block">
@@ -68,45 +68,45 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
           </span>
         </div>
 
-        <div className="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 backdrop-blur-md">
-          <span className="text-[11px] text-slate-500 uppercase font-semibold tracking-wider block">
+        <div className="bg-card p-3.5 rounded-xl border border-border backdrop-blur-md">
+          <span className="text-[11px] text-muted-foreground uppercase font-semibold tracking-wider block">
             Debt / Equity
           </span>
-          <span className="text-base font-bold text-slate-100 font-mono mt-1 block">
+          <span className="text-base font-bold text-foreground font-mono mt-1 block">
             {formatNum(fundamentals.debt_to_equity)}
           </span>
         </div>
 
-        <div className="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 backdrop-blur-md">
-          <span className="text-[11px] text-slate-500 uppercase font-semibold tracking-wider block">
+        <div className="bg-card p-3.5 rounded-xl border border-border backdrop-blur-md">
+          <span className="text-[11px] text-muted-foreground uppercase font-semibold tracking-wider block">
             Book Value
           </span>
-          <span className="text-base font-bold text-slate-100 font-mono mt-1 block">
+          <span className="text-base font-bold text-foreground font-mono mt-1 block">
             ₹{formatNum(fundamentals.book_value)}
           </span>
         </div>
       </div>
 
       {/* Financials Table Container */}
-      <div className="bg-slate-900/60 rounded-xl border border-slate-800/80 overflow-hidden backdrop-blur-md">
+      <div className="bg-card rounded-xl border border-border overflow-hidden backdrop-blur-md">
         {/* Table Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-b border-slate-800 bg-slate-950/40">
+        <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-b border-border bg-muted/40">
           <div>
-            <h3 className="text-base font-semibold text-slate-100">
+            <h3 className="text-base font-semibold text-foreground">
               Screener-Style Financial Statements
             </h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-muted-foreground mt-0.5">
               5-Year historical reporting horizon · Consolidated figures in ₹ Crores
             </p>
           </div>
 
-          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-border text-xs">
             <button
               onClick={() => setViewMode("quarterly")}
               className={`px-3 py-1.5 rounded-md font-medium transition-all ${
                 viewMode === "quarterly"
                   ? "bg-cyan-500 text-slate-950 font-bold shadow"
-                  : "text-slate-400 hover:text-slate-200"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Quarterly ({quarters.length}Q)
@@ -116,7 +116,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
               className={`px-3 py-1.5 rounded-md font-medium transition-all ${
                 viewMode === "annual"
                   ? "bg-cyan-500 text-slate-950 font-bold shadow"
-                  : "text-slate-400 hover:text-slate-200"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Annual ({annuals.length}Y)
@@ -128,9 +128,9 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
         <div className="overflow-x-auto">
           {viewMode === "quarterly" ? (
             <table className="w-full text-left text-xs font-mono">
-              <thead className="bg-slate-950/60 text-slate-400 border-b border-slate-800 font-sans font-semibold">
+              <thead className="bg-slate-950/60 text-muted-foreground border-b border-border font-sans font-semibold">
                 <tr>
-                  <th className="py-3 px-4 sticky left-0 bg-slate-950 z-10 w-44 min-w-[170px] border-r border-slate-800/80">
+                  <th className="py-3 px-4 sticky left-0 bg-slate-950 z-10 w-44 min-w-[170px] border-r border-border">
                     Metric
                   </th>
                   {quarters.map((q, idx) => (
@@ -140,10 +140,10 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-slate-300">
+              <tbody className="divide-y divide-slate-800/60 text-foreground">
                 {/* Sales */}
                 <tr className="hover:bg-slate-800/30 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-200 sticky left-0 bg-slate-900 border-r border-slate-800/80 font-sans">
+                  <td className="py-3 px-4 font-semibold text-foreground sticky left-0 bg-card border-r border-border font-sans">
                     Sales (Revenue)
                   </td>
                   {quarters.map((q, idx) => (
@@ -155,7 +155,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
 
                 {/* Sales YoY */}
                 <tr className="hover:bg-slate-800/30 transition-colors bg-slate-950/20">
-                  <td className="py-2.5 px-4 text-slate-400 sticky left-0 bg-slate-900 border-r border-slate-800/80 font-sans">
+                  <td className="py-2.5 px-4 text-muted-foreground sticky left-0 bg-card border-r border-border font-sans">
                     Sales YoY %
                   </td>
                   {quarters.map((q, idx) => (
@@ -166,7 +166,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
                           ? "text-emerald-400"
                           : (q.sales_yoy || 0) < 0
                           ? "text-rose-400"
-                          : "text-slate-400"
+                          : "text-muted-foreground"
                       }`}
                     >
                       {formatPct(q.sales_yoy)}
@@ -176,7 +176,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
 
                 {/* EBITDA */}
                 <tr className="hover:bg-slate-800/30 transition-colors">
-                  <td className="py-3 px-4 font-medium text-slate-200 sticky left-0 bg-slate-900 border-r border-slate-800/80 font-sans">
+                  <td className="py-3 px-4 font-medium text-foreground sticky left-0 bg-card border-r border-border font-sans">
                     EBITDA / Operating Profit
                   </td>
                   {quarters.map((q, idx) => (
@@ -188,7 +188,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
 
                 {/* OPM % */}
                 <tr className="hover:bg-slate-800/30 transition-colors bg-slate-950/20">
-                  <td className="py-2.5 px-4 text-slate-400 sticky left-0 bg-slate-900 border-r border-slate-800/80 font-sans">
+                  <td className="py-2.5 px-4 text-muted-foreground sticky left-0 bg-card border-r border-border font-sans">
                     OPM % (Margin)
                   </td>
                   {quarters.map((q, idx) => (
@@ -200,14 +200,14 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
 
                 {/* Net Profit */}
                 <tr className="hover:bg-slate-800/30 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-200 sticky left-0 bg-slate-900 border-r border-slate-800/80 font-sans">
+                  <td className="py-3 px-4 font-semibold text-foreground sticky left-0 bg-card border-r border-border font-sans">
                     Net Profit
                   </td>
                   {quarters.map((q, idx) => (
                     <td
                       key={idx}
                       className={`py-3 px-4 text-right font-bold ${
-                        (q.net_profit || 0) >= 0 ? "text-slate-100" : "text-rose-400"
+                        (q.net_profit || 0) >= 0 ? "text-foreground" : "text-rose-400"
                       }`}
                     >
                       {q.net_profit ? `₹${q.net_profit.toLocaleString("en-IN")}` : "—"}
@@ -217,7 +217,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
 
                 {/* Net Profit YoY % */}
                 <tr className="hover:bg-slate-800/30 transition-colors bg-slate-950/20">
-                  <td className="py-2.5 px-4 text-slate-400 sticky left-0 bg-slate-900 border-r border-slate-800/80 font-sans">
+                  <td className="py-2.5 px-4 text-muted-foreground sticky left-0 bg-card border-r border-border font-sans">
                     Net Profit YoY %
                   </td>
                   {quarters.map((q, idx) => (
@@ -228,7 +228,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
                           ? "text-emerald-400"
                           : (q.np_yoy || 0) < 0
                           ? "text-rose-400"
-                          : "text-slate-400"
+                          : "text-muted-foreground"
                       }`}
                     >
                       {formatPct(q.np_yoy)}
@@ -238,7 +238,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
 
                 {/* EPS */}
                 <tr className="hover:bg-slate-800/30 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-200 sticky left-0 bg-slate-900 border-r border-slate-800/80 font-sans">
+                  <td className="py-3 px-4 font-semibold text-foreground sticky left-0 bg-card border-r border-border font-sans">
                     EPS in ₹
                   </td>
                   {quarters.map((q, idx) => (
@@ -250,7 +250,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
 
                 {/* EPS YoY % */}
                 <tr className="hover:bg-slate-800/30 transition-colors bg-slate-950/20">
-                  <td className="py-2.5 px-4 text-slate-400 sticky left-0 bg-slate-900 border-r border-slate-800/80 font-sans">
+                  <td className="py-2.5 px-4 text-muted-foreground sticky left-0 bg-card border-r border-border font-sans">
                     EPS YoY Growth %
                   </td>
                   {quarters.map((q, idx) => (
@@ -261,7 +261,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
                           ? "text-emerald-400"
                           : (q.eps_yoy || 0) < 0
                           ? "text-rose-400"
-                          : "text-slate-400"
+                          : "text-muted-foreground"
                       }`}
                     >
                       {formatPct(q.eps_yoy)}
@@ -272,9 +272,9 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
             </table>
           ) : (
             <table className="w-full text-left text-xs font-mono">
-              <thead className="bg-slate-950/60 text-slate-400 border-b border-slate-800 font-sans font-semibold">
+              <thead className="bg-slate-950/60 text-muted-foreground border-b border-border font-sans font-semibold">
                 <tr>
-                  <th className="py-3 px-4 sticky left-0 bg-slate-950 z-10 w-44 border-r border-slate-800/80">
+                  <th className="py-3 px-4 sticky left-0 bg-slate-950 z-10 w-44 border-r border-border">
                     Metric
                   </th>
                   {annuals.map((a, idx) => (
@@ -284,9 +284,9 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-slate-300">
+              <tbody className="divide-y divide-slate-800/60 text-foreground">
                 <tr className="hover:bg-slate-800/30">
-                  <td className="py-3 px-4 font-semibold text-slate-200 sticky left-0 bg-slate-900 border-r border-slate-800 font-sans">
+                  <td className="py-3 px-4 font-semibold text-foreground sticky left-0 bg-card border-r border-border font-sans">
                     Sales
                   </td>
                   {annuals.map((a, idx) => (
@@ -296,7 +296,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
                   ))}
                 </tr>
                 <tr className="hover:bg-slate-800/30 bg-slate-950/20">
-                  <td className="py-2.5 px-4 text-slate-400 sticky left-0 bg-slate-900 border-r border-slate-800 font-sans">
+                  <td className="py-2.5 px-4 text-muted-foreground sticky left-0 bg-card border-r border-border font-sans">
                     Sales Growth %
                   </td>
                   {annuals.map((a, idx) => (
@@ -311,7 +311,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
                   ))}
                 </tr>
                 <tr className="hover:bg-slate-800/30">
-                  <td className="py-3 px-4 font-semibold text-slate-200 sticky left-0 bg-slate-900 border-r border-slate-800 font-sans">
+                  <td className="py-3 px-4 font-semibold text-foreground sticky left-0 bg-card border-r border-border font-sans">
                     Net Profit
                   </td>
                   {annuals.map((a, idx) => (
@@ -321,7 +321,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
                   ))}
                 </tr>
                 <tr className="hover:bg-slate-800/30 bg-slate-950/20">
-                  <td className="py-2.5 px-4 text-slate-400 sticky left-0 bg-slate-900 border-r border-slate-800 font-sans">
+                  <td className="py-2.5 px-4 text-muted-foreground sticky left-0 bg-card border-r border-border font-sans">
                     Net Profit Growth %
                   </td>
                   {annuals.map((a, idx) => (
@@ -336,7 +336,7 @@ export default function FundamentalsTable({ fundamentals }: FundamentalsTablePro
                   ))}
                 </tr>
                 <tr className="hover:bg-slate-800/30">
-                  <td className="py-3 px-4 font-semibold text-slate-200 sticky left-0 bg-slate-900 border-r border-slate-800 font-sans">
+                  <td className="py-3 px-4 font-semibold text-foreground sticky left-0 bg-card border-r border-border font-sans">
                     EPS in ₹
                   </td>
                   {annuals.map((a, idx) => (

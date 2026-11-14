@@ -13,15 +13,13 @@ import {
   Search,
   ArrowRight,
   TrendingUp,
-  ShieldCheck,
-  CheckCircle2,
   BarChart3,
   Flame,
-  Sparkles,
   Layers,
   Calendar,
   Newspaper,
-  Clock,
+  ChevronRight,
+  Sparkles,
 } from "lucide-react";
 
 export default function Home() {
@@ -38,338 +36,182 @@ export default function Home() {
 
   const quickSymbols = ["RELIANCE", "TRENT", "DIXON", "KAYNES", "TCS", "HDFCBANK", "ZOMATO", "BEL"];
 
-  const launchCards = [
+  const bentoWorkspaces = [
     {
       title: "The Warmup Cockpit",
-      subtitle: "Morning Market Breadth & Pre-Market Read",
-      description:
-        "Comprehensive market diagnostic cockpit featuring % of stocks above 20/50/200 SMA, composite RME Sentiment Index, FII/DII net cash flow tracking, and Stan Weinstein 4-Stage market lifecycle distribution.",
+      description: "Morning market readiness, 20/50/200 SMA breadth, RME sentiment & FII/DII net flows.",
       href: "/warmup",
       icon: Activity,
-      badge: "Market Breadth",
-      badgeColor: "bg-amber-500/10 text-amber-500 border-amber-500/20",
-      cta: "Launch The Warmup",
-      features: ["50 SMA Participation Dial", "RME Sentiment Meter (0-100)", "Stage 2 vs Stage 4 Ratio", "FII/DII 22-Session Flows"],
+      badge: "Morning Routine",
+      badgeColor: "bg-blue-50 text-blue-700 border-blue-200/60 dark:bg-blue-950/40 dark:text-blue-300",
+      stats: "74.4% Broad • +20.6 pts/wk",
+      colSpan: "lg:col-span-6",
     },
     {
-      title: "Intraday Screener",
-      subtitle: "3-Column Real-Time Momentum Radar",
-      description:
-        "Ergonomic 3-column structured grid tracking live index trend cards, real-time Advance/Decline (533 vs 972), VWAP positioning, unusual Relative Volume (RVol) surges, and quick intraday triggers.",
-      href: "/intraday",
-      icon: Zap,
-      badge: "Real-Time Intraday",
-      badgeColor: "bg-primary/10 text-primary border-primary/20",
-      cta: "Open Intraday Screener",
-      features: ["3-Column Ergonomic Grid", "VWAP Above/Below Counts", "+21,902% RVol Detection", "One-Click Quick Screens"],
-    },
-    {
-      title: "Market Breadth & Major Indices",
-      subtitle: "In-Depth Stage Breakdown & Multi-Chart Grid",
-      description:
-        "Deep structural stage analysis (Stage 1 Base, Stage 2 Markup, Stage 3 Top, Stage 4 Downtrend), constituent participation vs Nifty 500, cumulative advance/decline line, and responsive 6-index chart grid.",
+      title: "Market Breadth & Indices",
+      description: "Stan Weinstein 4-Stage breakdown, 6 regime pillars, and advance/decline internals.",
       href: "/markets",
       icon: BarChart3,
       badge: "NSE Universe Breadth",
-      badgeColor: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-      cta: "View Market Breadth",
-      features: ["Weinstein 4-Stage Breakdown", "Cumulative Advance/Decline Line", "68% Breakout Success Rate", "Major Indices Multi-Chart Grid"],
+      badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200/60 dark:bg-emerald-950/40 dark:text-emerald-300",
+      stats: "+180 Net Highs • 38.7% Stage 2",
+      colSpan: "lg:col-span-6",
     },
     {
-      title: "Institutional Scanners",
-      subtitle: "11 Curated Classic Screening Presets",
-      description:
-        "Split-pane technical execution hub combining sub-15ms vectorized Polars queries with real-time charting. Includes Minervini Trend Template, Stage 2 Breakouts, 4%+ Volume Climaxes, and 20-SMA Pullbacks.",
-      href: "/scanners/trend-template",
+      title: "Intraday Screener",
+      description: "3-column live radar tracking VWAP positioning, unusual RVol & momentum screens.",
+      href: "/intraday",
       icon: Zap,
-      badge: "11 Pre-Computed Scanners",
-      badgeColor: "bg-primary/10 text-primary border-primary/20",
-      cta: "Explore Scanners",
-      features: ["Minervini 8-Point Trend Template", "4%+ High-Volume Breakouts", "Recent Pivot Breakouts", "High RVOL & 1M Top Gainers"],
+      badge: "Live Session",
+      badgeColor: "bg-amber-50 text-amber-700 border-amber-200/60 dark:bg-amber-950/40 dark:text-amber-300",
+      stats: "568 Above VWAP • 211 20D Highs",
+      colSpan: "lg:col-span-4",
     },
     {
-      title: "Market Leaders Hub",
-      subtitle: "Top 150 Sector Leaders & Quarterly Trends",
-      description:
-        "Split-panel architecture categorizing top 150 leading stocks by sectoral themes with OHLC candlestick charts, SMA 10/20/50/200 overlays, Volume HVE markers, and 5-quarter financial statement grids with CSV export.",
-      href: "/leaders",
-      icon: Flame,
-      badge: "Top 150 Leaders",
-      badgeColor: "bg-amber-500/10 text-amber-500 border-amber-500/20",
-      cta: "Open Market Leaders",
-      features: ["Sectoral Theme Categorization", "Moving Averages Overlays", "High Volume Event (HVE) Markers", "Copy Table & CSV Export"],
+      title: "Technical Scanners Hub",
+      description: "Sub-15ms vectorized Polars queries for Trend Template, VCP, IPO Bases & Pivot Breakouts.",
+      href: "/scanners/trend-template",
+      icon: TrendingUp,
+      badge: "11+ Presets",
+      badgeColor: "bg-indigo-50 text-indigo-700 border-indigo-200/60 dark:bg-indigo-950/40 dark:text-indigo-300",
+      stats: "Minervini & O'Neil Filters",
+      colSpan: "lg:col-span-4",
     },
     {
-      title: "Relative Rotation Graph (RRG)",
-      subtitle: "Vectorized Sector & Stock Rotation",
-      description:
-        "Interactive 4-quadrant scatter chart plotting JdK RS-Ratio vs RS-Momentum with clockwise cyclical trailing tails across 5D, 10D, and 20D horizons with custom benchmark baseline.",
+      title: "Relative Rotation Graph",
+      description: "JdK rotational quadrant model plotting RS-Ratio vs RS-Momentum with trailing tails.",
       href: "/rrg",
       icon: Compass,
-      badge: "JdK Rotational Model",
-      badgeColor: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-      cta: "Open Rotation Graph",
-      features: ["Leading, Weakening, Lagging, Improving", "Sector Index Rotations vs NIFTY 50", "Top Momentum Rotational Leaders", "5D / 10D / 20D Trailing Tails"],
+      badge: "Sector Rotation",
+      badgeColor: "bg-purple-50 text-purple-700 border-purple-200/60 dark:bg-purple-950/40 dark:text-purple-300",
+      stats: "4-Quadrant Cyclical Model",
+      colSpan: "lg:col-span-4",
     },
     {
       title: "Market Cap Treemap Heatmap",
-      subtitle: "Hierarchical Sector & Stock Performance",
-      description:
-        "Cap-weighted recursive treemap visualizing daily percentage returns across Nifty 200, Nifty 500, and Smallcap 250 with smooth dynamic red/green gradients.",
+      description: "Cap-weighted recursive treemap visualizing daily returns across Nifty 200 & 500.",
       href: "/heatmap",
       icon: LayoutGrid,
-      badge: "Treemap Visualizer",
-      badgeColor: "bg-bull/10 text-bull border-bull/20",
-      cta: "Open Market Heatmap",
-      features: ["Recursive Cap-Weighted Layout", "-2% to +3% Dynamic Gradient", "Index Filtering (N200, N500, Smallcap)", "Sector Breakdown Ribbon"],
+      badge: "Visualizer",
+      badgeColor: "bg-rose-50 text-rose-700 border-rose-200/60 dark:bg-rose-950/40 dark:text-rose-300",
+      stats: "Cap-Weighted Hierarchies",
+      colSpan: "lg:col-span-4",
     },
     {
-      title: "Groups / Sectors / Themes",
-      subtitle: "3-Level Hierarchical Drilldown",
-      description:
-        "Deep drilldown navigating from 23 Core Sectors down to 172 Refined Industries and 96 Focused Thematic Clusters with multi-timeframe sorting pills (1D, 1W, 1M, 3M, 1Y, YTD).",
-      href: "/groups",
-      icon: Layers,
-      badge: "3-Level Hierarchy",
-      badgeColor: "bg-primary/10 text-primary border-primary/20",
-      cta: "Explore Groups & Themes",
-      features: ["23 Core Sectors Breakdown", "172 Refined Industries", "96 Thematic Clusters", "1D to YTD Timeframe Sorting"],
+      title: "Top 150 Sector Leaders",
+      description: "Leading growth stocks with 5-quarter financial statements & volume surge markers.",
+      href: "/leaders",
+      icon: Flame,
+      badge: "Market Leaders",
+      badgeColor: "bg-orange-50 text-orange-700 border-orange-200/60 dark:bg-orange-950/40 dark:text-orange-300",
+      stats: "Institutional High Volume (HVE)",
+      colSpan: "lg:col-span-4",
     },
     {
-      title: "Earnings Results Calendar",
-      subtitle: "Automated Quality Scorecards & Calendar",
-      description:
-        "Day column calendar view with fast 'Today' jump button and Q2 FY27 progress tracker. Features automated quality badges (Excellent, Good, Weak) and side financial details panel.",
-      href: "/results",
-      icon: Calendar,
-      badge: "Quarterly Calendar",
-      badgeColor: "bg-bull/10 text-bull border-bull/20",
-      cta: "Open Results Calendar",
-      features: ["Day Column Calendar Grid", "Excellent / Good / Weak Badges", "Q2 FY27 Season Progress Tracker", "YoY / QoQ Financial Metrics Panel"],
-    },
-    {
-      title: "Market News Feed",
-      subtitle: "Categorized Corporate Disclosures & Wires",
-      description:
-        "Focused news streams (Stock news, Global, Orders & deals, My watchlist) filtered by category tags: Earnings (E), Orders (O), Corp Action (C), Regulatory (R), and Management (M).",
+      title: "Corporate News & Wires",
+      description: "Categorized corporate disclosures: Earnings, Orders, Corp actions, and Regulatory.",
       href: "/news",
       icon: Newspaper,
-      badge: "Exchange News Feed",
-      badgeColor: "bg-primary/10 text-primary border-primary/20",
-      cta: "Open News Feed",
-      features: ["Stock, Global & Orders Streams", "Event Category Filter Chips", "Exchange Disclosures Wires", "Impact Badges & Timestamps"],
-    },
-    {
-      title: "Watchlists & Trader Journal",
-      subtitle: "3-Pane Layout with Integrated TradingView Charts",
-      description:
-        "Single-user persistent watchlists backed by direct storage with zero-friction persistence. Add symbols with global search, inspect 20D trend sparklines, and auto-save private trading thesis notes.",
-      href: "/watchlists",
-      icon: Star,
-      badge: "Single-User Persistence",
-      badgeColor: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
-      cta: "Manage Watchlists",
-      features: ["3-Pane Integrated Layout", "20-Day Mini Canvas Sparklines", "Star Favourites Quick Toggle", "Debounced Private Notes Sync"],
-    },
-    {
-      title: "Stock Detail & Analysis Suite",
-      subtitle: "Hardware-Accelerated Charts & Screener P&L",
-      description:
-        "Candlestick charts with SMA 10/20/50/200 overlays, IBD-style Relative Strength line relative to NIFTY 50, and Screener-style 5-year quarterly financial statements.",
-      href: "/stock/RELIANCE",
-      icon: LineChart,
-      badge: "Lightweight Charts v5",
-      badgeColor: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-      cta: "Open Stock Detail",
-      features: ["Candlesticks + Volume Surge Histograms", "RS Line vs NIFTY 50 Overlay", "Screener 5-Year Quarterly P&L", "FII/DII Shareholding Trends"],
+      badge: "Exchange Wires",
+      badgeColor: "bg-cyan-50 text-cyan-700 border-cyan-200/60 dark:bg-cyan-950/40 dark:text-cyan-300",
+      stats: "Timestamps & Tag Badges",
+      colSpan: "lg:col-span-4",
     },
   ];
 
   return (
-    <div className="min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto space-y-12">
-      {/* Hero Cockpit Header */}
-      <section className="text-center space-y-6 pt-4 pb-2">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/10 border border-primary/25 text-primary shadow-xs">
+    <div className="min-h-screen p-4 sm:p-6 lg:p-8 max-w-[1600px] mx-auto space-y-8">
+      {/* ================= HERO SEARCH & HEADER ================= */}
+      <div className="text-center space-y-4 pt-2 pb-2">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-950/50 text-primary border border-blue-200/60 dark:border-blue-900/50 shadow-2xs">
           <Sparkles className="h-3.5 w-3.5" />
-          <span>Scan The Charts (TRADESCOUT) • Indian Equity Terminal</span>
+          <span>TRADESCOUT (Inspired by Scan The Charts) • Indian Equity Analytics</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground max-w-4xl mx-auto leading-tight sm:leading-none">
-          Precision market breadth &amp; <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-highlight to-indigo-500">
-            high-speed scanners
-          </span>{" "}
-          for NSE.
+        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-foreground max-w-2xl mx-auto leading-tight">
+          Precision market breadth &amp; modular scanners for NSE
         </h1>
 
-        <p className="max-w-2xl mx-auto text-sm sm:text-base text-muted-foreground leading-relaxed">
-          All-in-one equity market analytics, technical stock scanning, institutional cash-flow tracking, and market breadth platform engineered specifically for Indian National Stock Exchange (NSE) swing and intraday traders.
+        <p className="max-w-xl mx-auto text-xs sm:text-sm text-muted-foreground leading-relaxed">
+          Clean minimalist, modular card (Bento-style) layout designed specifically for Indian National Stock Exchange (NSE) equity traders.
         </p>
 
-        {/* Hero Quick Search & Symbol Jump */}
-        <div className="max-w-xl mx-auto pt-2 space-y-3">
-          <form onSubmit={handleSearch} className="relative flex items-center shadow-lg shadow-primary/5">
+        {/* Search Bar */}
+        <div className="max-w-md mx-auto pt-1 space-y-2.5">
+          <form onSubmit={handleSearch} className="relative flex items-center shadow-xs">
             <input
               type="text"
               value={searchSymbol}
               onChange={(e) => setSearchSymbol(e.target.value)}
-              placeholder="Search or jump to any NSE stock (e.g. RELIANCE, TRENT, DIXON)..."
-              className="w-full pl-11 pr-24 py-3 text-sm rounded-2xl border border-border bg-card/90 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:ring-2 focus:ring-primary font-mono"
+              placeholder="Search ticker (e.g. RELIANCE, TRENT, DIXON)..."
+              className="w-full pl-10 pr-20 py-2.5 text-xs rounded-xl border border-border bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary font-mono"
             />
-            <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3.5 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
             <button
               type="submit"
-              className="absolute right-2 px-4 py-1.5 rounded-xl bg-primary text-white font-medium text-xs hover:bg-primary/90 transition-colors cursor-pointer shadow-xs"
+              className="absolute right-1.5 px-3 py-1.5 rounded-lg bg-primary text-white font-semibold text-xs hover:bg-primary/90 transition-colors cursor-pointer"
             >
               Search
             </button>
           </form>
 
-          {/* Quick Symbol Pills */}
+          {/* Popular ticker pills */}
           <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs text-muted-foreground">
-            <span className="font-medium mr-1 text-[11px]">Popular:</span>
+            <span className="text-[11px] font-medium mr-1">Popular:</span>
             {quickSymbols.map((sym) => (
               <button
                 key={sym}
                 onClick={() => router.push(`/stock/${sym}`)}
-                className="px-2 py-0.5 rounded-md border border-border/70 bg-card hover:bg-primary/15 hover:text-primary hover:border-primary/40 font-mono text-[11px] transition-colors cursor-pointer"
+                className="px-2 py-0.5 rounded-md border border-border/80 bg-card hover:bg-primary/10 hover:text-primary font-mono text-[11px] transition-colors cursor-pointer"
               >
                 {sym}
               </button>
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Primary Launch Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-          <Link
-            href="/warmup"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-semibold text-sm shadow-md shadow-primary/20 hover:bg-primary/90 transition-all cursor-pointer"
-          >
-            <Activity className="h-4 w-4" />
-            <span>Launch The Warmup</span>
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-
-          <Link
-            href="/intraday"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border bg-card text-foreground font-semibold text-sm hover:bg-muted/80 transition-all cursor-pointer shadow-xs"
-          >
-            <Zap className="h-4 w-4 text-primary" />
-            <span>Intraday Screener</span>
-          </Link>
-
-          <Link
-            href="/scanners/trend-template"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border bg-card text-foreground font-semibold text-sm hover:bg-muted/80 transition-all cursor-pointer shadow-xs"
-          >
-            <Flame className="h-4 w-4 text-amber-500" />
-            <span>11+ Scanners</span>
-          </Link>
-
-          <Link
-            href="/watchlists"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border bg-card text-foreground font-semibold text-sm hover:bg-muted/80 transition-all cursor-pointer shadow-xs"
-          >
-            <Star className="h-4 w-4 text-yellow-500" />
-            <span>Watchlists</span>
-          </Link>
-        </div>
-      </section>
-
-      {/* Quick Scanner Shortcut Strip */}
-      <section className="p-4 rounded-2xl border border-border bg-card/60 backdrop-blur-sm space-y-3 shadow-xs">
-        <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
-          <span className="flex items-center gap-1.5 text-foreground">
-            <Zap className="h-4 w-4 text-primary" /> Curated Classic Scans Dropdown &amp; Presets
-          </span>
-          <Link href="/scanners/trend-template" className="text-primary hover:underline text-[11px] font-semibold">
-            View all 11 presets &rarr;
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-          {[
-            { name: "Trend Template", slug: "trend-template", count: "326 stocks" },
-            { name: "Stage 2 Breakout", slug: "stage-2-breakout", count: "66 stocks" },
-            { name: "Recent Breakout", slug: "recent-breakout", count: "12 stocks" },
-            { name: "4% Breakout", slug: "4pct-breakout", count: "38 stocks" },
-            { name: "High Volume", slug: "high-volume", count: "28 stocks" },
-            { name: "1M Gainers", slug: "1m-gainers", count: "36 stocks" },
-          ].map((sc) => (
+      {/* ================= MODULAR BENTO WORKSPACE TILES ================= */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        {bentoWorkspaces.map((card) => {
+          const Icon = card.icon;
+          return (
             <Link
-              key={sc.slug}
-              href={`/scanners/${sc.slug}`}
-              className="p-2.5 rounded-xl border border-border bg-background hover:border-primary/40 hover:bg-primary/5 transition-all group"
+              key={card.title}
+              href={card.href}
+              className={`${card.colSpan} rounded-2xl bg-card border border-border/80 shadow-xs p-5 hover:border-primary/50 transition-all flex flex-col justify-between group space-y-3 cursor-pointer`}
             >
-              <div className="font-semibold text-xs text-foreground group-hover:text-primary flex items-center justify-between">
-                <span>{sc.name}</span>
-                <ArrowRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="h-8 w-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border ${card.badgeColor}`}>
+                    {card.badge}
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-1">
+                    <span>{card.title}</span>
+                    <ChevronRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                    {card.description}
+                  </p>
+                </div>
               </div>
-              <div className="text-[10px] text-muted-foreground font-mono mt-0.5">{sc.count}</div>
+
+              <div className="pt-2 border-t border-border/50 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
+                <span>{card.stats}</span>
+                <span className="text-primary font-bold group-hover:translate-x-0.5 transition-transform">
+                  Launch &rarr;
+                </span>
+              </div>
             </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Feature Modules Grid */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold tracking-tight text-foreground flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-primary" /> Complete Platform Architecture &amp; Modules
-          </h2>
-          <span className="text-xs font-mono text-muted-foreground">12 Core Workspaces</span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {launchCards.map((card) => {
-            const Icon = card.icon;
-            return (
-              <div
-                key={card.href}
-                className="flex flex-col justify-between p-6 rounded-2xl border border-border bg-card hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all group"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="h-10 w-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <span className={`text-[11px] font-mono px-2 py-0.5 rounded-full border font-semibold ${card.badgeColor}`}>
-                      {card.badge}
-                    </span>
-                  </div>
-
-                  <div className="space-y-1">
-                    <h3 className="font-bold text-base text-foreground group-hover:text-primary transition-colors">
-                      {card.title}
-                    </h3>
-                    <p className="text-xs font-medium text-primary/90">{card.subtitle}</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed pt-1">{card.description}</p>
-                  </div>
-
-                  <ul className="text-xs space-y-1.5 font-mono text-muted-foreground border-t border-border/60 pt-3">
-                    {card.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-center gap-2">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-bull shrink-0" />
-                        <span className="truncate">{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-5 mt-auto">
-                  <Link
-                    href={card.href}
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-colors shadow-xs cursor-pointer"
-                  >
-                    <span>{card.cta}</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+          );
+        })}
+      </div>
     </div>
   );
 }

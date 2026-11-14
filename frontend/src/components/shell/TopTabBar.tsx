@@ -1,32 +1,20 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  Search,
   Bell,
-  Plus,
   SlidersHorizontal,
-  Sparkles,
-  Command,
-  Layout,
-  Activity,
-  Zap,
-  Calendar,
-  LayoutGrid,
-  Flame,
-  Compass,
-  Newspaper,
-  ChevronDown,
+  Search,
 } from "lucide-react";
 import { UserSwitcher } from "@/components/common/UserSwitcher";
 import { CommandPalette } from "@/components/common/CommandPalette";
+import { StockSearchBar } from "@/components/common/StockSearchBar";
 
 export function TopTabBar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [searchSymbol, setSearchSymbol] = useState("");
   const [showNotification, setShowNotification] = useState(false);
 
   const tabs = [
@@ -40,35 +28,26 @@ export function TopTabBar() {
     { name: "News", href: "/news" },
   ];
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const sym = searchSymbol.trim().toUpperCase();
-    if (sym) {
-      router.push(`/stock/${sym}`);
-      setSearchSymbol("");
-    }
-  };
-
   const isTabActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-border bg-card/90 backdrop-blur-md">
-      <div className="flex items-center justify-between h-14 px-4 sm:px-6 gap-3">
+    <header className="sticky top-0 z-30 w-full border-b border-[#cce0fc] dark:border-border bg-gradient-to-r from-[#d6e5fb]/90 via-[#e0ecfc]/85 to-[#dbe8fc]/90 dark:from-card/95 dark:to-card/95 backdrop-blur-md">
+      <div className="flex items-center justify-between h-13 px-3 sm:px-5 gap-3">
         {/* Left: Tab Switcher */}
-        <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-1">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
           {tabs.map((tab) => {
             const active = isTabActive(tab.href);
             return (
               <Link
                 key={tab.name}
                 href={tab.href}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   active
-                    ? "bg-primary/10 text-primary font-bold border border-primary/20 shadow-xs"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                    ? "bg-white dark:bg-background text-primary font-bold shadow-xs border border-blue-200/70 dark:border-border"
+                    : "text-slate-700 dark:text-muted-foreground hover:text-foreground hover:bg-white/50 dark:hover:bg-muted/60"
                 }`}
               >
                 {tab.name}
@@ -76,41 +55,45 @@ export function TopTabBar() {
             );
           })}
 
+          {/* Add Page button matching screenshot */}
+          <button
+            type="button"
+            onClick={() => router.push("/")}
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-muted-foreground hover:text-foreground hover:bg-white/40 transition-colors whitespace-nowrap"
+            title="Add Page / Explore Workspaces"
+          >
+            <span>+ Add page</span>
+          </button>
+
           {/* Explore Scanners button */}
           <button
             type="button"
             onClick={() => router.push("/scanners/trend-template")}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors whitespace-nowrap border border-border"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-700 dark:text-muted-foreground hover:text-primary hover:bg-white/60 dark:hover:bg-primary/5 transition-colors whitespace-nowrap border border-blue-200/50 dark:border-border bg-white/30 dark:bg-card/40"
             title="Explore Scanners"
           >
             <SlidersHorizontal className="h-3 w-3" />
-            <span>Explore Scanners</span>
+            <span>Scanners</span>
           </button>
         </div>
 
         {/* Right: Search, Notifications, Tier Badge, User Profile */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          {/* Quick Search Bar */}
-          <form onSubmit={handleSearch} className="relative hidden md:block">
-            <input
-              type="text"
-              value={searchSymbol}
-              onChange={(e) => setSearchSymbol(e.target.value)}
-              placeholder="Search ticker (e.g. RELIANCE)..."
-              className="w-48 lg:w-60 pl-8 pr-12 py-1.5 text-xs rounded-xl border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-foreground font-mono placeholder:font-sans placeholder:text-muted-foreground/60"
-            />
-            <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
-            <button
-              type="button"
-              onClick={() => {
-                window.dispatchEvent(new CustomEvent("open-command-palette"));
-              }}
-              className="absolute right-1.5 top-1.5 px-1.5 py-0.5 rounded text-[10px] font-mono bg-muted text-muted-foreground border border-border hover:text-foreground"
-              title="Open Command Palette (Cmd+K)"
-            >
-              ⌘K
-            </button>
-          </form>
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Quick Search Bar with Predictive Dropdown */}
+          <div className="hidden md:block">
+            <StockSearchBar placeholder="Search ticker (e.g. RELIANCE)..." />
+          </div>
+
+          {/* Command Palette Trigger */}
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+            title="Command Palette (Ctrl+K)"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-700 dark:text-muted-foreground hover:text-foreground hover:bg-white/60 dark:hover:bg-muted/60 transition-colors border border-blue-200/50 dark:border-border bg-white/40 dark:bg-card/40 cursor-pointer"
+          >
+            <Search className="h-3.5 w-3.5" />
+            <kbd className="hidden lg:inline text-[10px] font-mono px-1 rounded bg-slate-100 dark:bg-muted">Ctrl+K</kbd>
+          </button>
 
           {/* Notification Bell */}
           <div className="relative">

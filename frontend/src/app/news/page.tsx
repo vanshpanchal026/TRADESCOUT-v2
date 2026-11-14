@@ -8,116 +8,127 @@ import {
   Briefcase,
   Star,
   Search,
-  Clock,
   ExternalLink,
-  Tag,
-  AlertCircle,
-  TrendingUp,
 } from "lucide-react";
 
-interface NewsItem {
+interface NewsEntry {
   id: string;
   stream: "stock" | "global" | "orders" | "watchlist";
+  time: string;
+  symbol: string;
+  headline: string;
   category: "E" | "O" | "C" | "R" | "M";
-  categoryLabel: string;
-  symbol?: string;
-  title: string;
-  summary: string;
-  source: string;
-  timeAgo: string;
-  impact: "High" | "Medium" | "Neutral";
+  badgeType: "Company announcement" | "Proposed" | "High impact";
 }
 
-const NEWS_DATA: NewsItem[] = [
+const NEWS_FEED: NewsEntry[] = [
   {
     id: "1",
     stream: "stock",
-    category: "O",
-    categoryLabel: "Orders (O)",
-    symbol: "BEL",
-    title: "Bharat Electronics secures ₹1,155 Cr order for multi-function radar systems",
-    summary:
-      "The contract involves supply of cutting-edge radar electronic subsystems to the Indian Navy with 24-month execution timelines.",
-    source: "BSE Disclosures",
-    timeAgo: "22 mins ago",
-    impact: "High",
+    time: "20:50",
+    symbol: "KERNEX",
+    headline: "Kernex grants 25,000 employee stock options; exercise price ₹25.",
+    category: "C",
+    badgeType: "Company announcement",
   },
   {
     id: "2",
     stream: "stock",
+    time: "20:49",
+    symbol: "ALGOQUANT",
+    headline: "Algoquant approves Q2/H1 FY27 financial results; standard earnings release.",
     category: "E",
-    categoryLabel: "Earnings (E)",
-    symbol: "TRENT",
-    title: "Trent reports stellar Q2 PAT surge of 46.5% YoY; plans 100 new stores",
-    summary:
-      "Operating margins reached 15.4% as Zudio sales momentum continues across tier-2 and tier-3 Indian urban centers.",
-    source: "Exchange Filing",
-    timeAgo: "45 mins ago",
-    impact: "High",
+    badgeType: "Company announcement",
   },
   {
     id: "3",
-    stream: "orders",
-    category: "O",
-    categoryLabel: "Orders (O)",
-    symbol: "HAL",
-    title: "Hindustan Aeronautics inks multi-year export agreement for aviation spares",
-    summary:
-      "Contract values exceed $85M with friendly partner nations in Southeast Asia for fleet maintenance and overhaul.",
-    source: "Press Release",
-    timeAgo: "1 hour ago",
-    impact: "Medium",
+    stream: "stock",
+    time: "20:43",
+    symbol: "JSLL",
+    headline: "Board approves Q2 FY2026-27 unaudited financial results.",
+    category: "E",
+    badgeType: "Company announcement",
   },
   {
     id: "4",
-    stream: "global",
-    category: "R",
-    categoryLabel: "Regulatory (R)",
-    title: "US Federal Reserve signals pause on interest rate path amidst softening core PCE",
-    summary:
-      "Global yields compress as Treasury 10-year benchmark declines 6 bps to 4.38%, boosting emerging market risk appetite.",
-    source: "Bloomberg",
-    timeAgo: "2 hours ago",
-    impact: "High",
+    stream: "stock",
+    time: "20:40",
+    symbol: "GICL",
+    headline: "Globe International Carriers reports Q2 FY27 results; unmodified audit opinion.",
+    category: "E",
+    badgeType: "Company announcement",
   },
   {
     id: "5",
-    stream: "watchlist",
-    category: "C",
-    categoryLabel: "Corp Action (C)",
-    symbol: "DIXON",
-    title: "Dixon Technologies approves interim dividend of ₹12.00 per equity share",
-    summary:
-      "Record date for payment of dividend fixed as November 24, 2026. Shareholders register updated accordingly.",
-    source: "NSE Disclosures",
-    timeAgo: "3 hours ago",
-    impact: "Neutral",
+    stream: "stock",
+    time: "20:37",
+    symbol: "GUFICBIO",
+    headline: "Gufic Biosciences: Q2 FY27; US FDA progress, international expansion.",
+    category: "R",
+    badgeType: "Company announcement",
   },
   {
     id: "6",
     stream: "stock",
-    category: "M",
-    categoryLabel: "Management (M)",
-    symbol: "INFY",
-    title: "Infosys appoints new Chief Technology Officer for Enterprise Generative AI",
-    summary:
-      "Veteran technology executive will lead global client implementations for custom agentic AI pipelines.",
-    source: "Company Release",
-    timeAgo: "4 hours ago",
-    impact: "Medium",
+    time: "20:34",
+    symbol: "AGL",
+    headline: "Allcargo Global Board approves Q2 FY27 financial results.",
+    category: "E",
+    badgeType: "Company announcement",
   },
   {
     id: "7",
+    stream: "stock",
+    time: "20:33",
+    symbol: "VIKRAMSOLR",
+    headline: "IPO proceeds utilized as planned, but project implementation delayed.",
+    category: "C",
+    badgeType: "Proposed",
+  },
+  {
+    id: "8",
+    stream: "stock",
+    time: "20:29",
+    symbol: "VIKRAMSOLR",
+    headline: "Vikram Solar board approves Q2FY27 financial results.",
+    category: "E",
+    badgeType: "Company announcement",
+  },
+  {
+    id: "9",
+    stream: "stock",
+    time: "20:09",
+    symbol: "SWASTIKAIN",
+    headline: "IPO proceeds utilized as planned, no deviation reported.",
+    category: "C",
+    badgeType: "Proposed",
+  },
+  {
+    id: "10",
+    stream: "stock",
+    time: "20:07",
+    symbol: "KELLTONTEC",
+    headline: "Kellton Tech: Q2 FY27 with rising EBITDA margin.",
+    category: "E",
+    badgeType: "Company announcement",
+  },
+  {
+    id: "11",
     stream: "orders",
+    time: "19:45",
+    symbol: "BEL",
+    headline: "Bharat Electronics secures ₹1,155 Cr order for multi-function radar systems.",
     category: "O",
-    categoryLabel: "Orders (O)",
-    symbol: "BHEL",
-    title: "BHEL receives letter of award for 2x800 MW supercritical thermal project",
-    summary:
-      "Turnkey EPC order valued at ₹6,100 Cr won via competitive bidding process from state generation utility.",
-    source: "Exchange Filing",
-    timeAgo: "5 hours ago",
-    impact: "High",
+    badgeType: "Company announcement",
+  },
+  {
+    id: "12",
+    stream: "global",
+    time: "19:15",
+    symbol: "GLOBAL",
+    headline: "US Federal Reserve signals pause on rate path amidst softening core PCE.",
+    category: "R",
+    badgeType: "High impact",
   },
 ];
 
@@ -127,95 +138,55 @@ export default function NewsPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const streamTabs = [
-    { id: "stock", name: "Stock news", icon: Newspaper },
-    { id: "global", name: "Global", icon: Globe },
-    { id: "orders", name: "Orders & deals", icon: Briefcase },
-    { id: "watchlist", name: "My watchlist", icon: Star },
+    { id: "stock", name: "Stock news" },
+    { id: "global", name: "Global" },
+    { id: "orders", name: "Orders & deals" },
+    { id: "watchlist", name: "My watchlist" },
   ] as const;
 
   const categoryChips = [
     { id: "All", label: "All" },
-    { id: "E", label: "Earnings (E)" },
-    { id: "O", label: "Orders (O)" },
-    { id: "C", label: "Corp Action (C)" },
-    { id: "R", label: "Regulatory (R)" },
-    { id: "M", label: "Management (M)" },
+    { id: "E", label: "E - Earnings" },
+    { id: "O", label: "O - Orders" },
+    { id: "C", label: "C - Corp action" },
+    { id: "R", label: "R - Regulatory" },
+    { id: "M", label: "M - Management" },
   ] as const;
 
-  const filteredNews = NEWS_DATA.filter((n) => {
-    const matchStream = n.stream === activeStream;
-    const matchCategory = activeCategory === "All" || n.category === activeCategory;
+  const filtered = NEWS_FEED.filter((item) => {
+    const matchStream = item.stream === activeStream;
+    const matchCategory = activeCategory === "All" || item.category === activeCategory;
     const matchSearch =
-      n.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      n.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (n.symbol && n.symbol.toLowerCase().includes(searchQuery.toLowerCase()));
+      item.headline.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.symbol.toLowerCase().includes(searchQuery.toLowerCase());
     return matchStream && matchCategory && matchSearch;
   });
 
-  const getImpactBadge = (impact: "High" | "Medium" | "Neutral") => {
-    switch (impact) {
-      case "High":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-bull/15 text-bull border border-bull/30">High Impact</span>;
-      case "Medium":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-primary/15 text-primary border border-primary/30">Medium</span>;
-      case "Neutral":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-muted text-muted-foreground border border-border">Neutral</span>;
-    }
-  };
-
   return (
-    <div className="min-h-screen p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-border">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">Market News Feed</h1>
-            <span className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-              Direct Exchange Feeds
-            </span>
-          </div>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Real-time categorized corporate disclosures, order wins, financial results &amp; macro regulatory wires
-          </p>
-        </div>
-
-        {/* Quick Search */}
-        <div className="relative w-full sm:w-64">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search news & filings..."
-            className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-border bg-background text-foreground font-mono placeholder:font-sans"
-          />
-          <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
-        </div>
-      </div>
-
-      {/* Sub-Navigation Tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-1.5 p-1 bg-muted/60 rounded-2xl border border-border">
+    <div className="min-h-screen p-3 sm:p-5 lg:p-6 max-w-[1400px] mx-auto space-y-4">
+      {/* ================= TOP STREAM TABS & CATEGORY FILTERS (Screenshot 4) ================= */}
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-border/60">
+        {/* Stream Tabs */}
+        <div className="flex items-center gap-1">
           {streamTabs.map((tab) => {
-            const Icon = tab.icon;
             const active = activeStream === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveStream(tab.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   active
-                    ? "bg-card text-primary shadow-xs border border-border font-bold"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "bg-white dark:bg-card text-primary font-bold shadow-xs border border-blue-200/60 dark:border-border"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
                 }`}
               >
-                <Icon className="h-3.5 w-3.5" />
-                <span>{tab.name}</span>
+                {tab.name}
               </button>
             );
           })}
         </div>
 
-        {/* Category Filter Chips */}
+        {/* Category Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto py-1">
           {categoryChips.map((chip) => {
             const active = activeCategory === chip.id;
@@ -223,10 +194,10 @@ export default function NewsPage() {
               <button
                 key={chip.id}
                 onClick={() => setActiveCategory(chip.id)}
-                className={`px-2.5 py-1 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
+                className={`px-2.5 py-1 rounded-md text-xs font-mono transition-all cursor-pointer ${
                   active
                     ? "bg-primary text-white font-bold shadow-xs"
-                    : "bg-muted/40 text-muted-foreground hover:text-foreground hover:bg-muted"
+                    : "bg-slate-100 dark:bg-muted text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {chip.label}
@@ -236,56 +207,88 @@ export default function NewsPage() {
         </div>
       </div>
 
-      {/* News Cards Feed */}
-      <div className="space-y-3">
-        {filteredNews.length === 0 ? (
-          <div className="p-12 rounded-2xl border border-dashed border-border text-center space-y-2">
-            <Newspaper className="h-8 w-8 text-muted-foreground mx-auto" />
-            <h3 className="text-sm font-semibold text-foreground">No news matching filter</h3>
-            <p className="text-xs text-muted-foreground">Try clearing search terms or switching category chips.</p>
-          </div>
-        ) : (
-          filteredNews.map((item) => (
-            <div
-              key={item.id}
-              className="p-5 rounded-2xl bg-card border border-border shadow-xs hover:border-primary/40 transition-colors space-y-2.5"
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  {item.symbol && (
+      {/* Date Header matching Screenshot 4 */}
+      <div className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground pt-1 pl-1 font-mono">
+        SAT 14 NOV
+      </div>
+
+      {/* ================= TIMELINE FEED CARDS (Screenshot 4) ================= */}
+      <div className="relative pl-6 sm:pl-16 space-y-2">
+        {/* Vertical timeline line */}
+        <div className="absolute left-2.5 sm:left-12 top-2 bottom-2 w-px bg-slate-200 dark:bg-border" />
+
+        {filtered.map((item) => (
+          <div key={item.id} className="relative flex items-center gap-3 group">
+            {/* Blue timeline dot & timestamp */}
+            <div className="absolute -left-6 sm:-left-16 flex items-center gap-2">
+              <span className="hidden sm:inline font-mono text-[11px] text-muted-foreground w-10 text-right">
+                {item.time}
+              </span>
+              <span className="w-2 h-2 rounded-full bg-primary ring-4 ring-background" />
+            </div>
+
+            {/* Modular News Card */}
+            <div className="flex-1 rounded-xl bg-card border border-border/80 shadow-xs p-3 hover:border-primary/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div className="flex items-start sm:items-center gap-2.5">
+                {/* Stock Circle Logo */}
+                <div className="h-7 w-7 rounded-full bg-slate-100 dark:bg-muted flex items-center justify-center font-mono font-bold text-[10px] text-foreground shrink-0 border border-border/60">
+                  {item.symbol.substring(0, 2)}
+                </div>
+
+                <div className="space-y-0.5">
+                  <div className="flex flex-wrap items-center gap-1.5">
                     <Link
                       href={`/stock/${item.symbol}`}
-                      className="px-2 py-0.5 rounded-md font-mono text-xs font-bold bg-primary/10 text-primary border border-primary/20 hover:underline"
+                      className="font-mono font-bold text-xs text-foreground hover:text-primary transition-colors"
                     >
                       {item.symbol}
                     </Link>
-                  )}
-                  <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-muted text-foreground border border-border">
-                    {item.categoryLabel}
-                  </span>
-                  {getImpactBadge(item.impact)}
-                </div>
-
-                <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
-                  <span>{item.source}</span>
-                  <span>•</span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {item.timeAgo}
-                  </span>
+                    <span className="text-xs text-muted-foreground leading-snug">
+                      {item.headline}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <h2 className="text-base font-bold text-foreground leading-snug hover:text-primary transition-colors cursor-pointer">
-                {item.title}
-              </h2>
+              {/* Right Tag Badges */}
+              <div className="flex items-center gap-2 shrink-0 self-end sm:self-center font-mono text-[10px]">
+                <span
+                  className={`px-1.5 py-0.2 rounded-full font-bold border ${
+                    item.category === "E"
+                      ? "bg-blue-50 text-blue-700 border-blue-200/60 dark:bg-blue-950/40 dark:text-blue-300"
+                      : item.category === "O"
+                      ? "bg-emerald-50 text-emerald-700 border-emerald-200/60 dark:bg-emerald-950/40 dark:text-emerald-300"
+                      : "bg-amber-50 text-amber-700 border-amber-200/60 dark:bg-amber-950/40 dark:text-amber-300"
+                  }`}
+                >
+                  {item.category}
+                </span>
 
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                {item.summary}
-              </p>
+                <span
+                  className={`px-2 py-0.5 rounded-md font-sans font-semibold border ${
+                    item.badgeType === "Proposed"
+                      ? "bg-amber-50 text-amber-700 border-amber-200/60 dark:bg-amber-950/40 dark:text-amber-300"
+                      : "bg-purple-50 text-purple-700 border-purple-200/60 dark:bg-purple-950/40 dark:text-purple-300"
+                  }`}
+                >
+                  {item.badgeType}
+                </span>
+              </div>
             </div>
-          ))
+          </div>
+        ))}
+
+        {filtered.length === 0 && (
+          <div className="text-center py-12 text-xs text-muted-foreground bg-card rounded-2xl border border-border">
+            No disclosures found matching current filters.
+          </div>
         )}
+      </div>
+
+      {/* Bottom status bar */}
+      <div className="flex items-center justify-between pt-4 border-t border-border/40 text-[10px] text-muted-foreground font-mono">
+        <span>300 of 15,410 headlines</span>
+        <span>Latest Sat 14 Nov 20:50 • Data delayed • Disclaimer</span>
       </div>
     </div>
   );
