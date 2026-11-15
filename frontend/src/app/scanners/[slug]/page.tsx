@@ -157,10 +157,10 @@ export default async function ScannerPage({ params }: PageProps) {
   const stocks = result?.data || [];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground w-full">
       {/* Top Navigation Bar / Breadcrumb */}
-      <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-40">
-        <div className="container mx-auto px-4 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-40 w-full">
+        <div className="w-full px-3 sm:px-6 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground mb-1">
               <Link href="/" className="hover:text-foreground transition-colors">
@@ -188,7 +188,7 @@ export default async function ScannerPage({ params }: PageProps) {
         </div>
 
         {/* Scanner Navigation Tabs */}
-        <div className="container mx-auto px-4">
+        <div className="w-full px-3 sm:px-6">
           <div className="flex items-center gap-2 overflow-x-auto py-2 scrollbar-none">
             {SCANNER_TABS.map((tab) => {
               const Icon = tab.icon;
@@ -223,12 +223,12 @@ export default async function ScannerPage({ params }: PageProps) {
       </header>
 
       {/* Main Content Area */}
-      <main className="container mx-auto px-4 py-6">
+      <main className="w-full px-3 sm:px-6 py-4">
         <ScannerGrid initialStocks={stocks} metadata={metadata} />
       </main>
 
       {/* Regulatory SEBI Educational Notice */}
-      <footer className="border-t border-border/40 py-6 text-center text-xs text-muted-foreground container mx-auto px-4">
+      <footer className="border-t border-border/40 py-4 text-center text-xs text-muted-foreground w-full px-3 sm:px-6">
         <p>
           TRADESCOUT is an educational research platform, not a SEBI-registered advisory. Market
           investments are subject to risk.

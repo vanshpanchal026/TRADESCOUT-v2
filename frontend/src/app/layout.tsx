@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Hanken_Grotesk } from "next/font/google";
+import { Inter, Hanken_Grotesk, Manrope } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Footer from "@/components/common/Footer";
@@ -14,6 +14,12 @@ const inter = Inter({
 const hanken = Hanken_Grotesk({
   subsets: ["latin"],
   variable: "--font-hanken",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -32,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${hanken.variable} dark`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${hanken.variable} ${manrope.variable} dark`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

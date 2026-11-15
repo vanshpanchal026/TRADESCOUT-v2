@@ -20,21 +20,21 @@ import { useTheme } from "@/components/theme-provider";
 
 function getChartThemeColors(isDark: boolean) {
   return {
-    textColor: isDark ? "#a1a1aa" : "#334155",
-    gridColor: isDark ? "rgba(39, 39, 42, 0.3)" : "rgba(226, 232, 240, 0.5)",
-    crosshairColor: isDark ? "#6366f1" : "#4f46e5",
-    crosshairLabelBg: isDark ? "#141420" : "#1e293b",
+    textColor: isDark ? "#a1a1aa" : "#475569",
+    gridColor: isDark ? "rgba(39, 39, 42, 0.35)" : "rgba(226, 232, 240, 0.6)",
+    crosshairColor: isDark ? "rgba(99, 102, 241, 0.75)" : "rgba(79, 70, 229, 0.75)",
+    crosshairLabelBg: isDark ? "#141420" : "#0f172a",
     borderColor: isDark ? "#27272a" : "#e2e8f0",
-    upColor: isDark ? "#22c55e" : "#16A34A",
-    downColor: isDark ? "#ef4444" : "#DC2626",
-    wickUpColor: isDark ? "#22c55e" : "#16A34A",
-    wickDownColor: isDark ? "#ef4444" : "#DC2626",
-    s10Color: isDark ? "#eab308" : "#d97706",
-    s20Color: isDark ? "#22c55e" : "#16a34a",
-    e21Color: isDark ? "#06b6d4" : "#0284c7",
+    upColor: isDark ? "#22c55e" : "#16a34a",
+    downColor: isDark ? "#ef4444" : "#dc2626",
+    wickUpColor: isDark ? "#22c55e" : "#16a34a",
+    wickDownColor: isDark ? "#ef4444" : "#dc2626",
+    s10Color: isDark ? "#f59e0b" : "#d97706",
+    s20Color: isDark ? "#10b981" : "#059669",
+    e21Color: isDark ? "#06b6d4" : "#0891b2",
     s50Color: isDark ? "#3b82f6" : "#2563eb",
-    s150Color: isDark ? "#a855f7" : "#9333ea",
-    s200Color: isDark ? "#ef4444" : "#dc2626",
+    s150Color: isDark ? "#a855f7" : "#7c3aed",
+    s200Color: isDark ? "#f43f5e" : "#e11d48",
     rsiColor: isDark ? "#c084fc" : "#7c3aed",
     rsLineColor: isDark ? "#6366f1" : "#4f46e5",
     pivotColor: "#f59e0b",
@@ -341,8 +341,8 @@ export default function TradingViewChart({
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
         textColor: tc.textColor,
-        fontSize: 12,
-        fontFamily: "'Hanken Grotesk', system-ui, sans-serif",
+        fontSize: 11,
+        fontFamily: "'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
       },
       grid: {
         vertLines: { color: tc.gridColor, style: LineStyle.Dotted },
@@ -354,26 +354,36 @@ export default function TradingViewChart({
           color: tc.crosshairColor,
           width: 1,
           style: LineStyle.Dashed,
+          visible: true,
+          labelVisible: true,
           labelBackgroundColor: tc.crosshairLabelBg,
         },
         horzLine: {
           color: tc.crosshairColor,
           width: 1,
           style: LineStyle.Dashed,
+          visible: true,
+          labelVisible: true,
           labelBackgroundColor: tc.crosshairLabelBg,
         },
       },
       rightPriceScale: {
         borderColor: tc.borderColor,
         scaleMargins: {
-          top: 0.1,
+          top: 0.08,
           bottom: 0.22,
         },
+        borderVisible: true,
+        alignLabels: true,
       },
       timeScale: {
         borderColor: tc.borderColor,
         timeVisible: true,
         secondsVisible: false,
+        borderVisible: true,
+        rightOffset: 6,
+        barSpacing: 6,
+        minBarSpacing: 2,
       },
     });
 
@@ -475,7 +485,7 @@ export default function TradingViewChart({
     );
     s200SeriesRef.current = s200Series;
 
-    // Volume Histogram (Pane 0)
+    // Volume Histogram (Pane 0 - aligned in bottom 22% without overlapping price axis)
     const volSeries = chart.addSeries(
       HistogramSeries,
       {
@@ -487,16 +497,17 @@ export default function TradingViewChart({
     volSeriesRef.current = volSeries;
     chart.priceScale("volume_scale").applyOptions({
       scaleMargins: {
-        top: 0.82,
+        top: 0.78,
         bottom: 0,
       },
+      visible: false,
     });
 
     // Sub-Pane: RSI / RS (Pane 1)
     const subSeries = chart.addSeries(
       LineSeries,
       {
-        color: "#A855F7",
+        color: tc.rsiColor,
         lineWidth: 2,
         priceScaleId: "sub_scale",
         title: "RSI(14)",
@@ -521,17 +532,24 @@ export default function TradingViewChart({
       title: "30",
     });
 
-    // Resize Observer for fluid responsiveness
+    // Resize Observer for fluid responsiveness with requestAnimationFrame debouncing
+    let rafId: number;
     const resizeObserver = new ResizeObserver((entries) => {
       if (!entries || entries.length === 0 || !entries[0].contentRect) return;
       const { width, height } = entries[0].contentRect;
       if (width > 0 && height > 0) {
-        chart.applyOptions({ width, height });
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          if (chartRef.current) {
+            chartRef.current.applyOptions({ width, height });
+          }
+        });
       }
     });
     resizeObserver.observe(container);
 
     return () => {
+      cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
       chart.remove();
       chartRef.current = null;
@@ -666,11 +684,11 @@ export default function TradingViewChart({
     if (showPivot && calculatedPivot) {
       pivotLineRef.current = candleSeriesRef.current.createPriceLine({
         price: calculatedPivot,
-        color: "#F59E0B",
+        color: "#f59e0b",
         lineWidth: 1,
         lineStyle: LineStyle.Dashed,
         axisLabelVisible: true,
-        title: `Pivot ₹${calculatedPivot}`,
+        title: `Pivot ₹${calculatedPivot.toFixed(2)}`,
       });
     }
   }, [showPivot, calculatedPivot]);
@@ -846,7 +864,7 @@ export default function TradingViewChart({
   };
 
   return (
-    <div className="relative flex flex-col w-full h-full bg-card rounded-2xl border border-border overflow-hidden shadow-sm backdrop-blur-md">
+    <div className="relative flex flex-col w-full h-full bg-card rounded-xl border border-border overflow-hidden shadow-xs backdrop-blur-md">
       {/* Toast notification pill */}
       {toastMessage && (
         <div className="absolute top-3 left-1/2 -translate-x-1/2 z-50 px-4 py-1.5 rounded-full bg-primary text-primary-foreground font-bold text-xs shadow-lg shadow-primary/20 animate-bounce">
@@ -855,96 +873,108 @@ export default function TradingViewChart({
       )}
 
       {/* Top Controls Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-border bg-muted/40">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 border-b border-border bg-muted/30">
         {/* Left: Indicator Toggles */}
         <div className="flex flex-wrap items-center gap-1.5 text-xs font-medium">
-          <span className="text-muted-foreground mr-1 select-none">Overlays:</span>
+          <span className="text-muted-foreground mr-1 text-[11px] font-semibold uppercase tracking-wider select-none">
+            Indicators:
+          </span>
           <button
+            type="button"
             onClick={() => setShowSma10(!showSma10)}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-150 border cursor-pointer active:scale-95 select-none ${
               showSma10
                 ? "bg-amber-500/15 border-amber-500/40 text-amber-400 font-semibold shadow-xs"
-                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                : "bg-card border-border/80 text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
             }`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-xs shadow-amber-400/50" />
             <span>SMA 10</span>
           </button>
           <button
+            type="button"
             onClick={() => setShowSma20(!showSma20)}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-150 border cursor-pointer active:scale-95 select-none ${
               showSma20
                 ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-400 font-semibold shadow-xs"
-                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                : "bg-card border-border/80 text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
             }`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-xs shadow-emerald-400/50" />
             <span>SMA 20</span>
           </button>
           <button
+            type="button"
             onClick={() => setShowEma21(!showEma21)}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-150 border cursor-pointer active:scale-95 select-none ${
               showEma21
-                ? "bg-cyan-500/15 border-cyan-500/40 text-cyan-400 font-semibold shadow-xs"
-                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                ? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300 font-bold shadow-xs shadow-cyan-500/20 ring-1 ring-cyan-500/30"
+                : "bg-card border-border/80 text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
             }`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-xs shadow-cyan-400/60" />
             <span>EMA 21</span>
           </button>
           <button
+            type="button"
             onClick={() => setShowSma50(!showSma50)}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-150 border cursor-pointer active:scale-95 select-none ${
               showSma50
                 ? "bg-blue-500/15 border-blue-500/40 text-blue-400 font-semibold shadow-xs"
-                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                : "bg-card border-border/80 text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
             }`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-xs shadow-blue-400/50" />
             <span>SMA 50</span>
           </button>
           <button
+            type="button"
             onClick={() => setShowSma150(!showSma150)}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-150 border cursor-pointer active:scale-95 select-none ${
               showSma150
-                ? "bg-purple-500/15 border-purple-500/40 text-purple-400 font-semibold shadow-xs"
-                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                ? "bg-purple-500/20 border-purple-500/50 text-purple-300 font-bold shadow-xs shadow-purple-500/20 ring-1 ring-purple-500/30"
+                : "bg-card border-border/80 text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
             }`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-xs shadow-purple-400/60" />
             <span>SMA 150</span>
           </button>
           <button
+            type="button"
             onClick={() => setShowSma200(!showSma200)}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-150 border cursor-pointer active:scale-95 select-none ${
               showSma200
                 ? "bg-rose-500/15 border-rose-500/40 text-rose-400 font-semibold shadow-xs"
-                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                : "bg-card border-border/80 text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
             }`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shadow-xs shadow-rose-400/50" />
             <span>SMA 200</span>
           </button>
           <button
+            type="button"
             onClick={() => setShowVolume(!showVolume)}
-            className={`px-2.5 py-1 rounded-md transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-150 border cursor-pointer active:scale-95 select-none ${
               showVolume
-                ? "bg-primary/15 border-primary/40 text-primary font-semibold shadow-xs"
-                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                ? "bg-primary/20 border-primary/50 text-primary font-bold shadow-xs shadow-primary/20"
+                : "bg-card border-border/80 text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
             }`}
           >
-            Volume
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            <span>Volume</span>
           </button>
           {calculatedPivot && (
             <button
+              type="button"
               onClick={() => setShowPivot(!showPivot)}
-              className={`px-2.5 py-1 rounded-md transition-all border ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-150 border cursor-pointer active:scale-95 select-none ${
                 showPivot
-                  ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 font-semibold shadow-xs"
-                  : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-amber-500/20 border-amber-500/50 text-amber-400 font-bold shadow-xs shadow-amber-500/20 ring-1 ring-amber-500/30"
+                  : "bg-card border-border/80 text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
               }`}
             >
-              Pivot (₹{calculatedPivot})
+              <span className="w-2.5 h-0.5 border-b border-dashed border-amber-400" />
+              <span>Pivot (₹{calculatedPivot.toFixed(2)})</span>
             </button>
           )}
 
@@ -952,14 +982,15 @@ export default function TradingViewChart({
 
           {/* Sub-Pane Indicator Switch */}
           <button
+            type="button"
             onClick={() => {
               if (!showSubPane) setShowSubPane(true);
               setSubPaneMode(subPaneMode === "rsi" ? "rs" : "rsi");
             }}
-            className={`px-2.5 py-1 rounded-md transition-all border ${
+            className={`px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-150 border cursor-pointer active:scale-95 select-none ${
               showSubPane
-                ? "bg-purple-500/15 border-purple-500/40 text-purple-600 dark:text-purple-300 font-semibold shadow-xs"
-                : "bg-card border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                ? "bg-purple-500/15 border-purple-500/40 text-purple-300 font-semibold shadow-xs"
+                : "bg-card border-border/80 text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
             }`}
           >
             Sub-Pane: {subPaneMode.toUpperCase()}
@@ -969,16 +1000,18 @@ export default function TradingViewChart({
 
           {/* Drawing Tools */}
           <button
+            type="button"
             onClick={handleAddDrawing}
-            className="px-2.5 py-1 rounded-lg transition-all border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 font-medium"
-            title="Add auto-saved horizontal line"
+            className="px-2.5 py-1 rounded-lg transition-all border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 text-[11px] font-medium cursor-pointer"
+            title="Add auto-saved horizontal level line"
           >
-            + Draw Line
+            + Level Line
           </button>
           {drawings.length > 0 && (
             <button
+              type="button"
               onClick={handleClearDrawings}
-              className="px-2 py-1 rounded-lg text-[11px] border border-border bg-card text-muted-foreground hover:text-rose-500 hover:border-rose-500/40 transition-colors"
+              className="px-2 py-1 rounded-lg text-[11px] border border-border bg-card text-muted-foreground hover:text-rose-500 hover:border-rose-500/40 transition-colors cursor-pointer"
             >
               Clear ({drawings.length})
             </button>
@@ -994,8 +1027,9 @@ export default function TradingViewChart({
         <div className="flex items-center gap-2">
           {/* Star Shortcut (Press 'W') */}
           <button
+            type="button"
             onClick={handleToggleFavourite}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all border cursor-pointer ${
               isFavourite
                 ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 shadow-xs"
                 : "bg-card border-border text-muted-foreground hover:text-amber-500"
@@ -1004,18 +1038,19 @@ export default function TradingViewChart({
           >
             <span>{isFavourite ? "★" : "☆"}</span>
             <span>{isFavourite ? "Starred" : "Favourite"}</span>
-            <kbd className="hidden sm:inline-block px-1 py-0.2 rounded bg-muted text-[10px] text-muted-foreground border border-border">
+            <kbd className="hidden sm:inline-block px-1 py-0.2 rounded bg-muted text-[10px] text-muted-foreground border border-border font-mono">
               W
             </kbd>
           </button>
 
           {/* Time Range Buttons */}
-          <div className="flex items-center gap-1 bg-muted/60 p-1 rounded-xl border border-border text-xs">
+          <div className="flex items-center gap-0.5 bg-muted/60 p-0.5 rounded-lg border border-border text-xs">
             {(["1M", "3M", "6M", "1Y", "ALL"] as const).map((rng) => (
               <button
                 key={rng}
+                type="button"
                 onClick={() => handleRangeChange(rng)}
-                className={`px-2.5 py-1 rounded font-medium transition-all ${
+                className={`px-2 py-1 rounded text-xs font-medium transition-all cursor-pointer ${
                   selectedRange === rng
                     ? "bg-primary text-primary-foreground font-bold shadow-xs"
                     : "text-muted-foreground hover:text-foreground"
@@ -1037,39 +1072,42 @@ export default function TradingViewChart({
         >
           {stageName}
         </div>
-        <div className="px-2.5 py-1 rounded-full text-xs font-semibold border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 backdrop-blur-md shadow-md">
+        <div className="px-2.5 py-1 rounded-full text-xs font-semibold border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 backdrop-blur-md shadow-md tabular-nums">
           RS {rsRating}
         </div>
         {bars.length > 0 && (
-          <div className="px-2.5 py-1 rounded-full text-xs font-medium border border-border bg-card/90 text-foreground backdrop-blur-md shadow-xs">
+          <div className="px-2.5 py-1 rounded-full text-xs font-semibold border border-border bg-card/90 text-foreground backdrop-blur-md shadow-xs tabular-nums">
             LTP: ₹{bars[bars.length - 1].close.toFixed(2)}
           </div>
         )}
       </div>
 
       {/* Canvas Mount Container */}
-      <div ref={containerRef} className="flex-1 w-full min-h-[520px]" />
+      <div ref={containerRef} className="flex-1 w-full min-h-[560px] lg:min-h-[640px]" />
 
       {/* High Volume Spikes Legend */}
-      <div className="flex items-center justify-between px-4 py-2 border-t border-border bg-muted/30 text-[11px] text-muted-foreground">
-        <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block" /> Bullish Candle
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 border-t border-border bg-muted/30 text-[11px] text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-xs bg-emerald-500 inline-block shadow-xs shadow-emerald-500/20" /> Bullish Candle
           </span>
-          <span className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded-sm bg-rose-500 inline-block" /> Bearish Candle
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-xs bg-rose-500 inline-block shadow-xs shadow-rose-500/20" /> Bearish Candle
           </span>
-          <span className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded-sm bg-fuchsia-500 inline-block" /> High-Vol Spike (&gt;2.0× 50D)
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-xs bg-fuchsia-500 inline-block shadow-xs shadow-fuchsia-500/20" /> Volume Spike (&gt;2.0× 50D)
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-3 h-0.5 bg-amber-500 inline-block border-b border-dashed border-amber-400" /> Pivot Line
           </span>
           {drawings.length > 0 && (
-            <span className="flex items-center gap-1 text-primary font-medium">
-              <span className="w-2.5 h-0.5 bg-emerald-500 inline-block" /> {drawings.length} Saved Drawing(s)
+            <span className="flex items-center gap-1.5 text-primary font-medium">
+              <span className="w-2.5 h-0.5 bg-emerald-500 inline-block" /> {drawings.length} Saved Level(s)
             </span>
           )}
         </div>
-        <div className="text-muted-foreground">
-          Hardware-accelerated HTML5 Canvas (60 FPS) · Cloud Drawings Auto-Saved
+        <div className="flex items-center gap-2 text-[10px] text-muted-foreground/80 font-mono">
+          <span>Educational research platform · Real-time OHLCV</span>
         </div>
       </div>
     </div>

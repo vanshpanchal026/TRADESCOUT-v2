@@ -12,7 +12,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ArrowUp, ArrowDown, Search } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ArrowDown, Search, X, ShieldAlert } from "lucide-react";
 
 import { ScannerStock, ScannerMetadata } from "@/lib/types";
 import { Sparkline } from "./sparkline";
@@ -103,7 +103,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         header: ({ column }) => (
           <button
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="flex items-center gap-1 font-semibold text-foreground hover:text-primary transition-colors"
+            className="flex items-center gap-1 font-semibold text-foreground hover:text-primary transition-colors duration-150 ease-out"
           >
             Symbol
             {column.getIsSorted() === "asc" ? (
@@ -118,7 +118,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         cell: ({ row }) => {
           const sym = row.original.symbol;
           return (
-            <div className="font-bold tracking-tight text-foreground hover:text-primary transition-colors">
+            <div className="font-bold tracking-tight text-foreground group-hover:text-primary transition-colors duration-150 ease-out">
               {sym}
             </div>
           );
@@ -140,7 +140,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         header: ({ column }) => (
           <button
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors"
+            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors duration-150 ease-out"
           >
             CMP (₹)
             {column.getIsSorted() === "asc" ? (
@@ -155,7 +155,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         cell: ({ getValue }) => {
           const val = Number(getValue());
           return (
-            <div className="text-right font-mono font-medium text-foreground">
+            <div className="text-right font-mono font-medium text-foreground tabular-nums text-xs">
               ₹{val ? val.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "—"}
             </div>
           );
@@ -167,7 +167,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         header: ({ column }) => (
           <button
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors"
+            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors duration-150 ease-out"
           >
             Day %
             {column.getIsSorted() === "asc" ? (
@@ -184,7 +184,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
           const isUp = val >= 0;
           return (
             <div
-              className={`text-right font-mono font-semibold ${
+              className={`text-right font-mono font-semibold text-xs tabular-nums ${
                 isUp ? "text-emerald-500" : "text-rose-500"
               }`}
             >
@@ -215,7 +215,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         header: ({ column }) => (
           <button
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors"
+            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors duration-150 ease-out"
           >
             RVOL
             {column.getIsSorted() === "asc" ? (
@@ -232,7 +232,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
           const highlight = val >= 2.0;
           return (
             <div
-              className={`text-right font-mono text-xs ${
+              className={`text-right font-mono text-xs tabular-nums ${
                 highlight ? "font-bold text-amber-500" : "text-muted-foreground"
               }`}
             >
@@ -246,7 +246,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         header: ({ column }) => (
           <button
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors"
+            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors duration-150 ease-out"
           >
             RS Rating
             {column.getIsSorted() === "asc" ? (
@@ -264,9 +264,9 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
           return (
             <div className="flex justify-end">
               <span
-                className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-xs font-semibold tabular-nums border ${
+                className={`inline-flex items-center justify-center min-w-[32px] rounded-md px-2 py-0.5 font-mono text-xs font-semibold tabular-nums border ${
                   isTopTier
-                    ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+                    ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30 shadow-[0_0_8px_rgba(34,197,94,0.12)]"
                     : "bg-zinc-800/60 text-zinc-400 border-zinc-700/40"
                 }`}
               >
@@ -281,7 +281,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         header: () => <div className="text-center">Stage</div>,
         cell: ({ getValue }) => {
           const st = Number(getValue());
-          let color = "bg-zinc-800 text-zinc-400 border-zinc-700/40";
+          let color = "bg-zinc-800/60 text-zinc-400 border-zinc-700/40";
           if (st === 2) color = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
           else if (st === 4) color = "bg-rose-500/15 text-rose-400 border-rose-500/30";
           else if (st === 1) color = "bg-amber-500/15 text-amber-400 border-amber-500/30";
@@ -289,7 +289,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
 
           return (
             <div className="flex justify-center">
-              <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold border ${color}`}>
+              <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold tabular-nums border ${color}`}>
                 Stage {st || "—"}
               </span>
             </div>
@@ -302,7 +302,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         cell: ({ getValue }) => {
           const val = Number(getValue());
           return (
-            <div className="text-right font-mono text-xs text-muted-foreground">
+            <div className="text-right font-mono text-xs text-muted-foreground tabular-nums">
               {val ? `₹${val.toFixed(2)}` : "—"}
             </div>
           );
@@ -314,7 +314,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         cell: ({ getValue }) => {
           const val = Number(getValue());
           return (
-            <div className="text-right font-mono text-xs text-muted-foreground">
+            <div className="text-right font-mono text-xs text-muted-foreground tabular-nums">
               {val ? `₹${val.toFixed(2)}` : "—"}
             </div>
           );
@@ -325,7 +325,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         header: ({ column }) => (
           <button
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors"
+            className="flex items-center justify-end w-full gap-1 font-semibold text-foreground hover:text-primary transition-colors duration-150 ease-out"
           >
             52W High %
             {column.getIsSorted() === "asc" ? (
@@ -340,7 +340,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
         cell: ({ getValue }) => {
           const val = Number(getValue());
           return (
-            <div className="text-right font-mono text-xs text-muted-foreground">
+            <div className="text-right font-mono text-xs text-muted-foreground tabular-nums">
               {val ? `${val.toFixed(1)}%` : "—"}
             </div>
           );
@@ -409,26 +409,38 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             placeholder="Search symbol, company name (<10ms)..."
-            className="h-10 w-full rounded-lg border border-border bg-background/80 pl-9 pr-4 text-sm text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="h-9.5 w-full rounded-lg border border-border bg-card/80 pl-9 pr-8 text-xs sm:text-sm text-foreground shadow-xs transition-colors duration-150 ease-out placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50"
           />
+          {globalFilter && (
+            <button
+              type="button"
+              onClick={() => setGlobalFilter("")}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-0.5"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          )}
         </div>
 
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <span>
-            Showing <strong className="text-foreground">{rows.length}</strong> of{" "}
-            <strong className="text-foreground">{currentMetadata.total_matches}</strong> candidates
+        <div className="flex flex-wrap items-center gap-2.5 text-xs text-muted-foreground">
+          <span className="tabular-nums">
+            Showing <strong className="text-foreground tabular-nums font-semibold">{rows.length}</strong> of{" "}
+            <strong className="text-foreground tabular-nums font-semibold">{currentMetadata.total_matches}</strong> candidates
           </span>
           <span className="h-3 w-px bg-border" />
-          <span>EOD: {currentMetadata.last_updated}</span>
+          <span className="tabular-nums">EOD: {currentMetadata.last_updated}</span>
         </div>
       </div>
 
       {/* Main Table Container with Sticky Frozen Columns */}
-      <div className="relative overflow-x-auto rounded-xl border border-border bg-card shadow-sm">
+      <div className="relative overflow-x-auto rounded-xl border border-border bg-card shadow-sm max-h-[720px] overflow-y-auto">
         <table className="w-full text-left text-sm border-collapse">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="sticky top-0 z-30 border-b border-border bg-muted/95 backdrop-blur-md text-xs uppercase tracking-wider text-muted-foreground">
+              <tr
+                key={headerGroup.id}
+                className="sticky top-0 z-30 border-b border-border bg-[#141420]/95 backdrop-blur-xs text-[11px] uppercase tracking-wider text-muted-foreground font-semibold"
+              >
                 {headerGroup.headers.map((header) => {
                   const isSymbol = header.column.id === "symbol";
                   const isCmp = header.column.id === "cmp";
@@ -436,11 +448,11 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
                   return (
                     <th
                       key={header.id}
-                      className={`py-3 px-4 select-none whitespace-nowrap ${
+                      className={`py-2 px-3 select-none whitespace-nowrap ${
                         isSymbol
-                          ? "sticky left-0 z-40 bg-muted/95 backdrop-blur-md shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
+                          ? "sticky left-0 z-40 bg-[#141420] shadow-[2px_0_4px_-2px_rgba(0,0,0,0.3)]"
                           : isCmp
-                          ? "sticky left-[110px] z-30 bg-muted/95 backdrop-blur-md shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
+                          ? "sticky left-[110px] z-30 bg-[#141420] shadow-[2px_0_4px_-2px_rgba(0,0,0,0.3)]"
                           : ""
                       }`}
                     >
@@ -470,7 +482,7 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
                       setSelectedIndex(idx);
                       router.push(`/stock/${row.original.symbol}`);
                     }}
-                    className={`cursor-pointer transition-colors ${
+                    className={`group cursor-pointer transition-colors duration-150 ease-out ${
                       isSelected
                         ? "bg-primary/15 ring-1 ring-inset ring-primary/40"
                         : "hover:bg-white/[0.03]"
@@ -483,11 +495,15 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
                       return (
                         <td
                           key={cell.id}
-                          className={`py-3 px-4 whitespace-nowrap ${
+                          className={`py-1.5 px-3 whitespace-nowrap text-xs ${
                             isSymbol
-                              ? "sticky left-0 z-20 bg-card font-semibold shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
+                              ? `sticky left-0 z-20 font-semibold shadow-[2px_0_4px_-2px_rgba(0,0,0,0.3)] ${
+                                  isSelected ? "bg-[#232338]" : "bg-card group-hover:bg-[#202033]"
+                                }`
                               : isCmp
-                              ? "sticky left-[110px] z-20 bg-card shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)]"
+                              ? `sticky left-[110px] z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.3)] ${
+                                  isSelected ? "bg-[#232338]" : "bg-card group-hover:bg-[#202033]"
+                                }`
                               : ""
                           }`}
                         >
@@ -508,6 +524,12 @@ export function ScannerGrid({ initialStocks, metadata }: ScannerGridProps) {
 
       {/* Freemium Lock Banner if truncated */}
       {currentMetadata.is_truncated && <PaywallBlurBanner totalMatches={currentMetadata.total_matches} />}
+
+      {/* Mandatory Regulatory Compliance Notice */}
+      <div className="flex items-center justify-center gap-1.5 pt-2 text-[11px] text-muted-foreground text-center">
+        <ShieldAlert className="h-3.5 w-3.5 shrink-0 text-muted-foreground/80" />
+        <span>TRADESCOUT is an educational research platform, not a SEBI-registered advisory. Market investments are subject to risk.</span>
+      </div>
     </div>
   );
 }

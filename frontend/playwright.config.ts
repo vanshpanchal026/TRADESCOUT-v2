@@ -21,15 +21,27 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "chromium",
+      name: "desktop-1440",
       use: {
         ...devices["Desktop Chrome"],
+        channel: "chrome",
+        viewport: { width: 1440, height: 900 },
+        headless: true,
+      },
+    },
+    {
+      name: "mobile-375",
+      use: {
+        channel: "chrome",
+        viewport: { width: 375, height: 667 },
+        isMobile: true,
+        hasTouch: true,
         headless: true,
       },
     },
   ],
   webServer: {
-    command: "pnpm dev",
+    command: "pnpm start",
     url: "http://localhost:3000",
     reuseExistingServer: true,
     timeout: 120000,

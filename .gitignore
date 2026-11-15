@@ -27,6 +27,10 @@ test-results/
 .env.production.local
 *.pem
 *.key
+storageState.json
+auth.json
+*.storageState.json
+research/extracted-specs/
 
 # ----------------------------------------------------------------------------
 # 3. Python & FastAPI Artifacts

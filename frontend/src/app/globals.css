@@ -21,21 +21,64 @@
     --background: #0a0a0f;
     --canvas: #0a0a0f;
     --foreground: #e4e4e7;
-    --card: #1c1c2e;
-    --card-foreground: #e4e4e7;
-    --surface: #1c1c2e;
-    --primary: #6366f1;
+    --card: #101a33;
+    --card-foreground: #ffffff;
+    --surface: #101a33;
+    --primary: #0171e4;
     --primary-foreground: #ffffff;
     --muted: #141420;
-    --muted-foreground: #a1a1aa;
+    --muted-foreground: #8a90a0;
     --border: #27272a;
   }
+}
+
+*, ::before, ::after {
+  --tw-ease: cubic-bezier(0.22, 0.65, 0.25, 1);
+}
+
+@keyframes slide {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hcUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0px, 24px, 0px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sc-shine {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-slide {
+  animation: slide 0.35s cubic-bezier(0.22, 0.65, 0.25, 1) forwards;
+}
+
+.animate-hcUp {
+  animation: hcUp 0.45s cubic-bezier(0.22, 0.65, 0.25, 1) forwards;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-hanken), var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-manrope), var(--font-hanken), var(--font-inter), system-ui, -apple-system, sans-serif;
   min-height: 100vh;
 }
 

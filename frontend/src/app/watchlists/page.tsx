@@ -124,8 +124,8 @@ export default function WatchlistsDashboardPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-40 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+      <header className="sticky top-0 z-40 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
               href="/scanners/trend-template"
@@ -159,7 +159,7 @@ export default function WatchlistsDashboardPage() {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {loadingWatchlists ? (
           <div className="flex items-center justify-center h-64 text-slate-500 text-sm animate-pulse">
             Loading your watchlists and trade setups...

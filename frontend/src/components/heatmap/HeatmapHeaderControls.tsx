@@ -63,10 +63,10 @@ export function HeatmapHeaderControls({
           </div>
 
           {/* Color Scale Legend */}
-          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted/40 border border-border text-[11px] font-mono">
-            <span className="text-bear font-bold">-3%</span>
-            <div className="h-2.5 w-20 rounded-full bg-gradient-to-r from-[#EF4444] via-[#27272a] to-[#00E5FF]" />
-            <span className="text-[#00E5FF] font-bold">+3%</span>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted/40 border border-border text-[11px] font-mono">
+            <span className="text-bear font-bold tabular-nums">-3%</span>
+            <div className="h-2.5 w-16 sm:w-20 rounded-full bg-gradient-to-r from-[#EF4444] via-[#27272a] to-[#00E5FF]" />
+            <span className="text-[#00E5FF] font-bold tabular-nums">+3%</span>
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-hanken)", "var(--font-inter)", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["var(--font-manrope)", "var(--font-hanken)", "var(--font-inter)", "Manrope", "Inter", "system-ui", "-apple-system", "sans-serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       colors: {
@@ -18,6 +18,14 @@ const config: Config = {
         foreground: "var(--foreground)",
         canvas: "var(--canvas)",
         surface: "var(--surface)",
+        brand: {
+          DEFAULT: "#0171e4",
+          50: "#c2f9ff",
+          100: "#8feaff",
+          500: "#0171e4",
+          900: "#002a7a",
+          950: "#001b4e",
+        },
         primary: {
           DEFAULT: "#6366f1",
           foreground: "#ffffff",
@@ -62,6 +70,40 @@ const config: Config = {
           weakening: "#D97706",
           lagging: "#DB2777",
         },
+      },
+      transitionTimingFunction: {
+        DEFAULT: "cubic-bezier(0.22, 0.65, 0.25, 1)",
+        "ease-out": "cubic-bezier(0.22, 0.65, 0.25, 1)",
+        "stc-ease": "cubic-bezier(0.22, 0.65, 0.25, 1)",
+      },
+      transitionDuration: {
+        "150": "150ms",
+        "160": "160ms",
+        "200": "200ms",
+        "350": "350ms",
+        "450": "450ms",
+      },
+      boxShadow: {
+        "stc-card": "rgba(16, 24, 40, 0.05) 0px 1px 2px 0px, rgba(26, 40, 90, 0.32) 0px 30px 70px -30px, rgba(16, 26, 51, 0.06) 0px 0px 0px 1px",
+        "stc-glow": "rgba(255, 255, 255, 0.08) 0px 0px 0px 1px, rgba(1, 113, 228, 0.35) 0px 20px 60px -20px",
+      },
+      keyframes: {
+        slide: {
+          "0%": { opacity: "0", transform: "translate3d(0, 8px, 0)" },
+          "100%": { opacity: "1", transform: "translate3d(0, 0, 0)" },
+        },
+        hcUp: {
+          "0%": { opacity: "0", transform: "translate3d(0px, 24px, 0px)" },
+          "100%": { opacity: "1", transform: "none" },
+        },
+        "sc-shine": {
+          "0%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+      },
+      animation: {
+        slide: "slide 0.35s cubic-bezier(0.22, 0.65, 0.25, 1) forwards",
+        hcUp: "hcUp 0.45s cubic-bezier(0.22, 0.65, 0.25, 1) forwards",
       },
     },
   },

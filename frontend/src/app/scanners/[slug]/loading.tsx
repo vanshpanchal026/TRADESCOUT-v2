@@ -2,10 +2,10 @@ import React from "react";
 
 export default function ScannerLoading() {
   return (
-    <div className="min-h-screen bg-background text-foreground animate-pulse">
+    <div className="min-h-screen bg-background text-foreground animate-pulse w-full">
       {/* Top Header Skeleton */}
-      <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-40">
-        <div className="container mx-auto px-4 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-40 w-full">
+        <div className="w-full px-3 sm:px-6 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
             <div className="h-3 w-48 bg-muted rounded" />
             <div className="h-7 w-64 bg-muted rounded-lg" />
@@ -15,7 +15,7 @@ export default function ScannerLoading() {
         </div>
 
         {/* Scanner Navigation Tabs Skeleton */}
-        <div className="container mx-auto px-4 py-2 flex items-center gap-2 overflow-hidden">
+        <div className="w-full px-3 sm:px-6 py-2 flex items-center gap-2 overflow-hidden">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="h-8 w-28 bg-muted rounded-lg shrink-0" />
           ))}
@@ -23,7 +23,7 @@ export default function ScannerLoading() {
       </header>
 
       {/* Main Grid Skeleton */}
-      <main className="container mx-auto px-4 py-6 space-y-4">
+      <main className="w-full px-3 sm:px-6 py-4 space-y-4">
         <div className="flex items-center justify-between gap-4">
           <div className="h-9 w-72 bg-muted rounded-lg" />
           <div className="h-4 w-40 bg-muted/60 rounded" />

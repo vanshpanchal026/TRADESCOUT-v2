@@ -157,7 +157,7 @@ export function WarmupMarketConditionBento() {
               </div>
 
               {showMoreRead && (
-                <div className="space-y-2.5 pt-1 border-t border-border/40 animate-in fade-in duration-200">
+                <div className="space-y-2.5 pt-1 border-t border-border/40 animate-slide duration-160">
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" />

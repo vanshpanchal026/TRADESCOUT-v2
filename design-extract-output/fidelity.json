@@ -1,0 +1,121 @@
+{
+  "host": "scanthecharts.com",
+  "url": "https://scanthecharts.com/warmup",
+  "cloneUrl": "http://localhost:3000/warmup",
+  "generatedAt": "2026-11-15T14:48:35.259Z",
+  "overall": 31,
+  "grade": "F",
+  "visual": 6,
+  "motion": 68,
+  "weights": {
+    "visual": 0.6,
+    "motion": 0.4
+  },
+  "directives": [
+    {
+      "area": "motion",
+      "target": "keyframes",
+      "aspect": "keyframes",
+      "issue": "motion aspect \"keyframes\" diverges from the original (score 0.00).",
+      "fix": "Author @keyframes for the missing motion kinds (n/a) and wire them to the elements that animate on the source.",
+      "expectedGain": 1.5,
+      "priority": "low"
+    },
+    {
+      "area": "motion",
+      "target": "feel",
+      "aspect": "feel",
+      "issue": "feels responsive, original feels mixed",
+      "fix": "Shift the clone's motion feel toward \"mixed\" — adjust easing and duration tokens so transitions read mixed, not responsive.",
+      "expectedGain": 1,
+      "priority": "low"
+    },
+    {
+      "area": "motion",
+      "target": "easings",
+      "aspect": "easings",
+      "issue": "motion aspect \"easings\" diverges from the original (score 0.50).",
+      "fix": "Apply the original's easing families (n/a) via transition-timing-function instead of custom, ease-out.",
+      "expectedGain": 1,
+      "priority": "low"
+    }
+  ],
+  "counts": {
+    "high": 0,
+    "medium": 0,
+    "low": 3,
+    "visual": 0,
+    "motion": 3
+  },
+  "summary": "31% overall fidelity (F) · visual 6% · motion 68% · 3 correction(s): 0 high, 0 med, 3 low",
+  "motionAspects": [
+    {
+      "aspect": "feel",
+      "score": 0.5,
+      "original": "mixed",
+      "clone": "responsive",
+      "gap": "feels responsive, original feels mixed",
+      "weight": 2
+    },
+    {
+      "aspect": "durations",
+      "score": 1,
+      "original": [
+        200
+      ],
+      "clone": [
+        150,
+        200,
+        350
+      ],
+      "gap": null,
+      "weight": 2
+    },
+    {
+      "aspect": "easings",
+      "score": 0.5,
+      "original": [],
+      "clone": [
+        "custom",
+        "ease-out",
+        "ease-out"
+      ],
+      "gap": null,
+      "weight": 2
+    },
+    {
+      "aspect": "springs",
+      "score": 1,
+      "original": 0,
+      "clone": 0,
+      "gap": null,
+      "weight": 1.5
+    },
+    {
+      "aspect": "keyframes",
+      "score": 0,
+      "original": [],
+      "clone": [
+        "slide"
+      ],
+      "gap": null,
+      "weight": 1.5
+    },
+    {
+      "aspect": "scrollLinked",
+      "score": 1,
+      "original": true,
+      "clone": true,
+      "gap": null,
+      "weight": 1
+    },
+    {
+      "aspect": "choreography",
+      "score": 1,
+      "original": 0,
+      "clone": 0,
+      "gap": null,
+      "weight": 1
+    }
+  ]
+}

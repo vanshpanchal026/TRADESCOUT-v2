@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { HeatmapSector, HeatmapStock } from "./types";
 
@@ -29,7 +29,7 @@ interface PlacedSector {
 }
 
 /**
- * Recursive rectangular subdivision algorithm that produces aspect-ratio optimized tiles.
+ * Recursive rectangular subdivision algorithm producing aspect-ratio optimized tiles.
  */
 function layoutRectangles<T extends { weight: number }>(
   items: T[],
@@ -80,8 +80,20 @@ function layoutRectangles<T extends { weight: number }>(
   }
 }
 
-export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps) {
+/**
+ * Formats market cap compactly for tile display.
+ */
+function formatTileMcap(mcap: number): string {
+  if (mcap >= 100000) {
+    return `₹${(mcap / 100000).toFixed(1)}L Cr`;
+  }
+  return `₹${Math.round(mcap).toLocaleString()} Cr`;
+}
+
+export function HeatmapTreemap({ sectors }: HeatmapTreemapProps) {
   const router = useRouter();
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const [hoveredStock, setHoveredStock] = useState<{
     stock: HeatmapStock;
     sectorName: string;
@@ -89,7 +101,7 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
     clientY: number;
   } | null>(null);
 
-  // Responsive canvas virtual dimensions
+  // Virtual canvas dimensions
   const viewWidth = 1000;
   const viewHeight = 620;
 
@@ -134,53 +146,76 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
     });
   }, [sectors]);
 
-  // Color mapping function
+  // Vibrant green-to-red performance color gradient
   const getChangeBg = (change: number): string => {
-    if (change >= 3.0) return "#00E5FF"; // Bright Cyan for explosive gainers
-    if (change >= 1.5) return "#059669"; // Strong green
-    if (change >= 0.5) return "#047857"; // Green
-    if (change > 0.0) return "#064e3b"; // Subtle green
-    if (change === 0.0) return "#27272a"; // Neutral
-    if (change >= -0.5) return "#7f1d1d"; // Subtle red
-    if (change >= -1.5) return "#991b1b"; // Medium red
-    if (change >= -3.0) return "#b91c1c"; // Red
-    return "#EF4444"; // Bright red for sharp decliners
+    if (change >= 3.0) return "#22c55e"; // Vibrant Emerald Green (+3% and up)
+    if (change >= 2.0) return "#16a34a"; // Rich Green (+2% to +3%)
+    if (change >= 1.0) return "#15803d"; // Medium Green (+1% to +2%)
+    if (change >= 0.25) return "#166534"; // Deep Forest Green (+0.25% to +1%)
+    if (change > -0.25) return "#27272a"; // Neutral Flat (~0.0%)
+    if (change > -1.0) return "#7f1d1d"; // Deep Crimson (-0.25% to -1%)
+    if (change > -2.0) return "#991b1b"; // Medium Red (-1% to -2%)
+    if (change > -3.0) return "#dc2626"; // Strong Red (-2% to -3%)
+    return "#ef4444"; // Vibrant Bright Red (-3% and lower)
   };
 
   const getTextColor = (change: number): string => {
-    if (change >= 3.0) return "#0a0a0f"; // Dark text on bright cyan
+    // Ultra high-contrast dark text on bright vibrant green, crisp white elsewhere
+    if (change >= 3.0) return "#0a0a0f";
     return "#ffffff";
   };
 
-  return (
-    <div className="relative w-full rounded-2xl border border-border bg-card p-3 sm:p-4 shadow-sm overflow-hidden select-none">
-      {/* Mobile 2-Column Grid Fallback (< 640px) */}
-      <div className="sm:hidden grid grid-cols-2 gap-2 p-1">
-        {sectors.flatMap((sec) => sec.stocks.map((stock) => ({ ...stock, sectorName: sec.name }))).map((stock) => (
-          <div
-            key={stock.symbol}
-            onClick={() => router.push(`/stock/${stock.symbol}`)}
-            className="p-2.5 rounded-xl border border-border cursor-pointer flex flex-col justify-between"
-            style={{ backgroundColor: getChangeBg(stock.change_1d) }}
-          >
-            <div className="flex items-center justify-between">
-              <span className="font-bold text-xs text-white font-mono">{stock.symbol}</span>
-              <span className="text-[11px] font-mono font-bold text-white tabular-nums">
-                {stock.change_1d >= 0 ? "+" : ""}{stock.change_1d}%
-              </span>
-            </div>
-            <div className="flex items-center justify-between text-[10px] text-zinc-200 mt-1">
-              <span className="truncate max-w-[70px]">{stock.sectorName}</span>
-              <span className="tabular-nums font-mono font-semibold">₹{stock.cmp.toLocaleString()}</span>
-            </div>
-          </div>
-        ))}
-      </div>
+  const handlePointer = (
+    e: React.MouseEvent<SVGElement>,
+    stock: HeatmapStock,
+    sectorName: string
+  ) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setHoveredStock({
+      stock,
+      sectorName,
+      clientX: e.clientX - rect.left,
+      clientY: e.clientY - rect.top,
+    });
+  };
 
-      {/* SVG Treemap Canvas (Desktop & Tablets >= 640px) */}
+  // Safe tooltip placement within container bounds
+  const tooltipStyle = useMemo(() => {
+    if (!hoveredStock || !containerRef.current) return { display: "none" };
+    const containerWidth = containerRef.current.clientWidth || viewWidth;
+    const containerHeight = containerRef.current.clientHeight || viewHeight;
+
+    const tooltipWidth = 260;
+    const tooltipHeight = 190;
+
+    let left = hoveredStock.clientX + 16;
+    if (left + tooltipWidth > containerWidth - 10) {
+      left = Math.max(10, hoveredStock.clientX - tooltipWidth - 16);
+    }
+
+    let top = hoveredStock.clientY - 90;
+    if (top < 10) {
+      top = 10;
+    } else if (top + tooltipHeight > containerHeight - 10) {
+      top = Math.max(10, containerHeight - tooltipHeight - 10);
+    }
+
+    return {
+      left: `${left}px`,
+      top: `${top}px`,
+    };
+  }, [hoveredStock]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full rounded-2xl border border-border bg-card p-3 sm:p-4 shadow-sm overflow-hidden select-none"
+    >
+      {/* SVG Treemap Canvas with Responsive ViewBox */}
       <svg
         viewBox={`0 0 ${viewWidth} ${viewHeight}`}
-        className="hidden sm:block w-full h-auto max-h-[660px] font-sans rounded-xl overflow-hidden bg-background"
+        className="w-full h-auto max-h-[660px] font-sans rounded-xl overflow-hidden bg-background"
         onMouseLeave={() => setHoveredStock(null)}
       >
         {placedSectors.map(({ sector, rect, placedStocks }) => {
@@ -188,7 +223,7 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
 
           return (
             <g key={sector.name}>
-              {/* Sector Outer Boundary */}
+              {/* Sector Outer Boundary Container */}
               <rect
                 x={rect.x}
                 y={rect.y}
@@ -200,7 +235,7 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
                 rx="4"
               />
 
-              {/* Sector Header Label */}
+              {/* Sector Header Label Ribbon */}
               {isLargeSector && (
                 <g>
                   <rect
@@ -209,7 +244,7 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
                     width={rect.w}
                     height={Math.min(20, rect.h * 0.2)}
                     fill="#181825"
-                    opacity="0.9"
+                    opacity="0.95"
                   />
                   <text
                     x={rect.x + 6}
@@ -223,9 +258,10 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
                     x={rect.x + rect.w - 6}
                     y={rect.y + 13}
                     textAnchor="end"
-                    className={`text-[10px] font-mono font-bold ${
+                    className={`text-[10px] font-mono font-bold tabular-nums ${
                       sector.change_1d >= 0 ? "fill-bull" : "fill-bear"
                     }`}
+                    style={{ fontVariantNumeric: "tabular-nums" }}
                   >
                     {sector.change_1d >= 0 ? "+" : ""}
                     {sector.change_1d}%
@@ -235,93 +271,137 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
 
               {/* Nested Stock Boxes */}
               {placedStocks.map(({ stock, sectorName, rect: sRect }) => {
-                const canShowSymbol = sRect.w >= 28 && sRect.h >= 20;
-                const canShowChange = sRect.w >= 36 && sRect.h >= 32;
+                const canShowSymbol = sRect.w >= 26 && sRect.h >= 18;
+                const canShowChange = sRect.w >= 36 && sRect.h >= 30;
                 const canShowPrice = sRect.w >= 54 && sRect.h >= 46;
+                const canShowMcap = sRect.w >= 72 && sRect.h >= 62;
 
                 const bg = getChangeBg(stock.change_1d);
                 const textColor = getTextColor(stock.change_1d);
+                const hasDarkText = textColor === "#0a0a0f";
+
+                // Dynamic type scaling based on tile dimension
+                const isHeroTile = sRect.w >= 100 && sRect.h >= 75;
+                const isMidTile = sRect.w >= 65 && sRect.h >= 50;
+
+                const symbolFontSize = isHeroTile ? 13 : isMidTile ? 11 : 9.5;
+                const changeFontSize = isHeroTile ? 11 : isMidTile ? 9.5 : 8.5;
+
+                // Vertical baseline calculation based on number of visible lines
+                const centerY = sRect.y + sRect.h / 2;
+                let symbolY = centerY + 3;
+                let changeY = centerY + 14;
+                let priceY = centerY + 24;
+                let mcapY = centerY + 34;
+
+                if (canShowMcap) {
+                  symbolY = centerY - 14;
+                  changeY = centerY - 1;
+                  priceY = centerY + 11;
+                  mcapY = centerY + 22;
+                } else if (canShowPrice) {
+                  symbolY = centerY - 9;
+                  changeY = centerY + 3;
+                  priceY = centerY + 15;
+                } else if (canShowChange) {
+                  symbolY = centerY - 4;
+                  changeY = centerY + 8;
+                }
 
                 return (
                   <g
                     key={stock.symbol}
                     className="cursor-pointer group"
                     onClick={() => router.push(`/stock/${stock.symbol}`)}
-                    onMouseEnter={(e) => {
-                      const svgRect = e.currentTarget.ownerSVGElement?.getBoundingClientRect();
-                      if (svgRect) {
-                        setHoveredStock({
-                          stock,
-                          sectorName,
-                          clientX: e.clientX - svgRect.left,
-                          clientY: e.clientY - svgRect.top,
-                        });
-                      }
-                    }}
-                    onMouseMove={(e) => {
-                      const svgRect = e.currentTarget.ownerSVGElement?.getBoundingClientRect();
-                      if (svgRect) {
-                        setHoveredStock({
-                          stock,
-                          sectorName,
-                          clientX: e.clientX - svgRect.left,
-                          clientY: e.clientY - svgRect.top,
-                        });
-                      }
-                    }}
+                    onMouseEnter={(e) => handlePointer(e, stock, sectorName)}
+                    onMouseMove={(e) => handlePointer(e, stock, sectorName)}
                   >
-                    {/* Stock Tile Box */}
+                    {/* Stock Tile Box with clean border-[#141420] */}
                     <rect
                       x={sRect.x + 0.5}
                       y={sRect.y + 0.5}
                       width={Math.max(0, sRect.w - 1)}
                       height={Math.max(0, sRect.h - 1)}
                       fill={bg}
-                      stroke="#0a0a0f"
-                      strokeWidth="1"
+                      stroke="#141420"
+                      strokeWidth="1.5"
                       rx="3"
-                      className="transition-all duration-150 hover:opacity-85 hover:stroke-foreground"
+                      className="transition-all duration-150 hover:brightness-110 hover:stroke-foreground/60"
                     />
 
                     {/* Stock Symbol Label */}
                     {canShowSymbol && (
                       <text
                         x={sRect.x + sRect.w / 2}
-                        y={canShowChange ? sRect.y + sRect.h / 2 - 4 : sRect.y + sRect.h / 2 + 3}
+                        y={symbolY}
                         textAnchor="middle"
                         fill={textColor}
-                        className="text-[10px] font-mono font-bold tracking-tight"
-                        style={{ textShadow: "0 1px 2px rgba(0,0,0,0.6)" }}
+                        fontSize={symbolFontSize}
+                        className="font-mono font-bold tracking-tight select-none"
+                        style={{
+                          textShadow: hasDarkText
+                            ? "none"
+                            : "0 1px 2px rgba(0,0,0,0.7)",
+                        }}
                       >
                         {stock.symbol}
                       </text>
                     )}
 
-                    {/* Stock 1D Change % */}
+                    {/* Stock 1D Change % with tabular-nums */}
                     {canShowChange && (
                       <text
                         x={sRect.x + sRect.w / 2}
-                        y={sRect.y + sRect.h / 2 + 9}
+                        y={changeY}
                         textAnchor="middle"
                         fill={textColor}
-                        className="text-[9px] font-mono font-semibold opacity-90"
-                        style={{ textShadow: "0 1px 2px rgba(0,0,0,0.6)" }}
+                        fontSize={changeFontSize}
+                        className="font-mono font-semibold tabular-nums opacity-95 select-none"
+                        style={{
+                          fontVariantNumeric: "tabular-nums",
+                          textShadow: hasDarkText
+                            ? "none"
+                            : "0 1px 2px rgba(0,0,0,0.7)",
+                        }}
                       >
                         {stock.change_1d >= 0 ? "+" : ""}
-                        {stock.change_1d}%
+                        {stock.change_1d.toFixed(2)}%
                       </text>
                     )}
 
-                    {/* Stock Price (for larger boxes) */}
+                    {/* Stock Price (CMP) with tabular-nums */}
                     {canShowPrice && (
                       <text
                         x={sRect.x + sRect.w / 2}
-                        y={sRect.y + sRect.h / 2 + 20}
+                        y={priceY}
                         textAnchor="middle"
                         fill={textColor}
-                        className="text-[8px] font-mono opacity-80"
+                        fontSize={8.5}
+                        className="font-mono tabular-nums opacity-85 select-none"
+                        style={{
+                          fontVariantNumeric: "tabular-nums",
+                          textShadow: hasDarkText ? "none" : "0 1px 2px rgba(0,0,0,0.7)",
+                        }}
                       >
                         ₹{stock.cmp.toLocaleString()}
+                      </text>
+                    )}
+
+                    {/* Stock Market Cap with tabular-nums (for hero tiles) */}
+                    {canShowMcap && (
+                      <text
+                        x={sRect.x + sRect.w / 2}
+                        y={mcapY}
+                        textAnchor="middle"
+                        fill={textColor}
+                        fontSize={7.5}
+                        className="font-mono tabular-nums opacity-75 select-none"
+                        style={{
+                          fontVariantNumeric: "tabular-nums",
+                          textShadow: hasDarkText ? "none" : "0 1px 2px rgba(0,0,0,0.7)",
+                        }}
+                      >
+                        {formatTileMcap(stock.market_cap)}
                       </text>
                     )}
                   </g>
@@ -332,36 +412,36 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
         })}
       </svg>
 
-      {/* Floating Hover Tooltip */}
+      {/* Floating Hover Tooltip with Institutional Card Styling */}
       {hoveredStock && (
         <div
-          className="pointer-events-none absolute z-30 w-60 rounded-xl border border-border bg-card/95 p-3 shadow-xl backdrop-blur-md text-xs space-y-2"
-          style={{
-            left: Math.min(hoveredStock.clientX + 15, viewWidth - 250),
-            top: Math.max(hoveredStock.clientY - 95, 10),
-          }}
+          className="pointer-events-none absolute z-30 w-64 rounded-xl border border-border bg-[#1c1c2e]/95 p-3.5 shadow-2xl backdrop-blur-md text-xs space-y-2.5 transition-all duration-75"
+          style={tooltipStyle}
         >
-          <div className="flex items-center justify-between border-b border-border/60 pb-1.5">
-            <div>
-              <div className="font-bold text-sm text-foreground font-mono">
-                {hoveredStock.stock.symbol}
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-border/60 pb-2">
+            <div className="min-w-0 pr-2">
+              <div className="font-bold text-sm text-foreground font-mono flex items-center gap-1.5">
+                <span>{hoveredStock.stock.symbol}</span>
               </div>
-              <div className="text-[11px] text-muted-foreground truncate max-w-[140px]">
+              <div className="text-[11px] text-muted-foreground truncate max-w-[150px]">
                 {hoveredStock.stock.name}
               </div>
             </div>
             <span
-              className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full border ${
+              className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full border tabular-nums shrink-0 ${
                 hoveredStock.stock.change_1d >= 0
                   ? "bg-bull/10 border-bull/30 text-bull"
                   : "bg-bear/10 border-bear/30 text-bear"
               }`}
+              style={{ fontVariantNumeric: "tabular-nums" }}
             >
               {hoveredStock.stock.change_1d >= 0 ? "+" : ""}
-              {hoveredStock.stock.change_1d}%
+              {hoveredStock.stock.change_1d.toFixed(2)}%
             </span>
           </div>
 
+          {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 gap-2 font-mono text-[11px]">
             <div>
               <span className="text-muted-foreground text-[10px] block font-sans">Sector</span>
@@ -371,24 +451,39 @@ export function HeatmapTreemap({ sectors, totalMarketCap }: HeatmapTreemapProps)
             </div>
             <div>
               <span className="text-muted-foreground text-[10px] block font-sans">CMP</span>
-              <strong className="text-foreground tabular-nums">
+              <strong className="text-foreground tabular-nums" style={{ fontVariantNumeric: "tabular-nums" }}>
                 ₹{hoveredStock.stock.cmp.toLocaleString()}
               </strong>
             </div>
             <div>
               <span className="text-muted-foreground text-[10px] block font-sans">Market Cap</span>
-              <strong className="text-foreground tabular-nums">
+              <strong className="text-foreground tabular-nums" style={{ fontVariantNumeric: "tabular-nums" }}>
                 ₹{hoveredStock.stock.market_cap.toLocaleString()} Cr
               </strong>
             </div>
             <div>
               <span className="text-muted-foreground text-[10px] block font-sans">Index Weight</span>
-              <strong className="text-foreground tabular-nums">{hoveredStock.stock.weight_pct}%</strong>
+              <strong className="text-foreground tabular-nums" style={{ fontVariantNumeric: "tabular-nums" }}>
+                {hoveredStock.stock.weight_pct}%
+              </strong>
+            </div>
+            <div>
+              <span className="text-muted-foreground text-[10px] block font-sans">Volume</span>
+              <strong className="text-foreground tabular-nums" style={{ fontVariantNumeric: "tabular-nums" }}>
+                {hoveredStock.stock.volume.toLocaleString()}
+              </strong>
+            </div>
+            <div>
+              <span className="text-muted-foreground text-[10px] block font-sans">Cap Tier</span>
+              <strong className="text-accent text-[11px] font-sans">
+                {formatTileMcap(hoveredStock.stock.market_cap)}
+              </strong>
             </div>
           </div>
 
-          <div className="text-[10px] text-accent border-t border-border/40 pt-1 font-semibold flex items-center justify-between">
-            <span>Volume: {hoveredStock.stock.volume.toLocaleString()}</span>
+          {/* Footer Action Hint */}
+          <div className="text-[10px] text-accent border-t border-border/40 pt-1.5 font-semibold flex items-center justify-between">
+            <span className="text-muted-foreground">Interactive Treemap</span>
             <span>Click to inspect chart →</span>
           </div>
         </div>

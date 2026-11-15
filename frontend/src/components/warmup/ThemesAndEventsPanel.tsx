@@ -37,7 +37,7 @@ export function ThemesAndEventsPanel() {
   return (
     <div className="space-y-4">
       {/* ================= WHERE THE MONEY IS ================= */}
-      <div className="rounded-2xl bg-card border border-border/80 shadow-xs p-4 sm:p-5 space-y-4">
+      <div className="rounded-2xl bg-card border border-border/80 shadow-stc-card p-4 sm:p-5 space-y-4 transition-all duration-150 ease-out hover:border-brand/40">
         <div className="flex items-center justify-between pb-3 border-b border-border/60">
           <div>
             <h3 className="text-sm font-bold text-foreground">Where the money is</h3>
@@ -102,7 +102,7 @@ export function ThemesAndEventsPanel() {
       </div>
 
       {/* ================= TODAY'S EVENTS ================= */}
-      <div className="rounded-2xl bg-card border border-border/80 shadow-xs p-4 sm:p-5 space-y-4">
+      <div className="rounded-2xl bg-card border border-border/80 shadow-stc-card p-4 sm:p-5 space-y-4 transition-all duration-150 ease-out hover:border-brand/40">
         <div className="flex items-center justify-between pb-3 border-b border-border/60">
           <div className="flex items-center gap-1.5">
             <h3 className="text-sm font-bold text-foreground">Today&apos;s events</h3>

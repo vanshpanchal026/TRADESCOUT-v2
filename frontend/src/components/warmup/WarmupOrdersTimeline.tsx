@@ -55,7 +55,7 @@ export function WarmupOrdersTimeline() {
   return (
     <div className="space-y-4">
       {/* ================= YOUR WATCHLIST PLAN CARD ================= */}
-      <div className="rounded-2xl bg-card border border-border/80 shadow-xs p-4 sm:p-5">
+      <div className="rounded-2xl bg-card border border-border/80 shadow-stc-card p-4 sm:p-5 transition-all duration-150 ease-out hover:border-brand/40">
         <h4 className="text-xs font-bold text-foreground">Your watchlist plan</h4>
         <div className="flex items-center justify-between text-xs text-muted-foreground mt-2">
           <span>Create a watchlist to see your plan here.</span>
@@ -70,7 +70,7 @@ export function WarmupOrdersTimeline() {
       </div>
 
       {/* ================= ORDERS, EXPANSION & APPROVALS CARD ================= */}
-      <div className="rounded-2xl bg-card border border-border/80 shadow-xs p-4 sm:p-5 space-y-3">
+      <div className="rounded-2xl bg-card border border-border/80 shadow-stc-card p-4 sm:p-5 space-y-3 transition-all duration-150 ease-out hover:border-brand/40">
         <div className="flex items-center justify-between pb-2 border-b border-border/60">
           <div>
             <h4 className="text-xs font-bold text-foreground">Orders, expansion &amp; approvals</h4>

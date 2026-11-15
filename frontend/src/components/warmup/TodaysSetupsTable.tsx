@@ -229,7 +229,7 @@ export function TodaysSetupsTable() {
   };
 
   return (
-    <div className="rounded-2xl bg-card border border-border/80 shadow-xs overflow-hidden">
+    <div className="rounded-2xl bg-card border border-border/80 shadow-stc-card overflow-hidden transition-all duration-150 ease-out hover:border-brand/40">
       {/* Top Header & Action Controls */}
       <div className="p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3 border-b border-border/60">
         <div>

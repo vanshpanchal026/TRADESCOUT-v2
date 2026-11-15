@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2026-11-15 — Master Swarm Extraction, Fidelity Audit & Parallel UI Polish
+
+### Phase 1: Parallel Route Spec Extraction (designlang)
+- **Swarm Extraction Workers (`ext-warmup`, `ext-scanners`, `ext-heatmap`, `ext-stock`):**
+  - `research/extracted-specs/warmup`: 8 unique colors, Manrope typography, 16 spacing values, dark mode pairing, motion presets, WCAG audit, and agent-native `DESIGN.md`.
+  - `research/extracted-specs/scanners`: 22 unique colors, DTCG tokens, shadows, gradients, and full component design system.
+  - `research/extracted-specs/heatmap`: Dembrandt brand tokens, color palettes, spacing, and typography scales.
+  - `research/extracted-specs/stock`: Motion easing curves, layout grid primitives, volume pane alignment, and token mappings.
+- **Environment & Credential Safety:** Ensured `storageState.json`, `auth.json`, `*.storageState.json`, and `research/extracted-specs/` are in `.gitignore`.
+
+### Phase 2: Measured Fidelity Gap Analysis (`auditor-fidelity`)
+- Automated benchmark of local Next.js (`http://localhost:3000`) against `scanthecharts.com`:
+  - **Overall Fidelity**: **73% (Grade C)** (Up from 56% F)
+  - **Motion Fidelity**: **90%** (Up from 46% F — feel: 100% responsive, easings: 99% ease-out, keyframes: slide)
+  - **Visual Score**: **61%**
+  - Generated ranked corrective plans (`fidelity.md`, `fidelity.json`, `fidelity-diff.png`).
+
+### Phase 3: Parallel Component Implementation & UI Polish
+- **UI Worker A (`frontend/src/components/warmup/`):**
+  - Upgraded `WarmupDashboard.tsx`, `RMEMeter.tsx`, `BreadthGauge.tsx`, `StageDistribution.tsx`, and `DailyCues.tsx`.
+  - High-density institutional Bento grid with rounded 16px cards (`rounded-xl border border-[#27272a] bg-[#1c1c2e] p-4`), Washed Out → Neutral → Stretched scale track, radial SMA 20/50/200 breadth gauges, Weinstein 4-stage horizontal bar, and Gift Nifty / global macro ticker badges with strict `tabular-nums`.
+- **UI Worker B (`frontend/src/components/scanner/` & `shell/`):**
+  - Compact institutional table density (`py-1.5 px-3`), frozen sticky columns (Symbol and CMP), subtle row hovers (`hover:bg-white/[0.03]`), and keyboard navigation.
+  - Strict `tabular-nums` formatting across CMP, Day %, RVOL, RS Rating, 50 SMA, 200 SMA, and 52W High %.
+  - Upgraded `PaywallBlurBanner` and `BlurredPlaceholderRows` with matching row heights and non-advisory freemium messaging.
+  - Upgraded `TopTabBar.tsx` with dark token `#141420`, active tab pill styling, and explore scanners shortcut button.
+- **UI Worker C (`frontend/src/components/chart/` & `app/stock/[symbol]`):**
+  - Polished `TradingViewChart.tsx` with canvas color blending, crosshairs, moving average overlay toggles, dashed amber pivot line (`#f59e0b`), volume pane alignment, and `tabular-nums` formatting.
+  - Polished `StockDetailPage` with 6-card Bento layout, live price ticker, 52-week range visualizer, and Screener-style quarterly tables with YoY pills.
+- **UI Worker D (`frontend/src/components/heatmap/` & `components/rrg/`):**
+  - Polished `HeatmapTreemap.tsx` with 9-tier green-to-red performance gradient, `tabular-nums` for market cap and % change on tiles, and clean `#141420` borders.
+  - Polished `RRGChart.tsx` with 4 quadrants, benchmark crosshair (100, 100), vector arrowheads on rotation trails, and SVG text halos.
+
+### Phase 4: Final Verification & Compliance
+- **Designlang Verify-UI Audit:** `designlang verify-ui http://localhost:3000/warmup` achieved **0 / 100 Generic-AI-Look Score** (distinct, non-templated craftsmanship). Integrated `Manrope` webfont via `next/font/google` and extended Tailwind color tokens.
+- **Regulatory & Compliance Guardrails:** Strict zero-tolerance check for advisory terms (`BUY`, `SELL`, `TARGET`, `STOP LOSS`, `RECOMMENDATION`, `MULTIBAGGER`) with 0 violations; preserved mandatory SEBI educational disclaimers across all views.
+- **Quality Gates:** Strict TypeScript compilation (`pnpm tsc --noEmit`) passes with 0 errors; Next.js production build (`pnpm build`) succeeds with 32/32 routes generated.
+
+---
+
 ## [2.0.0-rc1] - 2026-11-14 — TRADESCOUT-v2 UI/UX Polish & Bento Layout Contract
 
 ### UI/UX & Design System Contract
