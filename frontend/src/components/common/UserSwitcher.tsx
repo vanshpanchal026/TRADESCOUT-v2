@@ -1,12 +1,28 @@
 ﻿"use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { User } from "lucide-react";
-import { getActiveUserProfile } from "@/lib/auth";
+import { getActiveUserProfile, UserProfile } from "@/lib/auth";
 
 export function UserSwitcher() {
-  const profile = getActiveUserProfile();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    // Synchronize profile state safely after client mount to prevent SSR hydration mismatch
+    setProfile(getActiveUserProfile());
+
+    const handleUserChanged = () => {
+      setProfile(getActiveUserProfile());
+    };
+
+    window.addEventListener("ts-user-changed", handleUserChanged);
+    return () => {
+      window.removeEventListener("ts-user-changed", handleUserChanged);
+    };
+  }, []);
+
+  const plan = profile ? profile.plan : "Free";
 
   return (
     <Link
@@ -21,8 +37,11 @@ export function UserSwitcher() {
         <span className="font-semibold text-foreground text-xs">
           Account
         </span>
-        <span className="text-[10px] text-muted-foreground font-mono">
-          {profile.plan || "Free"}
+        <span
+          className="text-[10px] text-muted-foreground font-mono"
+          suppressHydrationWarning
+        >
+          {plan}
         </span>
       </div>
     </Link>
